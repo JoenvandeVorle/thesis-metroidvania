@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.team-zomsa.aplib-unity": "https://github.com/team-zomsa/Aplib-Unity-Package.git",
     "com.unity.addressables": "2.2.2",
     "com.unity.ai.navigation": "2.0.5",
     "com.unity.cinemachine": "3.1.2",
