@@ -61,18 +61,15 @@ namespace Tests.AplibTests
                 rigidbody.position = destination;
 
                 // Flip the sprite based on the direction
-                if (direction.x > 0)
-                {
-                    rigidbody.transform.localScale = new Vector3(1, 1, 1);
-                }
-                else if (direction.x < 0)
+                int needFlip = direction.x < 0 ? 180 : 0;
+                if (needFlip != 0)
                 {
                     rigidbody.transform.localScale = new Vector3(-1, 1, 1);
                 }
 
-                // Then rotate to face the direction (currently wrong)
-                // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                // rigidbody.rotation = angle;
+                // Then rotate to face the direction
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + needFlip;
+                rigidbody.rotation = angle;
             };
     }
 }

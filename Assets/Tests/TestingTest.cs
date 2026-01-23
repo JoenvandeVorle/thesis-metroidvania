@@ -30,6 +30,9 @@ namespace Tests.AplibTests
             new(GameObject.Find("Target").transform, x => x.position);
     }
 
+    /// <summary>
+    /// Simple test to verify that the agent and aplib runner are working.
+    /// </summary>
     public class TestingTest
     {
         /// <summary>

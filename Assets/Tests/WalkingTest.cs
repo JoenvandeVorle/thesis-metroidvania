@@ -30,18 +30,18 @@ namespace Tests.AplibTests
             new(GameObject.FindWithTag("Enemy").transform, x => x.position);
     }
 
+    /// <summary>
+    /// Simple test to verify that the TransformPathfinderAction2D is working. 
+    /// </summary>
     public class WalkingTest
     {
-        /// <summary>
-        /// A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use `yield return null;` to skip a frame.
-        /// </summary>
         [UnityTest]
         public IEnumerator PerformWalkingTest()
         {
             // Arrange
-            // Create a belief set for the agent.
             WalkingBeliefSet beliefSet = new();
 
+            // This action cannot move upwards! It is for walking, not jumping.
             TransformPathfinderAction2D<WalkingBeliefSet> move = new(
                 beliefSet =>
                 {
@@ -78,8 +78,6 @@ namespace Tests.AplibTests
 
             // Assert
             Assert.AreEqual(CompletionStatus.Success, agent.Status);
-
-
         }
 
         [SetUp]
