@@ -16,7 +16,7 @@ using Aplib.Integrations.Unity;
 
 namespace Tests.AplibTests
 {
-    public class MyFirstBeliefSet : BeliefSet
+    public class SimpleTestBeliefSet : BeliefSet
     {
         /// <summary>
         /// The player object in the scene.
@@ -43,10 +43,10 @@ namespace Tests.AplibTests
         {
             // Arrange
             // Create a belief set for the agent.
-            MyFirstBeliefSet beliefSet = new();
+            SimpleTestBeliefSet beliefSet = new();
 
             // Create an intent for the agent that moves the agent towards the target position.
-            Action<MyFirstBeliefSet> moveTowardsTargetAction = new(
+            Action<SimpleTestBeliefSet> moveTowardsTargetAction = new(
                 beliefSet =>
                 {
                     GameObject player = beliefSet.Player;
@@ -59,10 +59,10 @@ namespace Tests.AplibTests
                     );
                 }
             );
-            PrimitiveTactic<MyFirstBeliefSet> moveTowardsTargetTactic = new(moveTowardsTargetAction);
+            PrimitiveTactic<SimpleTestBeliefSet> moveTowardsTargetTactic = new(moveTowardsTargetAction);
 
             // Create a desire for the agent to reach the target position.
-            Goal<MyFirstBeliefSet> reachTargetGoal = new(
+            Goal<SimpleTestBeliefSet> reachTargetGoal = new(
                 moveTowardsTargetTactic,
                 beliefSet =>
                 {
@@ -72,12 +72,12 @@ namespace Tests.AplibTests
                     return Vector2.Distance(playerPosition, targetPosition) < 0.1f;
                 }
             );
-            PrimitiveGoalStructure<MyFirstBeliefSet> reachTargetGoalStructure = new(reachTargetGoal);
-            RepeatGoalStructure<MyFirstBeliefSet> repeat = new(reachTargetGoalStructure);
-            DesireSet<MyFirstBeliefSet> desireSet = new(repeat);
+            PrimitiveGoalStructure<SimpleTestBeliefSet> reachTargetGoalStructure = new(reachTargetGoal);
+            RepeatGoalStructure<SimpleTestBeliefSet> repeat = new(reachTargetGoalStructure);
+            DesireSet<SimpleTestBeliefSet> desireSet = new(repeat);
 
             // Setup the agent with the belief set and desire set and initialize the test runner.
-            BdiAgent<MyFirstBeliefSet> agent = new(beliefSet, desireSet);
+            BdiAgent<SimpleTestBeliefSet> agent = new(beliefSet, desireSet);
             AplibRunner testRunner = new(agent);
 
             // Act

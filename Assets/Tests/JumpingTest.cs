@@ -13,45 +13,59 @@ using Aplib.Core.Desire.GoalStructures;
 using Aplib.Core.Desire.DesireSets;
 using Aplib.Core.Agents;
 using Aplib.Integrations.Unity;
+using UnityEngine.InputSystem;
+ //using UnityEngine.InputSystem.TestingFranewir
 
 namespace Tests.AplibTests
 {
     /// <summary>
-    /// Simple test to verify that the TransformPathfinderAction2D is working. 
+    /// Simple test to verify that we can access the player's jumping ability.
     /// </summary>
-    public class WalkingTest
+    public class InputSystemTestJump : InputTestFixture
     {
+        // We cannot use the NUnit setup methods because the InputTestFixture already uses them.
+        // Instead, we override the SetUp method.
+        public override void Setup()
+        {
+            base.Setup();
+            Debug.Log("Starting test InputSystemTestJump");
+            SceneManager.LoadScene("SimpleTestScene");
+        }
+
         [UnityTest]
-        public IEnumerator PerformWalkingTest()
+        public IEnumerator PerformJumpingTest()
         {
             // Arrange
             SimpleTestBeliefSet beliefSet = new();
+            var keyboard = InputSystem.AddDevice<Keyboard>();
 
-            // This action cannot move upwards! It is for walking, not jumping.
-            TransformPathfinderAction2D<SimpleTestBeliefSet> move = new(
+            Action<SimpleTestBeliefSet> jump = new(
                 beliefSet =>
                 {
                     GameObject player = beliefSet.Player;
-                    return player.GetComponent<Rigidbody2D>();
-                },
-                beliefSet => beliefSet.TargetPosition,
-                1f
+                    Debug.Log("Simulating jump input");
+                    Press(keyboard.zKey);
+                }
             );
-    
-            PrimitiveTactic<SimpleTestBeliefSet> moveTowardsTargetTactic = new(move);
 
-            // Create a desire for the agent to reach the target position.
-            Goal<SimpleTestBeliefSet> reachTargetGoal = new(
-                moveTowardsTargetTactic,
+            // Press again to test
+            Debug.Log("Pressing attack key");
+            Press(keyboard.xKey);
+    
+            PrimitiveTactic<SimpleTestBeliefSet> jumpTactic = new(jump);
+
+            // Create a desire for the agent to reach the target position using jumping.
+            Goal<SimpleTestBeliefSet> jumpGoal = new(
+                jumpTactic,
                 beliefSet =>
                 {
                     GameObject player = beliefSet.Player;
                     Vector2 playerPosition = player.transform.position;
                     Vector2 targetPosition = beliefSet.TargetPosition;
-                    return Vector2.Distance(playerPosition, targetPosition) < 1f;
+                    return Vector2.Distance(playerPosition, targetPosition) < 5f;
                 }
             );
-            PrimitiveGoalStructure<SimpleTestBeliefSet> reachTargetGoalStructure = new(reachTargetGoal);
+            PrimitiveGoalStructure<SimpleTestBeliefSet> reachTargetGoalStructure = new(jumpGoal);
             RepeatGoalStructure<SimpleTestBeliefSet> repeat = new(reachTargetGoalStructure);
             DesireSet<SimpleTestBeliefSet> desireSet = new(repeat);
 
@@ -66,11 +80,5 @@ namespace Tests.AplibTests
             Assert.AreEqual(CompletionStatus.Success, agent.Status);
         }
 
-        [SetUp]
-        public void SetUp()
-        {
-            Debug.Log("Starting test WalkingTest");
-            SceneManager.LoadScene("SimpleTestScene");
-        }
     }
 }
