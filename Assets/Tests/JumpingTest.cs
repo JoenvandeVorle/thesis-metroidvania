@@ -35,6 +35,8 @@ namespace Tests.AplibTests
         [UnityTest]
         public IEnumerator PerformJumpingTest()
         {
+            // CURERNTLY NOT WORKING
+
             // Arrange
             SimpleTestBeliefSet beliefSet = new();
             var keyboard = InputSystem.AddDevice<Keyboard>();
