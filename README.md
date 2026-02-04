@@ -1,5 +1,17 @@
-# Python stuff
-See [here](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Installation.html) for details
+# Using Unity ML-Agents
+See documentation [here](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Installation.html) for details
+
+## Running a training session
+1. Open an agent training scene
+2. Start the mlagents in a terminal using:
+```bash
+mlagents-learn .\AgentConfigs\BasicAgent.yaml --run-id=test_run
+```
+3. Press play in the editor to start the training session
+
+Afterwards, the resulting `model.onnx` can be put on the Behavior Parameters component of the agent to use the trained model.
+
+You can test in parallel with multiple Unity instances using `--num-envs=x` flag in the `mlagents-learn` command. See docs [here](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Learning-Environment-Create-New.html#optional-training-using-concurrent-unity-instances).
 
 # Metroidvania
 

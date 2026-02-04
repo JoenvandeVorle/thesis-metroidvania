@@ -1,0 +1,29 @@
+{
+    "BasicAgent": {
+        "checkpoints": [
+            {
+                "steps": 30003,
+                "file_path": "results\\test2\\BasicAgent\\BasicAgent-30003.onnx",
+                "reward": 0.3333333333333333,
+                "creation_time": 1770232782.3580043,
+                "auxillary_file_paths": [
+                    "results\\test2\\BasicAgent\\BasicAgent-30003.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 30003,
+            "file_path": "results\\test2\\BasicAgent.onnx",
+            "reward": 0.3333333333333333,
+            "creation_time": 1770232782.3580043,
+            "auxillary_file_paths": [
+                "results\\test2\\BasicAgent\\BasicAgent-30003.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

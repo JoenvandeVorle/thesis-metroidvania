@@ -63,6 +63,11 @@ namespace Metroidvania.InputSystem
             inputActions.Gameplay.Disable();
         }
 
+        public float MoveValue()
+        {
+            return inputActions.Gameplay.Move.ReadValue<float>();
+        }
+
         void InputActions.IGameplayActions.OnMove(InputAction.CallbackContext context)
         {
             switch (context.phase)
