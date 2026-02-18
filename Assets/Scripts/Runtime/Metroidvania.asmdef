@@ -10,7 +10,8 @@
         "Unity.Collections",
         "Unity.Cinemachine",
         "Unity.TextMeshPro",
-        "Unity.Burst"
+        "Unity.Burst",
+        "DOTween.Modules"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
