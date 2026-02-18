@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Metroidvania
+namespace Metroidvania.Singletons
 {
     public abstract class StaticInstance<T> : MonoBehaviour where T : StaticInstance<T>
     {
@@ -33,5 +33,10 @@ namespace Metroidvania
             DontDestroyOnLoad(gameObject);
             name = $"[{typeof(T).Name}]";
         }
+    }
+
+    public interface IInitializableSingleton
+    {
+        void Initialize();
     }
 }

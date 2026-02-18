@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Metroidvania.InputSystem;
-using Metroidvania.Settings;
+using Metroidvania.Singletons;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

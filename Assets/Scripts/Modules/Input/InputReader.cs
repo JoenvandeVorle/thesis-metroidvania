@@ -1,5 +1,6 @@
 using System;
 using UnityEngine.InputSystem;
+using Metroidvania.Singletons;
 
 namespace Metroidvania.InputSystem
 {

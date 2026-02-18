@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Metroidvania
+namespace Metroidvania.Singletons
 {
     /// <summary>Base class for handle scriptable objects singleton</summary>
     public abstract class ScriptableSingleton<T> : ScriptableObject where T : ScriptableSingleton<T>

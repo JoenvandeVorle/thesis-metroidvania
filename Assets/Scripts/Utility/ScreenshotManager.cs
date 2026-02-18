@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using Metroidvania.Singletons;
 
 namespace Metroidvania
 {

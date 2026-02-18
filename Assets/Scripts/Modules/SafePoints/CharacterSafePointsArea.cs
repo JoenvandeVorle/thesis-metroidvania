@@ -1,5 +1,6 @@
 using Metroidvania.SceneManagement;
 using UnityEngine;
+using Metroidvania.Singletons;
 
 namespace Metroidvania.Characters.SafePoints
 {

@@ -1,0 +1,19 @@
+{
+    "name": "Metroidvania.Pathfinding",
+    "rootNamespace": "Metroidvania",
+    "references": [
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:fc8eba304f0a26d4381eb741bbffa603",
+        "GUID:53b5680bd4ee1d141994a6d2da87970b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

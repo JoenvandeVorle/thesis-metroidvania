@@ -1,0 +1,18 @@
+{
+    "name": "Metroidvania.UI",
+    "rootNamespace": "Metroidvania",
+    "references": [
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:53b5680bd4ee1d141994a6d2da87970b",
+        "GUID:dee3c3606a27d0941b32e84dc8f61786"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

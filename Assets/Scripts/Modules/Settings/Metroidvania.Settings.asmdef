@@ -1,0 +1,19 @@
+{
+    "name": "Metroidvania.Settings",
+    "rootNamespace": "Metroidvania",
+    "references": [
+        "GUID:eec0964c48f6f4e40bc3ec2257ccf8c5",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:da307dc2553b237488a3547f8da48abc",
+        "GUID:fc8eba304f0a26d4381eb741bbffa603"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,6 +1,6 @@
 ﻿using Metroidvania.SceneManagement;
 using Metroidvania.Serialization.Handlers;
-using Metroidvania.Settings;
+using Metroidvania.Singletons;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

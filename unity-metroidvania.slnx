@@ -1,5 +1,16 @@
 ﻿<Solution>
+  <Project Path="Metroidvania.Pathfinding.csproj" />
+  <Project Path="Metroidvania.Events.csproj" />
+  <Project Path="Metroidvania.UI.csproj" />
+  <Project Path="Metroidvania.Utility.csproj" />
+  <Project Path="Metroidvania.CharacterShared.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="DOTween.csproj" />
+  <Project Path="Metroidvania.csproj" />
+  <Project Path="Metroidvania.SceneManagement.csproj" />
   <Project Path="Tests.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Metroidvania.Entities.csproj" />
+  <Project Path="Metroidvania.InputSystem.csproj" />
+  <Project Path="Metroidvania.Settings.csproj" />
+  <Project Path="Metroidvania.Singletons.csproj" />
 </Solution>

@@ -1,5 +1,5 @@
 ﻿using Metroidvania.Events;
-using Metroidvania.Settings;
+using Metroidvania.Singletons;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;

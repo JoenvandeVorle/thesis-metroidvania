@@ -1,0 +1,17 @@
+{
+    "name": "Metroidvania.InputSystem",
+    "rootNamespace": "Metroidvania",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:fc8eba304f0a26d4381eb741bbffa603"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

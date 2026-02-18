@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Metroidvania.UI;
 using UnityEngine;
+using Metroidvania.Singletons;
 
 namespace Metroidvania
 {

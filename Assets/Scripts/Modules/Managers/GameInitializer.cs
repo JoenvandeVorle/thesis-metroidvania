@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Metroidvania.Settings
+namespace Metroidvania.Managers
 {
     public class GameInitializer : MonoBehaviour
     {
@@ -39,10 +39,5 @@ namespace Metroidvania.Settings
 
             yield return SceneLoader.instance.LoadSceneWithoutTransition(m_mainMenuSceneRef, SceneLoader.SceneTransitionData.MainMenu);
         }
-    }
-
-    public interface IInitializableSingleton
-    {
-        void Initialize();
     }
 }

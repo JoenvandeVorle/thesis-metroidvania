@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using UnityEngine;
+using Metroidvania.Singletons;
 
 namespace Metroidvania
 {

@@ -1,0 +1,18 @@
+{
+    "name": "Metroidvania.CharacterShared",
+    "rootNamespace": "Metroidvania",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:7c4129a05a3447b4bbbd24cb474146f3",
+        "GUID:e5202d560aad24e4e8f364d39e19c2ca"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

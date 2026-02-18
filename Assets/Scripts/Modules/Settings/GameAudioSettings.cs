@@ -1,8 +1,8 @@
 ﻿using Metroidvania.Events;
-using Metroidvania.Settings;
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using Metroidvania.Singletons;
 
 namespace Metroidvania.Audio
 {
