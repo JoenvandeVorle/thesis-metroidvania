@@ -11,6 +11,11 @@ mlagents-learn .\AgentConfigs\BasicAgent.yaml --run-id=test_run
 
 Afterwards, the resulting `model.onnx` can be put on the Behavior Parameters component of the agent to use the trained model.
 
+Training metrics can be visualized using Tensorboard with the command:
+```bash
+tensorboard --logdir results
+```
+
 You can test in parallel with multiple Unity instances using `--num-envs=x` flag in the `mlagents-learn` command. See docs [here](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/Learning-Environment-Create-New.html#optional-training-using-concurrent-unity-instances).
 
 # Metroidvania

@@ -2,11 +2,12 @@
     "name": "Tests",
     "rootNamespace": "",
     "references": [
+        "Metroidvania",
+        "Unity.InputSystem",
+        "Unity.InputSystem.TestFramework",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "team-zomsa.aplib-unity",
-        "Unity.InputSystem",
-        "Unity.InputSystem.TestFramework"
+        "team-zomsa.aplib-unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

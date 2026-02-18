@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Metroidvania.InputSystem
@@ -38,6 +39,17 @@ namespace Metroidvania.InputSystem
         private void OnDisable()
         {
             DisableAllInput();
+        }
+
+        /// <summary>Manual initialization for test environments where OnEnable may not be called</summary>
+        public void Initialize()
+        {
+            if (inputActions == null)
+            {
+                inputActions = new InputActions();
+                inputActions.Gameplay.SetCallbacks(this);
+                inputActions.Menus.SetCallbacks(this);
+            }
         }
 
         /// <summary>Enable the gameplay input</summary>
@@ -102,7 +114,10 @@ namespace Metroidvania.InputSystem
         void InputActions.IGameplayActions.OnJump(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed)
+            {
                 JumpEvent?.Invoke();
+                Debug.Log("Jump input performed, invoking JumpEvent");   
+            }
         }
 
         void InputActions.IGameplayActions.OnPause(InputAction.CallbackContext context)
