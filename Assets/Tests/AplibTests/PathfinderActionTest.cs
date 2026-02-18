@@ -19,10 +19,10 @@ namespace Tests.AplibTests
     /// <summary>
     /// Simple test to verify that the TransformPathfinderAction2D is working. 
     /// </summary>
-    public class WalkingTest
+    public class PathfinderActionTest
     {
         [UnityTest]
-        public IEnumerator PerformWalkingTest()
+        public IEnumerator PerformPathfinderActionTest()
         {
             // Arrange
             SimpleTestBeliefSet beliefSet = new();
@@ -69,7 +69,7 @@ namespace Tests.AplibTests
         [SetUp]
         public void SetUp()
         {
-            Debug.Log("Starting test WalkingTest");
+            Debug.Log("Starting test PathfinderActionTest");
             SceneManager.LoadScene("SimpleTestScene");
         }
     }

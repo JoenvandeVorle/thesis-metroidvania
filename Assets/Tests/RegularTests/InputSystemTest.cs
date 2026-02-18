@@ -6,7 +6,7 @@ using UnityEngine.TestTools;
 using UnityEngine.InputSystem;
 using Metroidvania.InputSystem;
 
-namespace Tests
+namespace Tests.Input
 {
     /// <summary>
     /// Using this test, we can verify that input system does not work as intended 
@@ -18,7 +18,13 @@ namespace Tests
         {
             base.Setup();
             Debug.Log("Starting test InputSystemDoesNotWorkTest");
-            SceneManager.LoadScene("SimpleTestScene");
+            SceneManager.LoadScene("InputSystemTestScene");
+        }
+
+        public override void TearDown()
+        {
+            Debug.Log("Finished test InputSystemDoesNotWorkTest");
+            base.TearDown();
         }
 
         [UnityTest]
@@ -29,11 +35,13 @@ namespace Tests
 
             var keyboard = InputSystem.AddDevice<Keyboard>();
             
-            InputReader.instance.Initialize();
-            InputReader.instance.EnableGameplayInput();
+            // TOOD:: fix this instancing shit
+            InputReader InputReader = TestInputReader.instance;
+            // InputReader.Initialize();
+            InputReader.EnableGameplayInput();
 
             bool jumpTriggered = false;
-            InputReader.instance.JumpEvent += () => 
+            InputReader.JumpEvent += () => 
             {
                 Debug.Log("JumpEvent callback triggered!");
                 jumpTriggered = true;
@@ -46,8 +54,16 @@ namespace Tests
             InputSystem.Update();
             yield return null;
 
+            // wait for 2 seconds
+            float timer = 0f;
+            while (timer < 2f)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
             // If it worked, this would be true
-            Assert.IsFalse(jumpTriggered, "Jump event was not triggered by Z key press");
+            Assert.IsTrue(jumpTriggered, "Jump event was not triggered by Z key press");
         }
     }
 }

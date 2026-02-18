@@ -96,5 +96,11 @@ namespace Tests.AplibTests
             Debug.Log("Starting test TestingTest");
             SceneManager.LoadScene("SimpleTestScene");
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Debug.Log("Finished test TestingTest");
+        }
     }
 }
