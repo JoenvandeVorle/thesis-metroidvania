@@ -1,0 +1,26 @@
+{
+    "name": "Metroidvania",
+    "rootNamespace": "Metroidvania",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.Localization",
+        "Unity.ResourceManager",
+        "Unity.Addressables",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Cinemachine",
+        "Unity.TextMeshPro",
+        "Unity.Burst"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "DOTween.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
