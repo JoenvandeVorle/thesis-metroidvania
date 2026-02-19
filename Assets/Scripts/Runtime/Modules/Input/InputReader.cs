@@ -18,6 +18,8 @@ namespace Metroidvania.InputSystem
 
         public event Action AttackEvent;
 
+        public event Action CrouchEvent;
+
         public event Action DashEvent;
 
         public event Action PauseEvent;
@@ -147,7 +149,7 @@ namespace Metroidvania.InputSystem
 
         private void CallAttack(InputAction.CallbackContext context) => AttackEvent?.Invoke();
 
-        private void CallCrouch(InputAction.CallbackContext context) => _ = context; // Event not implemented (yet)
+        private void CallCrouch(InputAction.CallbackContext context) => CrouchEvent?.Invoke();
 
         private void CallDash(InputAction.CallbackContext context) => DashEvent?.Invoke();
 
@@ -179,6 +181,9 @@ namespace Metroidvania.InputSystem
 
         public TestableInputAction TestableJumpAction => GetTestableInputAction(inputActions.Gameplay.Jump);
         public TestableInputAction TestableAttackAction => GetTestableInputAction(inputActions.Gameplay.Attack);
+        public TestableInputAction TestableCrouchAction => GetTestableInputAction(inputActions.Gameplay.Crouch);
+        public TestableInputAction TestableDashAction => GetTestableInputAction(inputActions.Gameplay.Dash);
+        public TestableInputAction TestableMoveAction => GetTestableInputAction(inputActions.Gameplay.Move);
 
         private Dictionary<InputAction, TestableInputAction> testableInputActions = new ();
 
@@ -197,7 +202,16 @@ namespace Metroidvania.InputSystem
         }
 
         public void SimulateAttack()
-            => CallAttack(default);
+        {
+            TestableAttackAction.HoldFor(0.1f);
+            CallAttack(default);
+        }
+
+        public void SimulateCrouch(float holdDuration)
+        {
+            TestableCrouchAction.HoldFor(holdDuration);
+            CallCrouch(default);
+        }
 
         public void SimulateDash()
             => CallDash(default);

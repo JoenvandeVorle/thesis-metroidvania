@@ -31,6 +31,15 @@ public class InputGenerator : Singleton<InputGenerator>
         }
         InputReader.instance.SimulateAttack();
     }
+    public void PressCrouch(float holdTime = DEFAULT_HOLDTIME)
+    {
+        if (PrintDebugLogs)
+        {
+            Debug.Log("Generating Crouch Input");
+            InputReader.instance.CrouchEvent += () => Debug.Log("Crouch triggered");
+        }
+        InputReader.instance.SimulateCrouch(holdTime);
+    }
 
     // Implementation using Reflection
 

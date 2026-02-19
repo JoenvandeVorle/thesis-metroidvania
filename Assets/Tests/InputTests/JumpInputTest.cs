@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using Metroidvania.InputSystem;
-using UnityEngine.InputSystem;
 
 namespace Tests.Input
 {
@@ -13,6 +12,13 @@ namespace Tests.Input
     /// </summary>
     public class JumpingTest
     {
+        [SetUp]
+        public void SetUp()
+        {
+            Debug.Log("Starting test JumpingTest");
+            SceneManager.LoadScene("SimpleTestScene");
+        }
+
         [UnityTest]
         public IEnumerator PerformJumpingTest()
         {
@@ -42,13 +48,6 @@ namespace Tests.Input
             // Assert
             Assert.IsTrue(jumpTriggered, "Jump event was not triggered" );
             yield return null;
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            Debug.Log("Starting test JumpingTest");
-            SceneManager.LoadScene("SimpleTestScene");
         }
     }
 }
