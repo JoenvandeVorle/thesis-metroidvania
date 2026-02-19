@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Metroidvania.Characters.SafePoints
 {
-    public class CharacterSafePointsArea : Singleton<CharacterSafePointsArea>
+    public class CharacterSafePointsArea : MonoSingleton<CharacterSafePointsArea>
     {
         [SerializeField] private SceneChannel m_scene;
         public string sceneGUID => m_scene.channelReference.AssetGUID;

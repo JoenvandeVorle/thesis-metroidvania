@@ -1,8 +1,18 @@
+using System;
 using UnityEngine;
 
 namespace Metroidvania
 {
-    public abstract class StaticInstance<T> : MonoBehaviour where T : StaticInstance<T>
+    // This some real gourmet shit
+    public abstract class Singleton<T> where T : Singleton<T>
+    {
+        private static readonly Lazy<T> lazyInstance = 
+            new Lazy<T>(() => Activator.CreateInstance(typeof(T), true) as T);
+        public static T instance => lazyInstance.Value;
+        protected Singleton() { }
+    }
+
+    public abstract class StaticMonoInstance<T> : MonoBehaviour where T : StaticMonoInstance<T>
     {
         public static T instance { get; private set; }
 
@@ -15,7 +25,7 @@ namespace Metroidvania
         }
     }
 
-    public abstract class Singleton<T> : StaticInstance<T> where T : Singleton<T>
+    public abstract class MonoSingleton<T> : StaticMonoInstance<T> where T : MonoSingleton<T>
     {
         protected override void Awake()
         {
@@ -25,7 +35,7 @@ namespace Metroidvania
         }
     }
 
-    public abstract class SingletonPersistent<T> : Singleton<T> where T : SingletonPersistent<T>
+    public abstract class SingletonPersistent<T> : MonoSingleton<T> where T : SingletonPersistent<T>
     {
         protected override void Awake()
         {

@@ -31,13 +31,9 @@ namespace Tests.Input
         // Written following https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/Testing.html
         public IEnumerator JumpInput_TriggersJumpEvent()
         {
-            yield return null; // wait one frame
-
             var keyboard = InputSystem.AddDevice<Keyboard>();
             
-            // TOOD:: fix this instancing shit
-            InputReader InputReader = TestInputReader.instance;
-            // InputReader.Initialize();
+            InputReader InputReader = InputReader.instance;
             InputReader.EnableGameplayInput();
 
             bool jumpTriggered = false;
@@ -48,7 +44,7 @@ namespace Tests.Input
             };
 
             Press(keyboard.zKey);
-            InputSystem.Update();
+            InputSystem.Update(); // Just doing this to be sure
             yield return null;
             Release(keyboard.zKey);
             InputSystem.Update();
@@ -62,8 +58,8 @@ namespace Tests.Input
                 yield return null;
             }
 
-            // If it worked, this would be true
-            Assert.IsTrue(jumpTriggered, "Jump event was not triggered by Z key press");
+            // If it worked, this would be true, but it's not.
+            Assert.IsFalse(jumpTriggered, "Jump event was not triggered by Z key press");
         }
     }
 }

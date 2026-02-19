@@ -69,10 +69,9 @@ namespace Metroidvania.InputSystem
             return inputActions.Gameplay.Move.ReadValue<float>();
         }
 
-        void InputActions.IGameplayActions.OnMove(InputAction.CallbackContext context)
-        {
-            OnMove(context);
-        }
+        #region Gameplay InputActions Button Processing Callbacks
+
+        void InputActions.IGameplayActions.OnMove(InputAction.CallbackContext context) => OnMove(context);
 
         protected virtual void OnMove(InputAction.CallbackContext context)
         {
@@ -95,17 +94,7 @@ namespace Metroidvania.InputSystem
                 CallAttack(context);
         }
 
-        protected virtual void CallAttack(InputAction.CallbackContext context)
-            => AttackEvent?.Invoke();
-
-        void InputActions.IGameplayActions.OnCrouch(InputAction.CallbackContext context)
-        {
-            CallCrouch(context);
-        }
-
-        protected virtual void CallCrouch(InputAction.CallbackContext context)
-        {
-        }
+        void InputActions.IGameplayActions.OnCrouch(InputAction.CallbackContext context) => CallCrouch(context);
 
         void InputActions.IGameplayActions.OnDash(InputAction.CallbackContext context)
         {
@@ -113,44 +102,28 @@ namespace Metroidvania.InputSystem
                 CallDash(context);
         }
 
-        protected virtual void CallDash(InputAction.CallbackContext context)
-            => DashEvent?.Invoke();
-
         void InputActions.IGameplayActions.OnJump(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed)
+            {
+                Debug.Log($"Context: {context}");
                 CallJump(context);
+            }
         }
-
-        protected virtual void CallJump(InputAction.CallbackContext context) 
-            => JumpEvent?.Invoke();
-        
 
         void InputActions.IGameplayActions.OnPause(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed)
                 CallPause(context);
-        }
+        } 
 
-        protected virtual void CallPause(InputAction.CallbackContext context)
-            => PauseEvent?.Invoke();
+        #endregion
 
+        #region Menu InputActions Button Processing Callbacks
 
-        void InputActions.IMenusActions.OnNavigate(InputAction.CallbackContext context)
-        {
-            CallNavigate(context);
-        }
+        void InputActions.IMenusActions.OnNavigate(InputAction.CallbackContext context) => CallNavigate(context);
 
-        protected virtual void CallNavigate(InputAction.CallbackContext context)
-            => _ = context;
-
-        void InputActions.IMenusActions.OnSubmit(InputAction.CallbackContext context)
-        {
-            CallSubmit(context);
-        }
-
-        protected virtual void CallSubmit(InputAction.CallbackContext context)
-            => _ = context;
+        void InputActions.IMenusActions.OnSubmit(InputAction.CallbackContext context) => CallSubmit(context);
 
         void InputActions.IMenusActions.OnCancel(InputAction.CallbackContext context)
         {
@@ -158,47 +131,52 @@ namespace Metroidvania.InputSystem
                 CallCancel(context);
         }
 
-        protected virtual void CallCancel(InputAction.CallbackContext context)
-            => MenuCloseEvent?.Invoke();
+        void InputActions.IMenusActions.OnClick(InputAction.CallbackContext context) => CallClick(context);
 
-        void InputActions.IMenusActions.OnClick(InputAction.CallbackContext context)
-        {
-            CallClick(context);
-        }
+        void InputActions.IMenusActions.OnPoint(InputAction.CallbackContext context) => CallPoint(context);
 
-        protected virtual void CallClick(InputAction.CallbackContext context)
-            => _ = context;
+        void InputActions.IMenusActions.OnRightClick(InputAction.CallbackContext context) => CallRightClick(context);
 
-        void InputActions.IMenusActions.OnPoint(InputAction.CallbackContext context)
-        {
-            CallPoint(context);
-        }
+        void InputActions.IMenusActions.OnScrollWheel(InputAction.CallbackContext context) => CallScrollWheel(context);
 
-        protected virtual void CallPoint(InputAction.CallbackContext context)
-            => _ = context;
+        void InputActions.IMenusActions.OnMiddleClick(InputAction.CallbackContext context) => CallMiddleClick(context);
 
-        void InputActions.IMenusActions.OnRightClick(InputAction.CallbackContext context)
-        {
-            CallRightClick(context);
-        }
+        #endregion
 
-        protected virtual void CallRightClick(InputAction.CallbackContext context)
-            => _ = context;
+        #region InputAction Event Invoking Callbacks
+        // We separate these from the actual InputAction callbacks so that these can be called in Tests and possible elsewhere
 
-        void InputActions.IMenusActions.OnScrollWheel(InputAction.CallbackContext context)
-        {
-            CallScrollWheel(context);
-        }
+        private void CallAttack(InputAction.CallbackContext context) => AttackEvent?.Invoke();
 
-        protected virtual void CallScrollWheel(InputAction.CallbackContext context)
-            => _ = context;
+        private void CallCrouch(InputAction.CallbackContext context) => _ = context; // Event not implemented (yet)
 
-        void InputActions.IMenusActions.OnMiddleClick(InputAction.CallbackContext context)
-        {
-            CallMiddleClick(context);
-        }
+        private void CallDash(InputAction.CallbackContext context) => DashEvent?.Invoke();
 
-        protected virtual void CallMiddleClick(InputAction.CallbackContext context)
-            => _ = context;
+        private void CallJump(InputAction.CallbackContext context) => JumpEvent?.Invoke();
+
+        private void CallPause(InputAction.CallbackContext context) => PauseEvent?.Invoke();
+
+        private void CallNavigate(InputAction.CallbackContext context) => _ = context;
+        private void CallSubmit(InputAction.CallbackContext context) => _ = context;
+        private void CallCancel(InputAction.CallbackContext context) => MenuCloseEvent?.Invoke();
+        private void CallClick(InputAction.CallbackContext context) => _ = context;
+        private void CallPoint(InputAction.CallbackContext context) => _ = context;
+        private void CallRightClick(InputAction.CallbackContext context) => _ = context;
+        private void CallScrollWheel(InputAction.CallbackContext context) => _ = context;
+        private void CallMiddleClick(InputAction.CallbackContext context) => _ = context;
+
+        #endregion
+
+#if UNITY_EDITOR
+        public void SimulateJump()
+            => CallJump(default);
+
+        public void SimulateAttack()
+            => CallAttack(default);
+
+        public void SimulateDash()
+            => CallDash(default);
+
+#endif
     }
 }

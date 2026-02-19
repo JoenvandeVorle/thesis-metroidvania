@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Metroidvania
 {
-    public class CharacterStatusBar : Singleton<CharacterStatusBar>
+    public class CharacterStatusBar : MonoSingleton<CharacterStatusBar>
     {
         [SerializeField] private SliderValueAnimator m_lifeSlider;
 

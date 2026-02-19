@@ -1,7 +1,7 @@
 ﻿<Solution>
   <Project Path="Metroidvania.csproj" />
+  <Project Path="Tests.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="DOTween.Modules.csproj" />
-  <Project Path="Tests.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

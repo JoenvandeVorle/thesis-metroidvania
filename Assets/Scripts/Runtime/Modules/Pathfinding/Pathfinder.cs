@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Metroidvania.Pathfinding
 {
-    public sealed class Pathfinder : Singleton<Pathfinder>
+    public sealed class Pathfinder : MonoSingleton<Pathfinder>
     {
         [SerializeField] private GraphRenderer m_GraphRenderer;
         public GraphRenderer graphRenderer

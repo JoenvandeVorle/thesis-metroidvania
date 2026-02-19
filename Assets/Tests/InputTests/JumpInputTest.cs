@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 namespace Tests.Input
 {
     /// <summary>
-    /// Simple test to verify that jumping is working via the custom TestInputGenerator.
+    /// Simple test to verify that jumping is working via the custom InputGenerator.
     /// </summary>
     public class JumpingTest
     {
@@ -17,27 +17,32 @@ namespace Tests.Input
         public IEnumerator PerformJumpingTest()
         {
             // Arrange
-            InputAction jumpAction = InputSystem.actions.FindAction("Gameplay/Jump");
             bool jumpTriggered = false;
 
-            InputReader inputReader = InputReader.instance;
-            inputReader.JumpEvent += () => 
+            InputGenerator inputGenerator = InputGenerator.instance;
+            inputGenerator.PrintDebugLogs = true;
+            InputReader.instance.JumpEvent += () => 
             {
-                Debug.Log("JumpEvent callback triggered!");
                 jumpTriggered = true;
             };
 
             // Act
             while (!jumpTriggered)
             {
-                // TestInputGenerator.PressJump();
+                inputGenerator.DoJump();
                 yield return null; // wait one frame
-                // TestInputGenerator.ReleaseJump();
-                // yield return null; // wait one frame
+            }
+
+            // Wait two seconds for the jump animation to play
+            float timer = 0f;
+            while (timer < 2f)
+            {
+                timer += Time.deltaTime;
+                yield return null;
             }
 
             // Assert
-            Assert.IsTrue(jumpTriggered, "Jump event was not triggered by Z key press");
+            Assert.IsTrue(jumpTriggered, "Jump event was not triggered" );
             yield return null;
         }
 

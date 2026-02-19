@@ -248,6 +248,7 @@ namespace Metroidvania.Characters.Knight
 
         private void HandleJump()
         {
+            Debug.Log("Jump input received in KnightCharacterController");
             stateMachine.currentState.HandleJump();
         }
 
