@@ -1,5 +1,5 @@
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 namespace Metroidvania.InputSystem
@@ -106,7 +106,6 @@ namespace Metroidvania.InputSystem
         {
             if (context.phase == InputActionPhase.Performed)
             {
-                Debug.Log($"Context: {context}");
                 CallJump(context);
             }
         }
@@ -168,8 +167,34 @@ namespace Metroidvania.InputSystem
         #endregion
 
 #if UNITY_EDITOR
-        public void SimulateJump()
-            => CallJump(default);
+
+        public TestableInputAction GetTestableInputAction(InputAction inputAction)
+        {
+            if (!testableInputActions.ContainsKey(inputAction))
+            {
+                testableInputActions[inputAction] = new TestableInputAction(inputAction);
+            }
+            return testableInputActions[inputAction];
+        }
+
+        public TestableInputAction TestableJumpAction => GetTestableInputAction(inputActions.Gameplay.Jump);
+        public TestableInputAction TestableAttackAction => GetTestableInputAction(inputActions.Gameplay.Attack);
+
+        private Dictionary<InputAction, TestableInputAction> testableInputActions = new ();
+
+        public void Update()
+        {
+            foreach (var testableInputAction in testableInputActions.Values)
+            {
+                testableInputAction.Update();
+            }
+        }
+
+        public void SimulateJump(float holdDuration)
+        {
+            TestableJumpAction.HoldFor(holdDuration);
+            CallJump(default);
+        }
 
         public void SimulateAttack()
             => CallAttack(default);

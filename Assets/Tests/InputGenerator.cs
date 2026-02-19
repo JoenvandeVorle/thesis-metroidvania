@@ -8,19 +8,21 @@ using Metroidvania;
 /// </summary>
 public class InputGenerator : Singleton<InputGenerator>
 {
+    public const float DEFAULT_HOLDTIME = 0.3f;
+
     public bool PrintDebugLogs = false;
 
-    public void DoJump()
+    public void PressJump(float holdTime = DEFAULT_HOLDTIME)
     {
         if (PrintDebugLogs)
         {
             Debug.Log("Generating Jump Input");
             InputReader.instance.JumpEvent += () => Debug.Log("Jump triggered");
         }
-        InputReader.instance.SimulateJump();
+        InputReader.instance.SimulateJump(holdTime);
     }
 
-    public void DoAttack()
+    public void PressAttack()
     {
         if (PrintDebugLogs)
         {

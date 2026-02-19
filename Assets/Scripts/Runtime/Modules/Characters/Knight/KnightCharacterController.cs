@@ -76,10 +76,17 @@ namespace Metroidvania.Characters.Knight
 
         public CharacterAttribute<float> lifeAttribute { get; private set; }
 
+#if UNITY_EDITOR
+        public TestableInputAction crouchAction => InputReader.instance.GetTestableInputAction(InputReader.instance.inputActions.Gameplay.Crouch);
+        public TestableInputAction dashAction => InputReader.instance.GetTestableInputAction(InputReader.instance.inputActions.Gameplay.Dash);
+        public TestableInputAction attackAction => InputReader.instance.GetTestableInputAction(InputReader.instance.inputActions.Gameplay.Attack);
+        public TestableInputAction jumpAction => InputReader.instance.GetTestableInputAction(InputReader.instance.inputActions.Gameplay.Jump);
+#else
         public InputAction crouchAction => InputReader.instance.inputActions.Gameplay.Crouch;
         public InputAction dashAction => InputReader.instance.inputActions.Gameplay.Dash;
         public InputAction attackAction => InputReader.instance.inputActions.Gameplay.Attack;
         public InputAction jumpAction => InputReader.instance.inputActions.Gameplay.Jump;
+#endif
 
         private void Awake()
         {
@@ -121,6 +128,9 @@ namespace Metroidvania.Characters.Knight
         private void Update()
         {
             stateMachine.Update();
+            #if UNITY_EDITOR
+            InputReader.instance.Update();
+            #endif
         }
 
         private void FixedUpdate()
@@ -248,7 +258,6 @@ namespace Metroidvania.Characters.Knight
 
         private void HandleJump()
         {
-            Debug.Log("Jump input received in KnightCharacterController");
             stateMachine.currentState.HandleJump();
         }
 

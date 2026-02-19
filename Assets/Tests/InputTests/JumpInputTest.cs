@@ -26,20 +26,18 @@ namespace Tests.Input
                 jumpTriggered = true;
             };
 
-            // Act
-            while (!jumpTriggered)
-            {
-                inputGenerator.DoJump();
-                yield return null; // wait one frame
-            }
+            // Wait for one second to ensure stuff is initialized
+            yield return TestWait.ForSeconds(1f);
 
-            // Wait two seconds for the jump animation to play
-            float timer = 0f;
-            while (timer < 2f)
-            {
-                timer += Time.deltaTime;
-                yield return null;
-            }
+            // Act
+            inputGenerator.PressJump(0.05f);
+            yield return TestWait.ForSeconds(1f); // wait for animation
+
+            inputGenerator.PressJump(0.2f);
+            yield return TestWait.ForSeconds(1f);
+
+            inputGenerator.PressJump(2f);
+            yield return TestWait.ForSeconds(2f);
 
             // Assert
             Assert.IsTrue(jumpTriggered, "Jump event was not triggered" );

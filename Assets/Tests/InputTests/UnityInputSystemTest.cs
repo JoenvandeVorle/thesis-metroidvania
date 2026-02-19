@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.InputSystem;
 using Metroidvania.InputSystem;
+using System;
 
 namespace Tests.Input
 {
@@ -34,6 +35,7 @@ namespace Tests.Input
             var keyboard = InputSystem.AddDevice<Keyboard>();
             
             InputReader InputReader = InputReader.instance;
+            InputAction jumpEvent = InputReader.inputActions.Gameplay.Jump;
             InputReader.EnableGameplayInput();
 
             bool jumpTriggered = false;
@@ -45,18 +47,16 @@ namespace Tests.Input
 
             Press(keyboard.zKey);
             InputSystem.Update(); // Just doing this to be sure
-            yield return null;
+            
+            // Wait for one second
+            yield return TestWait.ForSeconds(1f);
+
+            // Check if character is jumping
+            Debug.Log($"Jump Action State: {jumpEvent.phase}, IsPressed: {jumpEvent.IsPressed()}");
+
             Release(keyboard.zKey);
             InputSystem.Update();
             yield return null;
-
-            // wait for 2 seconds
-            float timer = 0f;
-            while (timer < 2f)
-            {
-                timer += Time.deltaTime;
-                yield return null;
-            }
 
             // If it worked, this would be true, but it's not.
             Assert.IsFalse(jumpTriggered, "Jump event was not triggered by Z key press");
