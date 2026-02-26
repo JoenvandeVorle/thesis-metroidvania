@@ -21,18 +21,34 @@ namespace MetroidvaniaEditor.Serialization
         private const string k_FileExtension = "." + DataHandler.FileExtension;
 
         [OnOpenAsset]
-        private static bool OnOpenAsset(int instanceId, int line)
+        private static bool OnOpenAsset(EntityId entityId, int line)
         {
-            string path = AssetDatabase.GetAssetPath(instanceId);
+            string path = AssetDatabase.GetAssetPath(entityId);
             if (!path.EndsWith(k_FileExtension, StringComparison.InvariantCultureIgnoreCase))
                 return false;
 
-            UnityEngine.Object obj = EditorUtility.InstanceIDToObject(instanceId);
+            // UnityEngine.Object obj = EditorUtility.InstanceIDToObject(instanceId);
+            UnityEngine.Object obj = EditorUtility.EntityIdToObject(entityId);
             if (obj is not GameDataAsset asset)
                 return false;
             OpenEditor(asset);
             return true;
         }
+
+        // InstanceId has been deprecated in 6.5
+        // [OnOpenAsset]
+        // private static bool OnOpenAsset(int instanceId, int line)
+        // {
+        //     string path = AssetDatabase.GetAssetPath(instanceId);
+        //     if (!path.EndsWith(k_FileExtension, StringComparison.InvariantCultureIgnoreCase))
+        //         return false;
+
+        //     UnityEngine.Object obj = EditorUtility.InstanceIDToObject(instanceId);
+        //     if (obj is not GameDataAsset asset)
+        //         return false;
+        //     OpenEditor(asset);
+        //     return true;
+        // }
 
         public static void OpenEditor(GameDataAsset asset)
         {
