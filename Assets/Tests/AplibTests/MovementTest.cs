@@ -1,5 +1,8 @@
 using Aplib.Core;
+using Aplib.Core.Belief.Beliefs;
+using Aplib.Core.Belief.BeliefSets;
 using Aplib.Core.Desire.Goals;
+using Aplib.Core.Intent.Actions;
 using Aplib.Core.Intent.Tactics;
 using NUnit.Framework;
 using System.Collections;
@@ -10,36 +13,51 @@ using Aplib.Core.Desire.GoalStructures;
 using Aplib.Core.Desire.DesireSets;
 using Aplib.Core.Agents;
 using Aplib.Integrations.Unity;
+using JetBrains.Annotations;
 
 namespace Tests.AplibTests
 {
-    /// <summary>
-    /// Simple test to verify that the TransformPathfinderAction2D is working. 
-    /// </summary>
-    public class PathfinderActionTest
+    public class MovementTest
     {
         [UnityTest]
-        public IEnumerator PerformPathfinderActionTest()
+        public IEnumerator PerformMovementTest()
         {
             // Arrange
+            InputGenerator inputGenerator = InputGenerator.instance;
             SimpleTestBeliefSet beliefSet = new();
 
-            // This action cannot move upwards! It is for walking, not jumping.
-            TransformPathfinderAction2D<SimpleTestBeliefSet> move = new(
+            // Create an intent for the agent that moves the agent towards the target position.
+            Action<SimpleTestBeliefSet> move = new(
                 beliefSet =>
                 {
                     GameObject player = beliefSet.Player;
-                    return player.GetComponent<Rigidbody2D>();
-                },
-                beliefSet => beliefSet.TargetPosition,
-                1f
+                    Vector2 playerPosition = player.transform.position;
+                    Vector2 targetPosition = beliefSet.TargetPosition;
+                    Vector2 direction = (targetPosition - playerPosition).normalized;
+                    inputGenerator.MoveTowards(direction);
+                }
+            );
+
+            Action<SimpleTestBeliefSet> stopMovement = new(
+                beliefSet => inputGenerator.ReleaseMovement()
             );
     
-            PrimitiveTactic<SimpleTestBeliefSet> moveTowardsTargetTactic = new(move);
+            PrimitiveTactic<SimpleTestBeliefSet> startMovementTactic = new(move);
+
+            bool hasReachedTargetGuard(SimpleTestBeliefSet beliefSet)
+            {
+                GameObject player = beliefSet.Player;
+                Vector2 playerPosition = player.transform.position;
+                Vector2 targetPosition = beliefSet.TargetPosition;
+                return Vector2.Distance(playerPosition, targetPosition) < 1f;
+            }
+
+            PrimitiveTactic<SimpleTestBeliefSet> stopMovementTactic = new(stopMovement, hasReachedTargetGuard);
+            FirstOfTactic<SimpleTestBeliefSet> moveTactic = new(startMovementTactic, stopMovementTactic);
 
             // Create a desire for the agent to reach the target position.
             Goal<SimpleTestBeliefSet> reachTargetGoal = new(
-                moveTowardsTargetTactic,
+                moveTactic,
                 beliefSet =>
                 {
                     GameObject player = beliefSet.Player;
@@ -66,7 +84,7 @@ namespace Tests.AplibTests
         [SetUp]
         public void SetUp()
         {
-            Debug.Log("Starting test PathfinderActionTest");
+            Debug.Log("Starting test MovementTest");
             SceneManager.LoadScene("SimpleTestScene");
         }
     }

@@ -15,8 +15,11 @@ EditorBuildSettings:
     path: Assets/Tests/TestScenes/SimpleTestScene.unity
     guid: de8c8f8093c8eee4db02fef9d1d3595b
   - enabled: 1
-    path: Assets/Tests/TestScenes/InputSysteMTestScene.unity
+    path: Assets/Tests/TestScenes/InputSystemTestScene.unity
     guid: 85549046d62bc4849ace9724e32024a0
+  - enabled: 1
+    path: Assets/Tests/TestScenes/WallJumpLeft.unity
+    guid: df81862fac95a8647881efaa04b0cd24
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 189c569713a33b1489299ccee6e81330, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

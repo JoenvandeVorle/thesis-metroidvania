@@ -32,12 +32,24 @@ public class InputGenerator : Singleton<InputGenerator>
         InputReader.instance.DashEvent -= () => Debug.Log("Dash triggered");
     }
 
+    public void MoveTowards(Vector2 direction)
+    {
+        bool toLeft = direction.x < 0;
+        if (doPrintDebug)
+            Debug.Log($"Moving in direction {direction}");
+        if (toLeft)
+            InputReader.instance.SimulateLeftHolding();
+        else
+            InputReader.instance.SimulateRightHolding();
+    }
+
     public void HoldLeft()
     {
         if (doPrintDebug)
             Debug.Log("Pressing left arrow");
         InputReader.instance.SimulateLeftHolding();
     }
+
     public void HoldRight()
     {
         if (doPrintDebug)

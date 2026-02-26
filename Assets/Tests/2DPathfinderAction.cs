@@ -1,7 +1,6 @@
 using Aplib.Core;
 using Aplib.Core.Belief.BeliefSets;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Tests.AplibTests
 {
