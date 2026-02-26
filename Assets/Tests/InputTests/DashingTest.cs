@@ -7,47 +7,42 @@ using Metroidvania.InputSystem;
 
 namespace Tests.Input
 {
-    /// <summary>
-    /// Simple test to verify that jumping is working via the custom InputGenerator.
-    /// </summary>
-    public class JumpingTest
+    public class DashingTest
     {
         [SetUp]
         public void SetUp()
         {
-            Debug.Log("Starting test JumpingTest");
+            Debug.Log("Starting test DashingTest");
             SceneManager.LoadScene("SimpleTestScene");
         }
 
         [UnityTest]
-        public IEnumerator PerformJumpingTest()
+        public IEnumerator PerformDashingTest()
         {
             // Arrange
-            bool jumpTriggered = false;
+            bool dashTriggered = false;
 
             InputGenerator inputGenerator = InputGenerator.instance;
             inputGenerator.EnableDebugPrints();
-            InputReader.instance.JumpEvent += () => 
-            {
-                jumpTriggered = true;
-            };
+            InputReader.instance.DashEvent += () => dashTriggered = true;
 
             // Wait for one second to ensure stuff is initialized
             yield return TestWait.ForSeconds(1f);
 
             // Act
-            inputGenerator.PressJump(0.05f);
-            yield return TestWait.ForSeconds(1f); // wait for animation
+            inputGenerator.PressDash();
+            yield return TestWait.ForSeconds(2f);
 
-            inputGenerator.PressJump(0.2f);
-            yield return TestWait.ForSeconds(1f);
+            inputGenerator.PressDash();
+            yield return TestWait.ForSeconds(2f);
 
-            inputGenerator.PressJump(2f);
+            inputGenerator.PressDash();
             yield return TestWait.ForSeconds(2f);
 
             // Assert
-            Assert.IsTrue(jumpTriggered, "Jump event was not triggered" );
+            Assert.IsTrue(dashTriggered, "Dash was not triggered");
             yield return null;
         }
     }
 }
+

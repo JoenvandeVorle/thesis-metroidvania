@@ -68,7 +68,7 @@ namespace Metroidvania
         public override void Heuristic(in ActionBuffers actionsOut)
         {
             var continuousActionsOut = actionsOut.ContinuousActions;
-            continuousActionsOut[0] = InputReader.instance.MoveValue();
+            continuousActionsOut[0] = InputReader.instance.inputActions.Gameplay.Move.ReadValue<int>();
         }
     }
 }

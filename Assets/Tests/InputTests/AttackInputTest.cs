@@ -26,7 +26,7 @@ namespace Tests.Input
             bool attackTriggered = false;
 
             InputGenerator inputGenerator = InputGenerator.instance;
-            inputGenerator.PrintDebugLogs = true;
+            inputGenerator.EnableDebugPrints();
             InputReader.instance.AttackEvent += () => 
             {
                 attackTriggered = true;

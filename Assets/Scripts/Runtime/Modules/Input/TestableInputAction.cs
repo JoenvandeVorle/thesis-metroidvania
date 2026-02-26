@@ -53,13 +53,13 @@ namespace Metroidvania.InputSystem
             SimulatePress();
         }
 
-        private void SimulatePress()
+        public void SimulatePress()
         {
             isSimulatingPress = true;
             wasSimulatedPressPerformedThisFrame = true;
         }
 
-        private void SimulateRelease()
+        public void SimulateRelease()
         {
             isSimulatingPress = false;
         }

@@ -10,35 +10,73 @@ public class InputGenerator : Singleton<InputGenerator>
 {
     public const float DEFAULT_HOLDTIME = 0.3f;
 
-    public bool PrintDebugLogs = false;
+    private bool doPrintDebug = false;
+
+    public void EnableDebugPrints()
+    {
+        doPrintDebug = true;
+        InputReader.instance.MoveEvent += dir => Debug.Log($"Move triggered in direction {dir}");
+        InputReader.instance.JumpEvent += () => Debug.Log("Jump triggered");
+        InputReader.instance.CrouchEvent += () => Debug.Log("Crouch triggered");
+        InputReader.instance.AttackEvent += () => Debug.Log("Attack triggered");
+        InputReader.instance.DashEvent += () => Debug.Log("Dash triggered");
+    }
+
+    public void DisableDebugPrints()
+    {
+        doPrintDebug = false;
+        InputReader.instance.MoveEvent -= dir => Debug.Log($"Move triggered in direction {dir}");
+        InputReader.instance.JumpEvent -= () => Debug.Log("Jump triggered");
+        InputReader.instance.CrouchEvent -= () => Debug.Log("Crouch triggered");
+        InputReader.instance.AttackEvent -= () => Debug.Log("Attack triggered");
+        InputReader.instance.DashEvent -= () => Debug.Log("Dash triggered");
+    }
+
+    public void HoldLeft()
+    {
+        if (doPrintDebug)
+            Debug.Log("Pressing left arrow");
+        InputReader.instance.SimulateLeftHolding();
+    }
+    public void HoldRight()
+    {
+        if (doPrintDebug)
+            Debug.Log("Pressing right arrow");
+        InputReader.instance.SimulateRightHolding();
+    }
+
+    public void ReleaseMovement()
+    {
+        if (doPrintDebug)
+            Debug.Log("Releasing arrows");
+        InputReader.instance.SimulateMovementRelease();
+    }
 
     public void PressJump(float holdTime = DEFAULT_HOLDTIME)
     {
-        if (PrintDebugLogs)
-        {
+        if (doPrintDebug)
             Debug.Log("Generating Jump Input");
-            InputReader.instance.JumpEvent += () => Debug.Log("Jump triggered");
-        }
         InputReader.instance.SimulateJump(holdTime);
     }
 
     public void PressAttack()
     {
-        if (PrintDebugLogs)
-        {
+        if (doPrintDebug)
             Debug.Log("Generating Attack Input");
-            InputReader.instance.AttackEvent += () => Debug.Log("Attack triggered");
-        }
         InputReader.instance.SimulateAttack();
     }
     public void PressCrouch(float holdTime = DEFAULT_HOLDTIME)
     {
-        if (PrintDebugLogs)
-        {
+        if (doPrintDebug)
             Debug.Log("Generating Crouch Input");
-            InputReader.instance.CrouchEvent += () => Debug.Log("Crouch triggered");
-        }
         InputReader.instance.SimulateCrouch(holdTime);
+    }
+
+    public void PressDash()
+    {
+        if (doPrintDebug)
+            Debug.Log("Generating Dash Input");
+        InputReader.instance.SimulateDash();
     }
 
     // Implementation using Reflection

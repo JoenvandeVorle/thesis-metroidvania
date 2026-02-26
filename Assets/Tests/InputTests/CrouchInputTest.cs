@@ -26,7 +26,7 @@ namespace Tests.Input
             bool crouchTriggered = false;
 
             InputGenerator inputGenerator = InputGenerator.instance;
-            inputGenerator.PrintDebugLogs = true;
+            inputGenerator.EnableDebugPrints();
             InputReader.instance.CrouchEvent += () => 
             {
                 crouchTriggered = true;

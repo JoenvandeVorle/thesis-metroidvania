@@ -66,29 +66,9 @@ namespace Metroidvania.InputSystem
             inputActions.Gameplay.Disable();
         }
 
-        public float MoveValue()
-        {
-            return inputActions.Gameplay.Move.ReadValue<float>();
-        }
-
         #region Gameplay InputActions Button Processing Callbacks
 
-        void InputActions.IGameplayActions.OnMove(InputAction.CallbackContext context) => OnMove(context);
-
-        protected virtual void OnMove(InputAction.CallbackContext context)
-        {
-            switch (context.phase)
-            {
-                case InputActionPhase.Performed:
-                    float value = context.ReadValue<float>();
-                    int valueNormalized = value == 0 ? 0 : MathF.Sign(value);
-                    MoveEvent?.Invoke(valueNormalized);
-                    break;
-                case InputActionPhase.Canceled:
-                    MoveEvent?.Invoke(0);
-                    break;
-            }
-        }
+        void InputActions.IGameplayActions.OnMove(InputAction.CallbackContext context) => CallMove(context);
 
         void InputActions.IGameplayActions.OnAttack(InputAction.CallbackContext context)
         {
@@ -146,6 +126,20 @@ namespace Metroidvania.InputSystem
 
         #region InputAction Event Invoking Callbacks
         // We separate these from the actual InputAction callbacks so that these can be called in Tests and possible elsewhere
+        private void CallMove(InputAction.CallbackContext context)
+        {
+            switch (context.phase)
+            {
+                case InputActionPhase.Performed:
+                    float value = context.ReadValue<float>();
+                    int valueNormalized = value == 0 ? 0 : MathF.Sign(value);
+                    MoveEvent?.Invoke(valueNormalized);
+                    break;
+                case InputActionPhase.Canceled:
+                    MoveEvent?.Invoke(0);
+                    break;
+            }
+        }
 
         private void CallAttack(InputAction.CallbackContext context) => AttackEvent?.Invoke();
 
@@ -195,6 +189,30 @@ namespace Metroidvania.InputSystem
             }
         }
 
+        /// <summary>
+        /// Holds until released by Release()
+        /// </summary>
+        public void SimulateLeftHolding()
+        {
+            TestableMoveAction.SimulatePress();
+            MoveEvent?.Invoke(-1);
+        }
+
+        /// <summary>
+        /// Holds until released by Release()
+        /// </summary>
+        public void SimulateRightHolding()
+        {
+            TestableMoveAction.SimulatePress();
+            MoveEvent?.Invoke(1);
+        }
+
+        public void SimulateMovementRelease()
+        {
+            TestableMoveAction.SimulateRelease();
+            MoveEvent?.Invoke(0);
+        }
+
         public void SimulateJump(float holdDuration)
         {
             TestableJumpAction.HoldFor(holdDuration);
@@ -214,7 +232,10 @@ namespace Metroidvania.InputSystem
         }
 
         public void SimulateDash()
-            => CallDash(default);
+        {
+            TestableDashAction.HoldFor(0.1f);
+            CallDash(default);
+        }
 
 #endif
     }
