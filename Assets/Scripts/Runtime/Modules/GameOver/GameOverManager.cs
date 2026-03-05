@@ -51,7 +51,7 @@ namespace Metroidvania.GameOver
 
         private IEnumerator DOGameOver()
         {
-            InputReader.instance.DisableAllInput();
+            InputReader.instance.DisableAllInputActions();
             _gameOverScreen.SetActive(true);
             yield return FadeScreen.instance.DOFadeIn(m_fadeTime).WaitForCompletion();
             yield return Helpers.GetYieldSeconds(m_gameOverScreenTime);

@@ -16,7 +16,7 @@ namespace Metroidvania
         {
             if (gameIsPaused)
                 return;
-            InputReader.instance.EnableMenuInput();
+            InputReader.instance.EnableMenuInputActions();
             Time.timeScale = 0;
             gameIsPaused = true;
             m_gamePausedChannel?.Raise();
@@ -26,7 +26,7 @@ namespace Metroidvania
         {
             if (!gameIsPaused)
                 return;
-            InputReader.instance.EnableGameplayInput();
+            InputReader.instance.EnableGameplayInputActions();
             Time.timeScale = 1;
             gameIsPaused = false;
             m_gameResumedChannel?.Raise();

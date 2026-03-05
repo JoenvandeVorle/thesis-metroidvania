@@ -13,7 +13,6 @@ using Aplib.Core.Desire.GoalStructures;
 using Aplib.Core.Desire.DesireSets;
 using Aplib.Core.Agents;
 using Aplib.Integrations.Unity;
-using JetBrains.Annotations;
 
 namespace Tests.AplibTests
 {

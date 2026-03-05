@@ -26,6 +26,8 @@ namespace Metroidvania.InputSystem
 
         public event Action MenuCloseEvent;
 
+        public bool InputDisabled {get; set;} = false;
+
         protected void OnEnable()
         {
             if (inputActions == null)
@@ -40,11 +42,11 @@ namespace Metroidvania.InputSystem
 
         protected void OnDisable()
         {
-            DisableAllInput();
+            DisableAllInputActions();
         }
 
         /// <summary>Enable the gameplay input</summary>
-        public void EnableGameplayInput()
+        public void EnableGameplayInputActions()
         {
             inputActions.Menus.Disable();
 
@@ -52,7 +54,7 @@ namespace Metroidvania.InputSystem
         }
 
         /// <summary>Enable menu input</summary>
-        public void EnableMenuInput()
+        public void EnableMenuInputActions()
         {
             inputActions.Gameplay.Disable();
 
@@ -60,7 +62,7 @@ namespace Metroidvania.InputSystem
         }
 
         /// <summary>Disable All inputs</summary>
-        public void DisableAllInput()
+        public void DisableAllInputActions()
         {
             inputActions.Menus.Disable();
             inputActions.Gameplay.Disable();
@@ -68,25 +70,33 @@ namespace Metroidvania.InputSystem
 
         #region Gameplay InputActions Button Processing Callbacks
 
-        void InputActions.IGameplayActions.OnMove(InputAction.CallbackContext context) => CallMove(context);
+        void InputActions.IGameplayActions.OnMove(InputAction.CallbackContext context)
+        {
+            if (!InputDisabled)
+                CallMove(context);
+        }
 
         void InputActions.IGameplayActions.OnAttack(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Performed)
+            if (context.phase == InputActionPhase.Performed && !InputDisabled)
                 CallAttack(context);
         }
 
-        void InputActions.IGameplayActions.OnCrouch(InputAction.CallbackContext context) => CallCrouch(context);
+        void InputActions.IGameplayActions.OnCrouch(InputAction.CallbackContext context) 
+        {
+            if (!InputDisabled)
+                CallCrouch(context);
+        }
 
         void InputActions.IGameplayActions.OnDash(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Performed)
+            if (context.phase == InputActionPhase.Performed && !InputDisabled)
                 CallDash(context);
         }
 
         void InputActions.IGameplayActions.OnJump(InputAction.CallbackContext context)
         {
-            if (context.phase == InputActionPhase.Performed)
+            if (context.phase == InputActionPhase.Performed && !InputDisabled)
             {
                 CallJump(context);
             }
@@ -181,6 +191,9 @@ namespace Metroidvania.InputSystem
 
         private Dictionary<InputAction, TestableInputAction> testableInputActions = new ();
 
+        private bool holdingJump = false;
+        private bool holdingMovement = false;
+
         public void Update()
         {
             foreach (var testableInputAction in testableInputActions.Values)
@@ -194,8 +207,10 @@ namespace Metroidvania.InputSystem
         /// </summary>
         public void SimulateLeftHolding()
         {
-            TestableMoveAction.SimulatePress();
+            if (!holdingMovement)
+                TestableMoveAction.SimulatePress();
             MoveEvent?.Invoke(-1);
+            holdingMovement = true;
         }
 
         /// <summary>
@@ -203,17 +218,36 @@ namespace Metroidvania.InputSystem
         /// </summary>
         public void SimulateRightHolding()
         {
-            TestableMoveAction.SimulatePress();
+            if (!holdingMovement)
+                TestableMoveAction.SimulatePress();
             MoveEvent?.Invoke(1);
+            holdingMovement = true;
         }
 
         public void SimulateMovementRelease()
         {
             TestableMoveAction.SimulateRelease();
             MoveEvent?.Invoke(0);
+            holdingMovement = false;
         }
 
-        public void SimulateJump(float holdDuration)
+        public void SimulateJumpHold()
+        {
+            if (!holdingJump)
+            {
+                TestableJumpAction.SimulatePress();
+                CallJump(default);
+            }
+            holdingJump = true;
+        }
+        
+        public void SimulateJumpRelease()
+        {
+            TestableJumpAction.SimulateRelease();
+            holdingJump = false;
+        }
+
+        public void SimulateJumpPress(float holdDuration)
         {
             TestableJumpAction.HoldFor(holdDuration);
             CallJump(default);

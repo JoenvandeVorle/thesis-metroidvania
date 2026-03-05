@@ -36,7 +36,7 @@ namespace Tests.Input
             
             InputReader InputReader = InputReader.instance;
             InputAction jumpEvent = InputReader.inputActions.Gameplay.Jump;
-            InputReader.EnableGameplayInput();
+            InputReader.EnableGameplayInputActions();
 
             bool jumpTriggered = false;
             InputReader.JumpEvent += () => 

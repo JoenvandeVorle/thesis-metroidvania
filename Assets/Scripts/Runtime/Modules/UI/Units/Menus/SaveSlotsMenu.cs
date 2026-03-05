@@ -43,7 +43,7 @@ namespace Metroidvania.Serialization.Menus
                 GameDebugger.Log($"Started a new game at user {userId}");
 
             SceneLoader.instance.LoadScene(m_sceneLevel0, SceneLoader.SceneTransitionData.UseGameData);
-            InputReader.instance.EnableGameplayInput();
+            InputReader.instance.EnableGameplayInputActions();
         }
 
         private void ContinueGame(GameData data)

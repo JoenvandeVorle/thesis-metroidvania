@@ -7,7 +7,9 @@
         "Unity.InputSystem.TestFramework",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "team-zomsa.aplib-unity"
+        "team-zomsa.aplib-unity",
+        "Unity.ML-Agents",
+        "Unity.ML-Agents.Input"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

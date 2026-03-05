@@ -30,7 +30,7 @@ namespace MetroidvaniaEditor.Settings
             scriptableSingletonsHandle.WaitForCompletion();
             persistentSingletonsHandle.WaitForCompletion();
 
-            InputReader.instance.EnableGameplayInput();
+            InputReader.instance.EnableGameplayInputActions();
         }
     }
 }

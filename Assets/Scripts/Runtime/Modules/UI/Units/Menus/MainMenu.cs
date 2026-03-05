@@ -25,7 +25,7 @@ namespace Metroidvania.UI.Menus
             m_saveSlotsMenu.OnMenuDisable += ActiveMenu;
             m_creditsMenu.OnMenuDisable += ActiveMenu;
             InputReader.instance.MenuCloseEvent += PerformMenuClose;
-            InputReader.instance.EnableMenuInput();
+            InputReader.instance.EnableMenuInputActions();
         }
 
         private void Start()

@@ -14,7 +14,7 @@ namespace Metroidvania.GameOver
 
         private void Start()
         {
-            InputReader.instance.EnableMenuInput();
+            InputReader.instance.EnableMenuInputActions();
             continueButton.onClick.AddListener(Continue);
             leaveButton.onClick.AddListener(Leave);
             Helpers.eventSystem.SetSelectedGameObject(continueButton.gameObject);

@@ -12,6 +12,15 @@ public class InputGenerator : Singleton<InputGenerator>
 
     private bool doPrintDebug = false;
 
+    /// <summary>
+    /// Disable regular gameplay keyboard input, so that only input from this class is processed.
+    /// </summary>
+    /// <param name="disable"></param>
+    public void SetKeyboardDisable(bool disable)
+    {
+        InputReader.instance.InputDisabled = disable;
+    }
+
     public void EnableDebugPrints()
     {
         doPrintDebug = true;
@@ -32,6 +41,10 @@ public class InputGenerator : Singleton<InputGenerator>
         InputReader.instance.DashEvent -= () => Debug.Log("Dash triggered");
     }
 
+    /// <summary>
+    /// Moves left or right depending on the direction.
+    /// </summary>
+    /// <param name="direction"></param>
     public void MoveTowards(Vector2 direction)
     {
         bool toLeft = direction.x < 0;
@@ -64,11 +77,25 @@ public class InputGenerator : Singleton<InputGenerator>
         InputReader.instance.SimulateMovementRelease();
     }
 
+    public void HoldJump()
+    {
+        if (doPrintDebug)
+            Debug.Log("Holding Jump");
+        InputReader.instance.SimulateJumpHold();
+    }
+
+    public void ReleaseJump()
+    {
+        if (doPrintDebug)
+            Debug.Log("Releasing Jump");
+        InputReader.instance.SimulateJumpRelease();
+    }
+
     public void PressJump(float holdTime = DEFAULT_HOLDTIME)
     {
         if (doPrintDebug)
             Debug.Log("Generating Jump Input");
-        InputReader.instance.SimulateJump(holdTime);
+        InputReader.instance.SimulateJumpPress(holdTime);
     }
 
     public void PressAttack()
