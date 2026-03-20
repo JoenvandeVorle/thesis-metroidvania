@@ -10,6 +10,9 @@ using UnityEngine.InputSystem;
 
 namespace Metroidvania.Characters.Knight
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(EntityTarget))]
     public class KnightCharacterController : CharacterBase, ISceneTransistor, IEntityHittable
     {
         public static readonly int IdleAnimHash = Animator.StringToHash("Idle");

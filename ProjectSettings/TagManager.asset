@@ -6,6 +6,9 @@ TagManager:
   tags:
   - MainCanvas
   - Enemy
+  - Spawn
+  - Target
+  - Ground
   layers:
   - Default
   - TransparentFX
