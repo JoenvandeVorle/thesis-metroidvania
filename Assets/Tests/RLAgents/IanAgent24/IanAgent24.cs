@@ -22,7 +22,10 @@ namespace Tests.AplibTests
         [SerializeField] private GameObject optionalPlatforms; // contains optional platforms
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private int observationGridSize = 14;
-        [SerializeField] private int fallHeight = -5;
+        [SerializeField] private float observationGridCellRadius= 0.3f;
+        [SerializeField] private bool drawObservationGrid = false;
+        [SerializeField] private int fallHeight = -5; // y coord below which the agent is considered to have fallen
+        [SerializeField] private float playerHeight = 0.2f;
 
         private Rigidbody2D rb;
         private GameObject start;
@@ -31,7 +34,6 @@ namespace Tests.AplibTests
         private bool isJumping;
         private float prevDistanceToGoal;
         private float[,] observationGrid;
-        private float playerHeight = 0.2f;
         private InputGenerator inputInstance = InputGenerator.instance;
 
         private void Start()
@@ -39,7 +41,6 @@ namespace Tests.AplibTests
             rb = GetComponent<Rigidbody2D>();
             inputInstance.SetKeyboardDisable(true);
             observationGrid = new float[observationGridSize, observationGridSize];
-            Debug.Log("Ground Layer: " + groundLayer);
         }
 
         public override void OnEpisodeBegin()
@@ -47,10 +48,10 @@ namespace Tests.AplibTests
             ResetStartAndGoal();
 
             // Enable/disable optional platforms
-            // foreach (Transform platform in optionalPlatforms.transform)
-            // {
-            //     platform.gameObject.SetActive(Random.value > 0.5f);
-            // }
+            foreach (Transform platform in optionalPlatforms.transform)
+            {
+                platform.gameObject.SetActive(Random.value > 0.5f);
+            }
 
             // Set the Agent position and speed if fallen
             if (this.transform.localPosition.y <= fallHeight)
@@ -66,7 +67,7 @@ namespace Tests.AplibTests
             sensor.AddObservation(this.transform.localPosition);
             sensor.AddObservation(goal.transform.localPosition);
 
-            // Observe the 14x14 grid around the agent, with 0 for empty, 1 for platform
+            // Observe the 14x14=196 grid around the agent, with 0 for empty, 1 for platform
             for (int i = 0; i < observationGridSize; i++)
             {
                 for (int j = 0; j < observationGridSize; j++)
@@ -75,13 +76,11 @@ namespace Tests.AplibTests
                         transform.position.x + (i - observationGridSize / 2),
                         transform.position.y + (j - observationGridSize / 2) - playerHeight
                     );
-                    Collider2D hit = Physics2D.OverlapCircle(checkPos, 0.3f, groundLayer);
-                    if (hit != null)
-                        Debug.Log($"Checking position {checkPos}: HIT: {hit.name} Layer: {hit.gameObject.layer}");
-                    observationGrid[i, j] = hit != null ? 1f : 0f;
+                    Collider2D hit = Physics2D.OverlapCircle(checkPos, observationGridCellRadius, groundLayer);
                     sensor.AddObservation(observationGrid[i, j]);
-                    Vector2 checkPosLocal = new Vector2(i - observationGridSize / 2, j - observationGridSize / 2);
-                    Debug.DrawLine(transform.localPosition, transform.localPosition + (Vector3)checkPosLocal, observationGrid[i, j] == 1f ? Color.green : Color.red, 0.1f);
+                    observationGrid[i, j] = hit != null ? 1f : 0f;
+                    if (drawObservationGrid)
+                        Debug.DrawRay(checkPos, Vector2.up * 0.2f, observationGrid[i, j] == 1f ? Color.green : Color.red, 0.1f);
                 }
             }
         }
