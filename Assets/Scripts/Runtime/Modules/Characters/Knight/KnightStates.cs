@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Metroidvania.Entities;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace Metroidvania.Characters.Knight
         }
 
         public abstract bool CanEnter();
+
+        public virtual bool CanExit() => true;
 
         public virtual void Enter(KnightStateBase previousState) { }
 
@@ -107,6 +110,8 @@ namespace Metroidvania.Characters.Knight
 
     public class KnightJumpState : KnightStateBase
     {
+        private float _minJumpTime = 0.1f;
+        private float _elapsedJumpTime;
         private bool _jumpPressed;
 
         public KnightJumpState(KnightStateMachine machine) : base(machine) { }
@@ -124,6 +129,7 @@ namespace Metroidvania.Characters.Knight
 
             character.rb.linearVelocityY = character.data.jumpHeight;
             _jumpPressed = true;
+            _elapsedJumpTime = 0f;
         }
 
         public override void Transition()
@@ -134,12 +140,15 @@ namespace Metroidvania.Characters.Knight
 
         public override void Update()
         {
-            _jumpPressed = character.jumpAction.IsPressed();
+            if (_elapsedJumpTime > _minJumpTime)
+                _jumpPressed = character.jumpAction.IsPressed();
         }
 
         public override void PhysicsUpdate()
         {
-            if (!_jumpPressed)
+            _elapsedJumpTime += Time.deltaTime;
+
+            if (!_jumpPressed && _elapsedJumpTime >= _minJumpTime)
             {
                 character.rb.linearVelocityY += (character.data.jumpLowMultiplier - 1) * Physics2D.gravity.y * Time.deltaTime;
             }

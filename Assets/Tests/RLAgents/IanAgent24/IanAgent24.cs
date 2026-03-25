@@ -66,6 +66,9 @@ namespace Tests.AplibTests
         {
             sensor.AddObservation(this.transform.localPosition);
             sensor.AddObservation(goal.transform.localPosition);
+            Vector2 toGoal = goal.transform.localPosition - transform.localPosition;
+            sensor.AddObservation(toGoal);
+            Debug.DrawLine(transform.position, goal.transform.position, Color.yellow, 0.1f);
 
             // Observe the 14x14=196 grid around the agent, with 0 for empty, 1 for platform
             for (int i = 0; i < observationGridSize; i++)
@@ -132,11 +135,14 @@ namespace Tests.AplibTests
                 EndEpisode();
             }
 
-            if (distanceToGoal < prevDistanceToGoal)
-                AddReward(0.01f);
-            else
-                AddReward(-0.01f);
-            prevDistanceToGoal = distanceToGoal;
+
+            AddReward(-0.001f); // small step penalty to encourage faster solutions
+
+            // if (distanceToGoal < prevDistanceToGoal)
+            //     AddReward(0.01f);
+            // else
+            //     AddReward(-0.01f);
+            // prevDistanceToGoal = distanceToGoal;
         }
 
         // Heuristic method for testing the agent using keyboard controls

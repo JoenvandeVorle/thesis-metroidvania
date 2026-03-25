@@ -193,7 +193,6 @@ namespace Metroidvania.InputSystem
 
         private bool holdingJump = false;
         private bool holdingMovement = false;
-
         public void Update()
         {
             foreach (var testableInputAction in testableInputActions.Values)
