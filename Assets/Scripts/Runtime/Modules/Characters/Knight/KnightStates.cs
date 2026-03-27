@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using Metroidvania.Entities;
 using UnityEngine;
@@ -19,8 +20,6 @@ namespace Metroidvania.Characters.Knight
         }
 
         public abstract bool CanEnter();
-
-        public virtual bool CanExit() => true;
 
         public virtual void Enter(KnightStateBase previousState) { }
 
@@ -110,8 +109,8 @@ namespace Metroidvania.Characters.Knight
 
     public class KnightJumpState : KnightStateBase
     {
-        private float _minJumpTime = 0.1f;
         private float _elapsedJumpTime;
+        private float _minJumpTime = 0.1f;
         private bool _jumpPressed;
 
         public KnightJumpState(KnightStateMachine machine) : base(machine) { }
@@ -135,7 +134,9 @@ namespace Metroidvania.Characters.Knight
         public override void Transition()
         {
             if (character.rb.linearVelocityY < 0.0f)
+            {
                 machine.EnterDefaultState();
+            }
         }
 
         public override void Update()

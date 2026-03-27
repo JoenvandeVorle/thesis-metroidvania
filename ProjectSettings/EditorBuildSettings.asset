@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Tests/TestScenes/SimpleTestScene.unity
     guid: de8c8f8093c8eee4db02fef9d1d3595b
   - enabled: 1
-    path: Assets/Tests/TestScenes/InputSystemTestScene.unity
+    path: Assets/Tests/TestScenes/InputSysteMTestScene.unity
     guid: 85549046d62bc4849ace9724e32024a0
   - enabled: 1
     path: Assets/Tests/TestScenes/WallJumpLeft.unity

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Metroidvania.Characters.Knight
 {
     public class KnightStateMachine
@@ -64,6 +66,7 @@ namespace Metroidvania.Characters.Knight
 
         public void EnterState(KnightStateBase state)
         {
+            // Debug.Log($"Entering state {state.GetType().Name}");
             KnightStateBase previousState = currentState;
             currentState = state;
             previousState?.Exit();
