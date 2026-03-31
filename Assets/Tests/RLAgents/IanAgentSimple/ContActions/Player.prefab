@@ -19845,7 +19845,7 @@ GameObject:
   - component: {fileID: 5676798463791169102}
   - component: {fileID: 1826395532184607456}
   - component: {fileID: 6750548040909714776}
-  - component: {fileID: 4426256346536123301}
+  - component: {fileID: 5631221413699188927}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -19861,7 +19861,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6375356015120142696}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.934, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20021,10 +20021,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.DecisionRequester
-  DecisionPeriod: 3
+  DecisionPeriod: 2
   DecisionStep: 0
   TakeActionsBetweenDecisions: 1
---- !u!114 &4426256346536123301
+--- !u!114 &5631221413699188927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20033,9 +20033,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6375356015120142696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b2a8cbabd9a152449cb2d572d7cd425, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ad72e8d27f559e42aa1beac96ae6e55, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Tests::Tests.AplibTests.IanAgent24
+  m_EditorClassIdentifier: Tests::Tests.AplibTests.IanAgent24Cont
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
@@ -20045,12 +20045,12 @@ MonoBehaviour:
   optionalPlatforms: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   observationGridSize: 14
   observationGridCellRadius: 0.3
   drawObservationGrid: 0
-  fallHeight: -8
-  playerHeight: 0.27
+  fallHeight: -5
+  playerHeight: 0.2
 --- !u!1 &7108038146395077900
 GameObject:
   m_ObjectHideFlags: 0

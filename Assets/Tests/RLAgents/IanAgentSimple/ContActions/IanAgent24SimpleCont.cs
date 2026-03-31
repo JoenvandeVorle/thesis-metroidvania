@@ -14,8 +14,9 @@ namespace Tests.AplibTests
     [RequireComponent(typeof(DecisionRequester))]
     [RequireComponent(typeof(BehaviorParameters))]
     // Agent based on Ian's "Train24" agent
+    // Uses continuous actions instead of discrete
     // Don't forget to create a IanAgent24.yaml config file
-    public class IanAgent24 : Agent
+    public class IanAgent24Cont : Agent
     {
         [SerializeField] private GameObject goals; // parent object containing possible goal positions
         [SerializeField] private GameObject starts; // parent object containing possible start positions
@@ -87,40 +88,37 @@ namespace Tests.AplibTests
             sensor.AddObservation(isHoldingJump ? 1f : 0f);
             Vector2 toGoal = goal.transform.localPosition - transform.localPosition;
             sensor.AddObservation(toGoal);
-            // Debug.Log($"Distance to goal: {toGoal}");
             Debug.DrawLine(transform.position, goal.transform.position, Color.yellow, 0.1f);
         }
 
         public override void OnActionReceived(ActionBuffers actions)
         {
-            int movement = actions.DiscreteActions[0];
-            int jump = actions.DiscreteActions[1];
+            float xMovement = actions.ContinuousActions[0];
+            float jump = actions.ContinuousActions[1];
 
-            if (currentMovement != movement)
+            if (xMovement <= -0.5f)
             {
-                switch (movement)
-                {
-                    case 1:
-                        inputInstance.HoldLeft();
-                        currentMovement = 1;
-                        break;
-                    case 2:
-                        inputInstance.HoldRight();
-                        currentMovement = 2;
-                        break;
-                    default:
-                        inputInstance.ReleaseMovement();
-                        currentMovement = 0;
-                        break;
-                }
+                inputInstance.HoldLeft();
+                currentMovement = 1;
+            }
+            else if (xMovement >= 0.5f)
+            {
+                currentMovement = 2;
+                inputInstance.HoldRight();
+            }
+            else
+            {
+                currentMovement = 0;
+                inputInstance.ReleaseMovement();
             }
 
-            if (jump == 1 && !isHoldingJump)
+
+            if (jump >= 0f && !isHoldingJump)
             {
                 inputInstance.HoldJump();
                 isHoldingJump = true;
             }
-            else if (jump == 0 && isHoldingJump)
+            else if (jump < 0f && isHoldingJump)
             {
                 inputInstance.ReleaseJump();
                 isHoldingJump = false;
@@ -138,16 +136,17 @@ namespace Tests.AplibTests
                 EndEpisode();
             }
 
+
             AddReward(-0.00025f); // small step penalty to encourage faster solutions
         }
 
         // Heuristic method for testing the agent using keyboard controls
         public override void Heuristic(in ActionBuffers actionsOut)
         {
-            var discreteActionsOut = actionsOut.DiscreteActions;
+            var contActionsOut = actionsOut.ContinuousActions;
             var movement = InputReader.instance.inputActions.Gameplay.Move.ReadValue<float>(); // this is -1, 0 ,1 instead of 0,1,2
-            discreteActionsOut[0] = movement == 0 ? 0 : movement == -1 ? 1 : 2; // convert to 0,1,2
-            discreteActionsOut[1] = InputReader.instance.inputActions.Gameplay.Jump.IsPressed() ? 1 : 0;
+            contActionsOut[0] = movement == 0 ? 0 : MathF.Sign(movement);
+            contActionsOut[1] = InputReader.instance.inputActions.Gameplay.Jump.IsPressed() ? 1 : -1;
         }
 
         private GameObject GetRandomChild(GameObject parent)

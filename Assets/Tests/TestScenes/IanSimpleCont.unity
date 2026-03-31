@@ -17530,15 +17530,19 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2727056719694322246}
     m_Modifications:
-    - target: {fileID: 4426256346536123301, guid: eb86071bfa8983d4896c1c055aee8b54, type: 3}
+    - target: {fileID: 1826395532184607456, guid: eb86071bfa8983d4896c1c055aee8b54, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5631221413699188927, guid: eb86071bfa8983d4896c1c055aee8b54, type: 3}
       propertyPath: goals
       value: 
       objectReference: {fileID: 470254085518406802}
-    - target: {fileID: 4426256346536123301, guid: eb86071bfa8983d4896c1c055aee8b54, type: 3}
+    - target: {fileID: 5631221413699188927, guid: eb86071bfa8983d4896c1c055aee8b54, type: 3}
       propertyPath: starts
       value: 
       objectReference: {fileID: 9158190106474922148}
-    - target: {fileID: 4426256346536123301, guid: eb86071bfa8983d4896c1c055aee8b54, type: 3}
+    - target: {fileID: 5631221413699188927, guid: eb86071bfa8983d4896c1c055aee8b54, type: 3}
       propertyPath: optionalPlatforms
       value: 
       objectReference: {fileID: 7440326258084237500}
