@@ -2,22 +2,22 @@
     "IanAgent24Disc": {
         "checkpoints": [
             {
-                "steps": 43617,
-                "file_path": "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-43617.onnx",
-                "reward": null,
-                "creation_time": 1775134201.4173806,
+                "steps": 79426,
+                "file_path": "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-79426.onnx",
+                "reward": 16.27737029393514,
+                "creation_time": 1775137343.7335885,
                 "auxillary_file_paths": [
-                    "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-43617.pt"
+                    "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-79426.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 43617,
+            "steps": 79426,
             "file_path": "results\\RewardOnDistance\\IanAgent24Disc.onnx",
-            "reward": null,
-            "creation_time": 1775134201.4173806,
+            "reward": 16.27737029393514,
+            "creation_time": 1775137343.7335885,
             "auxillary_file_paths": [
-                "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-43617.pt"
+                "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-79426.pt"
             ]
         }
     },

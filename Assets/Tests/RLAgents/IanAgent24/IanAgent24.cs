@@ -32,7 +32,7 @@ namespace Tests.AplibTests
         private GameObject goal;
         private int currentMovement = 0; // 0: no movement, 1: left, 2: right
         private bool isHoldingJump = false;
-        private float prevDistanceToGoal;
+        private float startDistanceToGoal;
         private float[,] observationGrid;
         private InputGenerator inputInstance = InputGenerator.instance;
         private KnightCharacterController character;
@@ -61,7 +61,8 @@ namespace Tests.AplibTests
                 rb.linearVelocity = Vector2.zero;
                 rb.angularVelocity = 0f;
             }
-            prevDistanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
+
+            startDistanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
         }
 
         public override void CollectObservations(VectorSensor sensor)
@@ -128,26 +129,24 @@ namespace Tests.AplibTests
             float distanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
             if (distanceToGoal <= 1) // reached goal
             {
-                SetReward(5.0f);
+                AddReward(10.0f);
                 EndEpisode();
-            } else if (distanceToGoal < prevDistanceToGoal)
-            {
-                float reward = (prevDistanceToGoal - distanceToGoal) * 0.1f; // reward for getting closer
-                SetReward(reward);
             }
             if (transform.localPosition.y <= fallHeight) // fell down
             {
-                SetReward(-10.0f);
+                AddReward(-10.0f);
                 EndEpisode();
             }
-
-            if (StepCount >= MaxStep - 1)
+            if (StepCount >= MaxStep - 1) // timeout
             {
-                SetReward(-5.0f);
+                AddReward(-5.0f);
             }
 
+            // Add reward based on distance to goal
+            float distanceReward = (startDistanceToGoal - distanceToGoal) / startDistanceToGoal;
+            AddReward(distanceReward * 0.1f); // scale it down
+
             AddReward(-0.0025f); // small step penalty to encourage faster solutions
-            prevDistanceToGoal = distanceToGoal;
         }
 
         // Heuristic method for testing the agent using keyboard controls
