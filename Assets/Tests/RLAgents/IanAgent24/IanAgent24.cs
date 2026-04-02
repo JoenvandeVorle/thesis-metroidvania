@@ -87,7 +87,6 @@ namespace Tests.AplibTests
             sensor.AddObservation(isHoldingJump ? 1f : 0f);
             Vector2 toGoal = goal.transform.localPosition - transform.localPosition;
             sensor.AddObservation(toGoal);
-            // Debug.Log($"Distance to goal: {toGoal}");
             Debug.DrawLine(transform.position, goal.transform.position, Color.yellow, 0.1f);
         }
 
@@ -131,6 +130,10 @@ namespace Tests.AplibTests
             {
                 SetReward(5.0f);
                 EndEpisode();
+            } else if (distanceToGoal < prevDistanceToGoal)
+            {
+                float reward = (prevDistanceToGoal - distanceToGoal) * 0.1f; // reward for getting closer
+                SetReward(reward);
             }
             if (transform.localPosition.y <= fallHeight) // fell down
             {
@@ -138,7 +141,13 @@ namespace Tests.AplibTests
                 EndEpisode();
             }
 
+            if (StepCount >= MaxStep - 1)
+            {
+                SetReward(-5.0f);
+            }
+
             AddReward(-0.0025f); // small step penalty to encourage faster solutions
+            prevDistanceToGoal = distanceToGoal;
         }
 
         // Heuristic method for testing the agent using keyboard controls

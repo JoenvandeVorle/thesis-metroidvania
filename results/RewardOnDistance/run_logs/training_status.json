@@ -1,0 +1,29 @@
+{
+    "IanAgent24Disc": {
+        "checkpoints": [
+            {
+                "steps": 43617,
+                "file_path": "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-43617.onnx",
+                "reward": null,
+                "creation_time": 1775134201.4173806,
+                "auxillary_file_paths": [
+                    "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-43617.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 43617,
+            "file_path": "results\\RewardOnDistance\\IanAgent24Disc.onnx",
+            "reward": null,
+            "creation_time": 1775134201.4173806,
+            "auxillary_file_paths": [
+                "results\\RewardOnDistance\\IanAgent24Disc\\IanAgent24Disc-43617.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}
