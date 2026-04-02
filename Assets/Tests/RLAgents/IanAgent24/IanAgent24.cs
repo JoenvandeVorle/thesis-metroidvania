@@ -129,16 +129,16 @@ namespace Tests.AplibTests
             float distanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
             if (distanceToGoal <= 1) // reached goal
             {
-                SetReward(1.0f);
+                SetReward(5.0f);
                 EndEpisode();
             }
             if (transform.localPosition.y <= fallHeight) // fell down
             {
-                SetReward(-1.0f);
+                SetReward(-10.0f);
                 EndEpisode();
             }
 
-            AddReward(-0.00025f); // small step penalty to encourage faster solutions
+            AddReward(-0.0025f); // small step penalty to encourage faster solutions
         }
 
         // Heuristic method for testing the agent using keyboard controls
