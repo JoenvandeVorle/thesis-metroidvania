@@ -1,0 +1,47 @@
+{
+    "IanImitation": {
+        "checkpoints": [
+            {
+                "steps": 12820,
+                "file_path": "results\\ImitationPillarsLongDemosVail\\IanImitation\\IanImitation-12820.onnx",
+                "reward": -5.062499769963324,
+                "creation_time": 1775821592.5200005,
+                "auxillary_file_paths": [
+                    "results\\ImitationPillarsLongDemosVail\\IanImitation\\IanImitation-12820.pt"
+                ]
+            },
+            {
+                "steps": 52735,
+                "file_path": "results\\ImitationPillarsLongDemosVail\\IanImitation\\IanImitation-52735.onnx",
+                "reward": 2.4685002523474395,
+                "creation_time": 1775822580.8189402,
+                "auxillary_file_paths": [
+                    "results\\ImitationPillarsLongDemosVail\\IanImitation\\IanImitation-52735.pt"
+                ]
+            },
+            {
+                "steps": 91860,
+                "file_path": "results\\ImitationPillarsLongDemosVail\\IanImitation\\IanImitation-91860.onnx",
+                "reward": -0.008812292478978634,
+                "creation_time": 1775823004.118666,
+                "auxillary_file_paths": [
+                    "results\\ImitationPillarsLongDemosVail\\IanImitation\\IanImitation-91860.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 91860,
+            "file_path": "results\\ImitationPillarsLongDemosVail\\IanImitation.onnx",
+            "reward": -0.008812292478978634,
+            "creation_time": 1775823004.118666,
+            "auxillary_file_paths": [
+                "results\\ImitationPillarsLongDemosVail\\IanImitation\\IanImitation-91860.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

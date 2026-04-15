@@ -133,24 +133,24 @@ namespace Tests.AplibTests
             float distanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
             if (distanceToGoal <= 1) // reached goal
             {
-                AddReward(10.0f);
+                AddReward(8.0f);
                 EndEpisode();
             }
             if (transform.localPosition.y <= fallHeight) // fell down
             {
-                AddReward(-10.0f);
+                AddReward(-3.0f);
                 EndEpisode();
             }
             if (StepCount >= MaxStep - 1) // timeout
             {
-                AddReward(-5.0f);
+                AddReward(-2.0f);
             }
 
             // Add reward based on distance to goal
             float distanceReward = (startDistanceToGoal - distanceToGoal) / startDistanceToGoal;
             // AddReward(distanceReward > 0 ? distanceReward * 0.1f : distanceReward * 0.01f); // scale it down
-            // Debug.Log($"{(distanceReward > 0 ? distanceReward * 0.1f : distanceReward * 0.01f)}");
             AddReward(distanceReward * 0.1f); // scale it down
+            // Debug.Log($"{(distanceReward > 0 ? distanceReward * 0.1f : distanceReward * 0.01f)}");
 
             AddReward(-0.0025f); // small step penalty to encourage faster solutions
         }
