@@ -1,0 +1,47 @@
+{
+    "IanImitation": {
+        "checkpoints": [
+            {
+                "steps": 81884,
+                "file_path": "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation\\IanImitation-81884.onnx",
+                "reward": 4.9919383861124516,
+                "creation_time": 1776259192.0620637,
+                "auxillary_file_paths": [
+                    "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation\\IanImitation-81884.pt"
+                ]
+            },
+            {
+                "steps": 122516,
+                "file_path": "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation\\IanImitation-122516.onnx",
+                "reward": 2.609318420290947,
+                "creation_time": 1776259772.8194947,
+                "auxillary_file_paths": [
+                    "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation\\IanImitation-122516.pt"
+                ]
+            },
+            {
+                "steps": 151001,
+                "file_path": "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation\\IanImitation-151001.onnx",
+                "reward": 10.143548846244812,
+                "creation_time": 1776260084.9988341,
+                "auxillary_file_paths": [
+                    "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation\\IanImitation-151001.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 151001,
+            "file_path": "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation.onnx",
+            "reward": 10.143548846244812,
+            "creation_time": 1776260084.9988341,
+            "auxillary_file_paths": [
+                "results-imitation\\Imit_GridNormalizedStrongBHV\\IanImitation\\IanImitation-151001.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

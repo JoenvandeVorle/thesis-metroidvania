@@ -19,23 +19,23 @@ behaviors:
         strength: 1.0
         gamma: 0.99
       curiosity:
-        strength: 0.1
+        strength: 0.01
         gamma: 0.99
         learning_rate: 3.0e-4
       gail:
-        strength: 0.1
+        strength: 0.02
         gamma: 0.99
         network_settings:
           normalize: true
           hidden_units: 128
           num_layers: 2
-        demo_path: Assets\Tests\RLAgents\IanAgent24\Imitation\DemosPillarsShort
+        demo_path: Assets\Tests\RLAgents\IanAgent24\Imitation\DemosPillarsWithGrid
         use_vail: true
         use_actions: false
     behavioral_cloning:
-      demo_path: Assets\Tests\RLAgents\IanAgent24\Imitation\DemosPillarsShort
+      demo_path: Assets\Tests\RLAgents\IanAgent24\Imitation\DemosPillarsWithGrid
       strength: 0.2
-      steps: 0
+      steps: 80000
     keep_checkpoints: 5
     max_steps: 500000
     time_horizon: 32
