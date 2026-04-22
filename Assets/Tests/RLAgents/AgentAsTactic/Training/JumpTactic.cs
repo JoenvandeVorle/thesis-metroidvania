@@ -14,7 +14,7 @@ namespace Tests.AplibTests
     [RequireComponent(typeof(DecisionRequester))]
     [RequireComponent(typeof(BehaviorParameters))]
     // Based on IanAgentRays
-    public class AgentAsTactic : Agent
+    public class JumpTactic : Agent
     {
         [SerializeField] private GameObject goals; // parent object containing possible goal positions
         [SerializeField] private GameObject starts; // parent object containing possible start positions
@@ -36,6 +36,7 @@ namespace Tests.AplibTests
         private float[,] observationGrid;
         private InputGenerator inputInstance = InputGenerator.instance;
         private KnightCharacterController character;
+        private bool startLeft = true;
 
         private void Start()
         {
@@ -55,10 +56,11 @@ namespace Tests.AplibTests
         {
             ResetStartAndGoal();
 
-            // Enable/disable optional platforms
-            foreach (Transform platform in optionalPlatforms.transform)
+            // Select 1 optional platform and enable it
+            int platformIndex = Random.Range(0, optionalPlatforms.transform.childCount);
+            for (int i = 0; i < optionalPlatforms.transform.childCount; i++)
             {
-                platform.gameObject.SetActive(Random.value > 0.5f);
+                optionalPlatforms.transform.GetChild(i).gameObject.SetActive(i == platformIndex);
             }
 
             // Set the Agent position and speed if fallen
@@ -73,7 +75,6 @@ namespace Tests.AplibTests
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            // Observe the 14x14=196 grid around the agent, with 0 for empty, 1 for platform
             if (useGridObservations)
             {
                 for (int i = 0; i < observationGridSize; i++)
@@ -155,7 +156,6 @@ namespace Tests.AplibTests
             float distanceReward = (startDistanceToGoal - distanceToGoal) / startDistanceToGoal;
             // AddReward(distanceReward > 0 ? distanceReward * 0.1f : distanceReward * 0.01f); // scale it down
             AddReward(distanceReward * 0.1f); // scale it down
-            // Debug.Log($"{(distanceReward > 0 ? distanceReward * 0.1f : distanceReward * 0.01f)}");
 
             AddReward(-0.0025f); // small step penalty to encourage faster solutions
         }
@@ -169,14 +169,6 @@ namespace Tests.AplibTests
             discreteActionsOut[1] = InputReader.instance.inputActions.Gameplay.Jump.IsPressed() ? 1 : 0;
         }
 
-        private GameObject GetRandomChild(GameObject parent)
-        {
-            int childCount = parent.transform.childCount;
-            if (childCount == 0) return null;
-            int randomIndex = Random.Range(0, childCount);
-            return parent.transform.GetChild(randomIndex).gameObject;
-        }
-
         private void ResetStartAndGoal()
         {
             if (start != null)
@@ -185,12 +177,15 @@ namespace Tests.AplibTests
             if (goal != null)
                 goal.SetActive(false);
 
-            start = GetRandomChild(starts);
+            bool pickLeft = startLeft;
+            start = pickLeft ? starts.transform.GetChild(0).gameObject : starts.transform.GetChild(1).gameObject;
             start.SetActive(true);
             this.transform.localPosition = start.transform.localPosition;
 
-            goal = GetRandomChild(goals);
+            goal = pickLeft ? goals.transform.GetChild(1).gameObject : goals.transform.GetChild(0).gameObject;
             goal.SetActive(true);
+
+            startLeft = !startLeft;
         }
     }
 }
