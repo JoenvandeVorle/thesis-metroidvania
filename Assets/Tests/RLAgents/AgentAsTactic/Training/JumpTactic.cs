@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using Metroidvania.InputSystem;
 using Metroidvania.Characters.Knight;
 using System;
+using System.Collections.Generic;
 
 namespace Tests.AplibTests
 {
@@ -14,7 +15,7 @@ namespace Tests.AplibTests
     [RequireComponent(typeof(DecisionRequester))]
     [RequireComponent(typeof(BehaviorParameters))]
     // Based on IanAgentRays
-    public class JumpTactic : Agent
+    public class JumpBehavior : Agent
     {
         [SerializeField] private GameObject goals; // parent object containing possible goal positions
         [SerializeField] private GameObject starts; // parent object containing possible start positions
@@ -22,14 +23,15 @@ namespace Tests.AplibTests
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private bool useGridObservations = false;
         [SerializeField] private int observationGridSize = 14;
-        [SerializeField] private float observationGridCellRadius= 0.3f;
+        [SerializeField] private float observationGridCellRadius = 0.3f;
         [SerializeField] private bool drawObservationGrid = false;
+        [SerializeField] private bool isTraining = true;
         [SerializeField] private int fallHeight = -5; // y coord below which the agent is considered to have fallen
         [SerializeField] private float playerHeight = 0.2f;
 
+        public GameObject goal;
         private Rigidbody2D rb;
         private GameObject start;
-        private GameObject goal;
         private int currentMovement = 0; // 0: no movement, 1: left, 2: right
         private bool isHoldingJump = false;
         private float startDistanceToGoal;
@@ -45,29 +47,35 @@ namespace Tests.AplibTests
             observationGrid = new float[observationGridSize, observationGridSize];
             character = GetComponent<KnightCharacterController>();
 
-            foreach (Transform child in starts.transform)
-                child.gameObject.SetActive(false);
+            if (isTraining)
+            {
+                foreach (Transform child in starts.transform)
+                    child.gameObject.SetActive(false);
 
-            foreach (Transform child in goals.transform)
-                child.gameObject.SetActive(false);
+                foreach (Transform child in goals.transform)
+                    child.gameObject.SetActive(false);
+            }
         }
 
         public override void OnEpisodeBegin()
         {
-            ResetStartAndGoal();
-
-            // Select 1 optional platform and enable it
-            int platformIndex = Random.Range(0, optionalPlatforms.transform.childCount);
-            for (int i = 0; i < optionalPlatforms.transform.childCount; i++)
+            if (isTraining)
             {
-                optionalPlatforms.transform.GetChild(i).gameObject.SetActive(i == platformIndex);
-            }
+                ResetStartAndGoal();
 
-            // Set the Agent position and speed if fallen
-            if (this.transform.localPosition.y <= fallHeight)
-            {
-                rb.linearVelocity = Vector2.zero;
-                rb.angularVelocity = 0f;
+                // Select 1 optional platform and enable it
+                int platformIndex = Random.Range(0, optionalPlatforms.transform.childCount);
+                for (int i = 0; i < optionalPlatforms.transform.childCount; i++)
+                {
+                    optionalPlatforms.transform.GetChild(i).gameObject.SetActive(i == platformIndex);
+                }
+
+                // Set the Agent position and speed if fallen
+                if (this.transform.localPosition.y <= fallHeight)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    rb.angularVelocity = 0f;
+                }
             }
 
             startDistanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
@@ -137,7 +145,7 @@ namespace Tests.AplibTests
             }
 
             float distanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
-            if (distanceToGoal <= 1) // reached goal
+            if (distanceToGoal <= 0.5) // reached goal
             {
                 AddReward(8.0f);
                 EndEpisode();

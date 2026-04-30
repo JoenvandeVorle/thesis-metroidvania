@@ -21,7 +21,7 @@ namespace Tests.AplibTests
         /// <summary>
         /// The player object in the scene.
         /// </summary>
-        public readonly Belief<GameObject, GameObject> Player = 
+        public readonly Belief<GameObject, GameObject> Player =
             new(reference: GameObject.Find("Player"), x => x);
 
         /// <summary>

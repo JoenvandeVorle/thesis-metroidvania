@@ -22,15 +22,17 @@ behaviors:
       #   strength: 0.05
       #   gamma: 0.95
       gail:
-        strength: 0.05
-        gamma: 0.99
+        strength: 0.1
+        gamma: 0.90
         network_settings:
           normalize: false
           hidden_units: 128
           num_layers: 2
-        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/JumpDemos
+        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/JumpDemosRays
+        use_vail: true
+        use_actions: true
     behavioral_cloning:
-      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/JumpDemos
+      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/JumpDemosRays
       strength: 0.4
       steps: 10000
     keep_checkpoints: 5
