@@ -3,7 +3,7 @@ using Metroidvania.InputSystem;
 using Metroidvania;
 
 /// <summary>
-/// A Singleton for generating input events in tests. 
+/// A Singleton for generating input events in tests.
 /// This is needed because the Unity Input System does not work well in tests.
 /// </summary>
 public class InputGenerator : Singleton<InputGenerator>
@@ -91,11 +91,11 @@ public class InputGenerator : Singleton<InputGenerator>
         InputReader.instance.SimulateJumpRelease();
     }
 
-    public void PressJump(float holdTime = DEFAULT_HOLDTIME)
+    public void PressJumpFor(float holdTime = DEFAULT_HOLDTIME)
     {
         if (doPrintDebug)
             Debug.Log("Generating Jump Input");
-        InputReader.instance.SimulateJumpPress(holdTime);
+        InputReader.instance.SimulateJumpHoldFor(holdTime);
     }
 
     public void PressAttack()

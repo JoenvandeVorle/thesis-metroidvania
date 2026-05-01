@@ -82,7 +82,7 @@ namespace Metroidvania.InputSystem
                 CallAttack(context);
         }
 
-        void InputActions.IGameplayActions.OnCrouch(InputAction.CallbackContext context) 
+        void InputActions.IGameplayActions.OnCrouch(InputAction.CallbackContext context)
         {
             if (!InputDisabled)
                 CallCrouch(context);
@@ -106,7 +106,7 @@ namespace Metroidvania.InputSystem
         {
             if (context.phase == InputActionPhase.Performed)
                 CallPause(context);
-        } 
+        }
 
         #endregion
 
@@ -239,17 +239,20 @@ namespace Metroidvania.InputSystem
             }
             holdingJump = true;
         }
-        
+
         public void SimulateJumpRelease()
         {
             TestableJumpAction.SimulateRelease();
             holdingJump = false;
         }
 
-        public void SimulateJumpPress(float holdDuration)
+        public void SimulateJumpHoldFor(float holdDuration)
         {
-            TestableJumpAction.HoldFor(holdDuration);
-            CallJump(default);
+            if (!TestableJumpAction.IsPressed())
+            {
+                TestableJumpAction.HoldFor(holdDuration);
+                CallJump(default);
+            }
         }
 
         public void SimulateAttack()

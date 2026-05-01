@@ -57,8 +57,8 @@ namespace Tests.HybridTests
             }
         );
 
-        public readonly Belief<GameObject, JumpBehavior> JumpBehavior =
-            new(GameObject.Find("Player"), x => x.GetComponent<JumpBehavior>());
+        public readonly Belief<GameObject, JumpBehaviorLong> JumpBehavior =
+            new(GameObject.Find("Player"), x => x.GetComponent<JumpBehaviorLong>());
     }
 
     public class HybridJumpTest
@@ -83,7 +83,7 @@ namespace Tests.HybridTests
                 beliefSet =>
                 {
                     GameObject closestTarget = beliefSet.ClosestTarget;
-                    JumpBehavior jump = beliefSet.JumpBehavior;
+                    JumpBehaviorLong jump = beliefSet.JumpBehavior;
                     jump.enabled = true;
                     jump.goal = closestTarget;
                 }
@@ -92,7 +92,7 @@ namespace Tests.HybridTests
             Action<HybridJumpBeliefSet> stopMovement = new(
                 beliefSet =>
                 {
-                    JumpBehavior jump = beliefSet.JumpBehavior;
+                    JumpBehaviorLong jump = beliefSet.JumpBehavior;
                     jump.enabled = false;
                     GameObject closestTarget = beliefSet.ClosestTarget;
                     closestTarget.SetActive(false);

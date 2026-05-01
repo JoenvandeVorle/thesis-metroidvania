@@ -16,23 +16,23 @@ behaviors:
       num_layers: 2
     reward_signals:
       extrinsic:
-        gamma: 0.99
+        gamma: 0.995
         strength: 1.0
       # curiosity:
       #   strength: 0.05
       #   gamma: 0.95
       gail:
-        strength: 0.1
+        strength: 0.075
         gamma: 0.90
         network_settings:
           normalize: false
           hidden_units: 128
           num_layers: 2
-        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/JumpDemosRays
+        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/Jump/JumpDemosLong
         use_vail: true
-        use_actions: true
+        use_actions: false
     behavioral_cloning:
-      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/JumpDemosRays
+      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/Jump/JumpDemosLong
       strength: 0.4
       steps: 10000
     keep_checkpoints: 5
