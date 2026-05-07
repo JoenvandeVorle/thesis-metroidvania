@@ -78,6 +78,8 @@ namespace Tests.AplibTests
                 }
             }
 
+            if (goal == null)
+                return;
             startDistanceToGoal = Vector2.Distance(transform.localPosition, goal.transform.localPosition);
         }
 

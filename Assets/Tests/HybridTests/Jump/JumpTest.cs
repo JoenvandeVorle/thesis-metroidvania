@@ -74,33 +74,32 @@ namespace Tests.HybridTests
         public IEnumerator PerformHybridJumpTest()
         {
             // Arrange
-            // BehaviorParameters RLBehavior = GameObject.Find("Player").GetComponent<BehaviorParameters>();
             InputGenerator inputGenerator = InputGenerator.instance;
             HybridJumpBeliefSet beliefSet = new();
+            JumpBehaviorLong jumpComponent = beliefSet.JumpBehavior;
+            jumpComponent.enabled = false;
 
-            // Create an intent for the agent that moves the agent towards the target position.
-            Action<HybridJumpBeliefSet> jumpBehavior = new(
+            // Action that turns on the jump component
+            Action<HybridJumpBeliefSet> jumpAction = new(
                 beliefSet =>
                 {
                     GameObject closestTarget = beliefSet.ClosestTarget;
-                    JumpBehaviorLong jump = beliefSet.JumpBehavior;
-                    jump.enabled = true;
-                    jump.goal = closestTarget;
+                    jumpComponent.goal = closestTarget;
+                    jumpComponent.enabled = true;
                 }
             );
 
             Action<HybridJumpBeliefSet> stopMovement = new(
                 beliefSet =>
                 {
-                    JumpBehaviorLong jump = beliefSet.JumpBehavior;
-                    jump.enabled = false;
+                    jumpComponent.enabled = false;
                     GameObject closestTarget = beliefSet.ClosestTarget;
                     closestTarget.SetActive(false);
                     Debug.Log("Disabled target: " + closestTarget.name);
                 }
             );
 
-            PrimitiveTactic<HybridJumpBeliefSet> startMovementTactic = new(jumpBehavior);
+            PrimitiveTactic<HybridJumpBeliefSet> startMovementTactic = new(jumpAction);
 
             bool hasReachedTargetGuard(HybridJumpBeliefSet beliefSet)
             {
