@@ -1,0 +1,29 @@
+{
+    "JumpTactic": {
+        "checkpoints": [
+            {
+                "steps": 250023,
+                "file_path": "results-tactics\\Jump_Rays_GAIL\\JumpTactic\\JumpTactic-250023.onnx",
+                "reward": 2.1270217895507812,
+                "creation_time": 1777462291.019456,
+                "auxillary_file_paths": [
+                    "results-tactics\\Jump_Rays_GAIL\\JumpTactic\\JumpTactic-250023.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 250023,
+            "file_path": "results-tactics\\Jump_Rays_GAIL\\JumpTactic.onnx",
+            "reward": 2.1270217895507812,
+            "creation_time": 1777462291.019456,
+            "auxillary_file_paths": [
+                "results-tactics\\Jump_Rays_GAIL\\JumpTactic\\JumpTactic-250023.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

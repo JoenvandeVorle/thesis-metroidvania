@@ -1,0 +1,29 @@
+{
+    "IanImitation": {
+        "checkpoints": [
+            {
+                "steps": 215699,
+                "file_path": "results\\Imit_ShortEps2\\IanImitation\\IanImitation-215699.onnx",
+                "reward": null,
+                "creation_time": 1776169539.5372417,
+                "auxillary_file_paths": [
+                    "results\\Imit_ShortEps2\\IanImitation\\IanImitation-215699.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 215699,
+            "file_path": "results\\Imit_ShortEps2\\IanImitation.onnx",
+            "reward": null,
+            "creation_time": 1776169539.5372417,
+            "auxillary_file_paths": [
+                "results\\Imit_ShortEps2\\IanImitation\\IanImitation-215699.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "Ian10M": {
+        "checkpoints": [
+            {
+                "steps": 1999988,
+                "file_path": "results-ppo\\10M\\Ian10M\\Ian10M-1999988.onnx",
+                "reward": null,
+                "creation_time": 1776455350.687037,
+                "auxillary_file_paths": [
+                    "results-ppo\\10M\\Ian10M\\Ian10M-1999988.pt"
+                ]
+            },
+            {
+                "steps": 2499991,
+                "file_path": "results-ppo\\10M\\Ian10M\\Ian10M-2499991.onnx",
+                "reward": null,
+                "creation_time": 1776459867.0580804,
+                "auxillary_file_paths": [
+                    "results-ppo\\10M\\Ian10M\\Ian10M-2499991.pt"
+                ]
+            },
+            {
+                "steps": 2999975,
+                "file_path": "results-ppo\\10M\\Ian10M\\Ian10M-2999975.onnx",
+                "reward": 0.44644439220428467,
+                "creation_time": 1776464388.449445,
+                "auxillary_file_paths": [
+                    "results-ppo\\10M\\Ian10M\\Ian10M-2999975.pt"
+                ]
+            },
+            {
+                "steps": 3499994,
+                "file_path": "results-ppo\\10M\\Ian10M\\Ian10M-3499994.onnx",
+                "reward": 9.86935007572174,
+                "creation_time": 1776468898.4254906,
+                "auxillary_file_paths": [
+                    "results-ppo\\10M\\Ian10M\\Ian10M-3499994.pt"
+                ]
+            },
+            {
+                "steps": 3593864,
+                "file_path": "results-ppo\\10M\\Ian10M\\Ian10M-3593864.onnx",
+                "reward": null,
+                "creation_time": 1776469773.042853,
+                "auxillary_file_paths": [
+                    "results-ppo\\10M\\Ian10M\\Ian10M-3593864.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3593864,
+            "file_path": "results-ppo\\10M\\Ian10M.onnx",
+            "reward": null,
+            "creation_time": 1776469773.042853,
+            "auxillary_file_paths": [
+                "results-ppo\\10M\\Ian10M\\Ian10M-3593864.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

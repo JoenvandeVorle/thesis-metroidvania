@@ -33,7 +33,7 @@ namespace Tests.Input
 
             while (playerTransform.position.y <= 1)
             {
-                inputGenerator.PressJump();
+                inputGenerator.PressJumpFor();
                 yield return TestWait.ForSeconds(0.5f);
             }
 

@@ -27,7 +27,7 @@ namespace Tests.Input
 
             InputGenerator inputGenerator = InputGenerator.instance;
             inputGenerator.EnableDebugPrints();
-            InputReader.instance.JumpEvent += () => 
+            InputReader.instance.JumpEvent += () =>
             {
                 jumpTriggered = true;
             };
@@ -36,13 +36,13 @@ namespace Tests.Input
             yield return TestWait.ForSeconds(1f);
 
             // Act
-            inputGenerator.PressJump(0.05f);
+            inputGenerator.PressJumpFor(0.05f);
             yield return TestWait.ForSeconds(1f); // wait for animation
 
-            inputGenerator.PressJump(0.2f);
+            inputGenerator.PressJumpFor(0.2f);
             yield return TestWait.ForSeconds(1f);
 
-            inputGenerator.PressJump(2f);
+            inputGenerator.PressJumpFor(2f);
             yield return TestWait.ForSeconds(2f);
 
             // Assert

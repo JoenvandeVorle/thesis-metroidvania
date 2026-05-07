@@ -39,7 +39,7 @@ MonoBehaviour:
     <useSimulationMove>k__BackingField: 1
     <useAttachedTriggers>k__BackingField: 0
   airMoveSpeed: 5
-  jumpHeight: 12
+  jumpHeight: 12.5
   jumpFallMultiplier: 1
   jumpLowMultiplier: 5
   jumpCoyoteTime: 0.1

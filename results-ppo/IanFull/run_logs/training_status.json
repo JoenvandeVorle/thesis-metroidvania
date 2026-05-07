@@ -1,0 +1,29 @@
+{
+    "IanAgent24": {
+        "checkpoints": [
+            {
+                "steps": 91521,
+                "file_path": "results\\IanFull\\IanAgent24\\IanAgent24-91521.onnx",
+                "reward": null,
+                "creation_time": 1775635332.5553496,
+                "auxillary_file_paths": [
+                    "results\\IanFull\\IanAgent24\\IanAgent24-91521.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 91521,
+            "file_path": "results\\IanFull\\IanAgent24.onnx",
+            "reward": null,
+            "creation_time": 1775635332.5553496,
+            "auxillary_file_paths": [
+                "results\\IanFull\\IanAgent24\\IanAgent24-91521.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

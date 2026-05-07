@@ -1,3 +1,4 @@
+using System.Text;
 using Metroidvania.Pathfinding.Blocks;
 using Unity.Collections;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace Metroidvania.Pathfinding
             nodes = new PathNode[size];
             nativeNodes = new NativeArray<PathNodeReference>(size, Allocator.Persistent);
 
+            StringBuilder sb = new();
+
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -43,12 +46,16 @@ namespace Metroidvania.Pathfinding
                     {
                         if (blocks[j].IsBlocked(node))
                         {
+                            sb.Append("X");
                             node.walkable = false;
                             break;
                         }
                     }
+                    sb.Append(".");
                 }
+                sb.AppendLine();
             }
+            Debug.Log("Generated grid graph:\n" + sb.ToString());
         }
 
         public void InvokeNodeChanged(PathNode node) => NodeChanged?.Invoke(node);
