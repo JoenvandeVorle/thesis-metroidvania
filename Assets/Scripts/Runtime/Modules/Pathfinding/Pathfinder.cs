@@ -31,6 +31,7 @@ namespace Metroidvania.Pathfinding
         [SerializeField, Min(0)] private float m_GraphCellSize;
         [SerializeField] private Vector2 m_GraphOffset;
         [SerializeField] private bool m_GetSizesFromTilemap = false;
+        [SerializeField] private int m_MaxJumpHeight = 4;
 
         public int GraphWidth => generatedGraph ? graph.width : m_GraphWidth;
         public int GraphHeight => generatedGraph ? graph.height : m_GraphHeight;
@@ -77,7 +78,9 @@ namespace Metroidvania.Pathfinding
             base.OnDestroy();
         }
 
-        public Path FindPath(Vector2 start, Vector2 end)
+        public Path FindPathForPlayer(Vector2 start, Vector2 end) => FindPath(start, end, forPlayer: true);
+
+        public Path FindPath(Vector2 start, Vector2 end, bool forPlayer = false)
         {
             CellPosition startCell = graph.GetLocalPosition(start);
             CellPosition endCell = graph.GetLocalPosition(end);
@@ -95,8 +98,15 @@ namespace Metroidvania.Pathfinding
 
             NativeList<int> generatedPath = new NativeList<int>(Allocator.TempJob);
 
-            // create, schedule and complete the pathfinding job
-            new PathFindJob()
+            var job = forPlayer ? new PathFindJobForPlayer()
+            {
+                start = startCell,
+                end = endCell,
+                gridSize = new CellPosition(graph.width, graph.height),
+                maxJumpHeight = m_MaxJumpHeight,
+                pathNodes = graph.nativeNodes,
+                generatedPath = generatedPath,
+            }.Schedule() : new PathFindJob()
             {
                 start = startCell,
                 end = endCell,
@@ -104,7 +114,9 @@ namespace Metroidvania.Pathfinding
                 pathNodes = graph.nativeNodes,
                 neighborOffsets = _neighborsOffset,
                 generatedPath = generatedPath,
-            }.Schedule().Complete();
+            }.Schedule();
+
+            job.Complete();
 
             Path path = null;
             // A check if the pathfinding found a path, if not return null

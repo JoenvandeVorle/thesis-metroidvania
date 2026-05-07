@@ -1,4 +1,5 @@
 using Metroidvania;
+using Metroidvania.Characters.Knight;
 using Metroidvania.Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,11 +8,12 @@ public class TargetPathFinder : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject target;
-    [SerializeField] private float pathUpdateRate = 1f;
+    [SerializeField] private float pathUpdateRate = 3f;
 
     private Pathfinder pathfinderInstance;
     private Path currentPath;
     private float pathUpdateTimer;
+    private KnightCharacterController character;
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class TargetPathFinder : MonoBehaviour
         }
 
         pathfinderInstance = Pathfinder.instance;
+        character = player.GetComponent<KnightCharacterController>();
 
         UpdatePath();
     }
@@ -31,6 +34,9 @@ public class TargetPathFinder : MonoBehaviour
         pathUpdateTimer += Time.deltaTime;
         if (pathUpdateTimer >= pathUpdateRate)
         {
+            if (!character.collisionChecker.isGrounded)
+                return; // to prevent path updates mid-air
+
             UpdatePath();
             pathUpdateTimer = 0f;
         }
@@ -44,7 +50,8 @@ public class TargetPathFinder : MonoBehaviour
         if (currentPath != null)
             pathfinderInstance.ReleasePath(ref currentPath);
 
-        currentPath = pathfinderInstance.FindPath(playerPos, targetPos);
+        currentPath = pathfinderInstance.FindPathForPlayer(playerPos, targetPos);
+        print(currentPath == null ? "No path found." : $"Path {currentPath} found.");
     }
 
 #if UNITY_EDITOR

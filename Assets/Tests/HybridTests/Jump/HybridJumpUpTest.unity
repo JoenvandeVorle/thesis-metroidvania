@@ -563,6 +563,7 @@ MonoBehaviour:
   m_GraphCellSize: 1
   m_GraphOffset: {x: -1, y: -1}
   m_GetSizesFromTilemap: 0
+  m_MaxJumpHeight: 4
 --- !u!4 &1190362799
 Transform:
   m_ObjectHideFlags: 0
@@ -593,7 +594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tests::TilemapPathFinder
   player: {fileID: 6556827614545383135}
   target: {fileID: 4383588491322518141}
-  pathUpdateRate: 1
+  pathUpdateRate: 2
 --- !u!1 &1624451815
 GameObject:
   m_ObjectHideFlags: 0
@@ -8499,7 +8500,7 @@ Transform:
   m_GameObject: {fileID: 7657334810668495327}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.72, y: -1.12, z: 0}
+  m_LocalPosition: {x: 5.2, y: -1.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

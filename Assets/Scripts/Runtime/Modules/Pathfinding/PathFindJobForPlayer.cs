@@ -56,8 +56,8 @@ namespace Metroidvania.Pathfinding
             s0.h = CalculateDistanceCost(start, end);
             states[startIdx] = s0;
 
-            NativeList<int> openList = new NativeList<int>(Allocator.Temp);
-            NativeList<int> closedList = new NativeList<int>(Allocator.Temp);
+            NativeList<int> openList = new(Allocator.Temp);
+            NativeList<int> closedList = new(Allocator.Temp);
             openList.Add(startIdx);
 
             while (openList.Length > 0)
@@ -102,9 +102,9 @@ namespace Metroidvania.Pathfinding
                         if (IsWalkable(cx + 1, cy)) ExploreAscend(cx + 1, cy + 1, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                     }
 
-                    // Drift horizontally (no height budget consumed).
-                    ExploreAir(cx - 1, cy, curPhase, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
-                    ExploreAir(cx + 1, cy, curPhase, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
+                    // Drift horizontally
+                    ExploreAir(cx - 1, cy, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
+                    ExploreAir(cx + 1, cy, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
 
                     // Gravity takes over — start falling.
                     ExploreFall(cx, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
@@ -115,10 +115,6 @@ namespace Metroidvania.Pathfinding
                     ExploreFall(cx, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
                     if (IsWalkable(cx - 1, cy)) ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                     if (IsWalkable(cx + 1, cy)) ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
-
-                    // Drift horizontally while airborne.
-                    ExploreAir(cx - 1, cy, fallingPhase, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
-                    ExploreAir(cx + 1, cy, fallingPhase, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
                 }
             }
 
@@ -214,7 +210,7 @@ namespace Metroidvania.Pathfinding
         // A cell has a floor if the cell directly below is solid (not walkable) or it sits on the grid bottom.
         private bool HasFloor(int x, int y)
         {
-            if (y == 0) return true;
+            if (y == 0) return false;
             return !pathNodes[x + (y - 1) * gridSize.x].walkable;
         }
 
