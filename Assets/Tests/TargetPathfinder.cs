@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using Metroidvania;
 using Metroidvania.Characters.Knight;
 using Metroidvania.Pathfinding;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class TargetPathFinder : MonoBehaviour
 {
@@ -42,6 +42,10 @@ public class TargetPathFinder : MonoBehaviour
         }
     }
 
+    // TODO:: when following path, can differentiate between hor jump and ver jump by looking at
+    // next 4 nodes and checking the max y difference.
+    public List<Vector2> GetCurrentPath() => currentPath?.vectorPath;
+
     private void UpdatePath()
     {
         Vector2 playerPos = player.transform.position;
@@ -51,14 +55,13 @@ public class TargetPathFinder : MonoBehaviour
             pathfinderInstance.ReleasePath(ref currentPath);
 
         currentPath = pathfinderInstance.FindPathForPlayer(playerPos, targetPos);
-        print(currentPath == null ? "No path found." : $"Path {currentPath} found.");
     }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (currentPath != null)
-            new GizmosDrawer().SetColor(GizmosColor.instance.pathfinding.pathColor).DrawPath(currentPath);
+            new GizmosDrawer().DrawPathNodes(currentPath);
     }
 #endif
 }

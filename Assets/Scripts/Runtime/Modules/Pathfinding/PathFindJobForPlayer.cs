@@ -2,7 +2,6 @@ using Unity.Collections;
 
 namespace Metroidvania.Pathfinding
 {
-    // Platformer-aware A* that accounts for gravity and jump height.
     // State space: (x, y, jumpPhase) where:
     //   jumpPhase = 0            → grounded (solid floor below)
     //   jumpPhase = 1..maxJump   → ascending (cells risen from launch point)
@@ -132,6 +131,7 @@ namespace Metroidvania.Pathfinding
             }
 
             // Trace path end→start (Path.Setup reverses it).
+            // TODO:: add jump state to returned path?
             if (bestEndIdx != -1)
             {
                 generatedPath.Add(bestEndIdx % cells);

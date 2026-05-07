@@ -19,6 +19,7 @@ namespace Metroidvania
         public class Pathfinding
         {
             public Color pathColor = Color.green;
+            public Color nodeColor = Color.yellow;
         }
 
         [System.Serializable]
