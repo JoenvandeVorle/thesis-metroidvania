@@ -13,5 +13,7 @@ namespace Metroidvania.Pathfinding.Blocks
         }
 
         public abstract bool IsBlocked(PathNode node);
+
+        public abstract BoundsInt GetBounds();
     }
 }

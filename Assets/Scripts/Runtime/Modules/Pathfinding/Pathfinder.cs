@@ -1,3 +1,4 @@
+using System;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace Metroidvania.Pathfinding
         [SerializeField, Min(0)] private int m_GraphHeight;
         [SerializeField, Min(0)] private float m_GraphCellSize;
         [SerializeField] private Vector2 m_GraphOffset;
+        [SerializeField] private bool m_GetSizesFromTilemap = false;
 
         public int GraphWidth => generatedGraph ? graph.width : m_GraphWidth;
         public int GraphHeight => generatedGraph ? graph.height : m_GraphHeight;
@@ -48,6 +50,19 @@ namespace Metroidvania.Pathfinding
             _neighborsOffset[6] = new CellPosition(+1, -1); // right down
             _neighborsOffset[7] = new CellPosition(+1, +1); // right up
             _blocks = GetComponentsInChildren<Blocks.GraphBlockBase>();
+            if (m_GetSizesFromTilemap)
+            {
+                Debug.Log("Getting graph size and offset from tilemap blocks...");
+                foreach (var block in _blocks)
+                {
+                    BoundsInt blockBounds = block.GetBounds();
+                    m_GraphWidth = Mathf.Max(m_GraphWidth, blockBounds.size.x);
+                    m_GraphHeight = Mathf.Max(m_GraphHeight, blockBounds.size.y);
+                    m_GraphOffset = new Vector2(Mathf.Min(m_GraphOffset.x, blockBounds.min.x), Mathf.Min(m_GraphOffset.y, blockBounds.min.y));
+                    Debug.Log($"Updated graph size from block {block.name}: width={m_GraphWidth}, height={m_GraphHeight}");
+                    Debug.Log($"Updated graph offset from block {block.name}: offset={m_GraphOffset}");
+                }
+            }
             graph = new GridGraph(m_GraphWidth, m_GraphHeight, m_GraphCellSize, m_GraphOffset, _blocks);
             generatedGraph = true;
             _pool = new PathPool();
