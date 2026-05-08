@@ -14,8 +14,14 @@ namespace Metroidvania.Pathfinding.Blocks
 
         public override BoundsInt GetBounds()
         {
+            m_Tilemap.RefreshAllTiles();
             m_Tilemap.CompressBounds();
             return m_Tilemap.cellBounds;
+        }
+
+        public override Vector2 GetOffsetInWorldSpace()
+        {
+            return m_Tilemap.CellToWorld(m_Tilemap.cellBounds.min);
         }
     }
 }

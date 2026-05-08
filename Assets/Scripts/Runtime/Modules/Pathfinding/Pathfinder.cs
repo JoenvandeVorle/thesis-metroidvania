@@ -31,7 +31,6 @@ namespace Metroidvania.Pathfinding
         [SerializeField, Min(0)] private float m_GraphCellSize;
         [SerializeField] private Vector2 m_GraphOffset;
         [SerializeField] private bool m_GetSizesFromTilemap = false;
-        [SerializeField] private int m_MaxJumpHeight = 4;
 
         public int GraphWidth => generatedGraph ? graph.width : m_GraphWidth;
         public int GraphHeight => generatedGraph ? graph.height : m_GraphHeight;
@@ -54,14 +53,17 @@ namespace Metroidvania.Pathfinding
             if (m_GetSizesFromTilemap)
             {
                 Debug.Log("Getting graph size and offset from tilemap blocks...");
+                m_GraphWidth = 0; m_GraphHeight = 0; m_GraphOffset = Vector2.zero;
                 foreach (var block in _blocks)
                 {
                     BoundsInt blockBounds = block.GetBounds();
+                    Vector2 blockOffset = block.GetOffsetInWorldSpace();
+                    Debug.Log($"Block {block.name} bounds: {block}");
                     m_GraphWidth = Mathf.Max(m_GraphWidth, blockBounds.size.x);
                     m_GraphHeight = Mathf.Max(m_GraphHeight, blockBounds.size.y);
-                    m_GraphOffset = new Vector2(Mathf.Min(m_GraphOffset.x, blockBounds.min.x), Mathf.Min(m_GraphOffset.y, blockBounds.min.y));
+                    m_GraphOffset = new Vector2(Mathf.Min(m_GraphOffset.x, blockOffset.x), Mathf.Min(m_GraphOffset.y, blockOffset.y));
                     Debug.Log($"Updated graph size from block {block.name}: width={m_GraphWidth}, height={m_GraphHeight}");
-                    Debug.Log($"Updated graph offset from block {block.name}: offset={m_GraphOffset}");
+                    Debug.Log($"Updated graph offset from block {block.name}): offset={m_GraphOffset}");
                 }
             }
             graph = new GridGraph(m_GraphWidth, m_GraphHeight, m_GraphCellSize, m_GraphOffset, _blocks);
@@ -103,7 +105,7 @@ namespace Metroidvania.Pathfinding
                 start = startCell,
                 end = endCell,
                 gridSize = new CellPosition(graph.width, graph.height),
-                maxJumpHeight = m_MaxJumpHeight,
+                maxJumpHeight = Vars.MAX_JUMP_HEIGHT,
                 pathNodes = graph.nativeNodes,
                 generatedPath = generatedPath,
             }.Schedule() : new PathFindJob()

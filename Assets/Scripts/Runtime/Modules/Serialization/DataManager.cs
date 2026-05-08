@@ -75,6 +75,9 @@ namespace Metroidvania.Serialization
 
         public void SerializeData()
         {
+            if (!Vars.DO_SERIALIZE)
+                return;
+
             _gameData.lastSerialization = System.DateTime.Now.ToBinary();
             s_dataHandler.Serialize(_gameData, _gameData.userId);
         }
