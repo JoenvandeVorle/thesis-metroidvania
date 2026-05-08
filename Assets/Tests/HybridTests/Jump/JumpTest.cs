@@ -126,7 +126,6 @@ namespace Tests.HybridTests
                 {
                     Debug.Log("Stopping jump");
                     jumpTacticAgent.StopAgent();
-                    pathfinder.UpdatePath();
                     nextPathNode = pathfinder.GetNextPathNode();
                 }
             );
