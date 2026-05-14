@@ -6,36 +6,40 @@ behaviors:
       buffer_size: 256
       learning_rate: 0.0003
       beta: 0.005
-      epsilon: 0.2
+      epsilon: 0.1
       lambd: 0.95
-      num_epoch: 3
+      num_epoch: 5
       learning_rate_schedule: linear
     network_settings:
-      normalize: false
+      normalize: true
       hidden_units: 128
       num_layers: 2
+      goal_conditioning_type: hyper
+      # memory:
+      #   memory_size: 128
+      #   sequence_length: 32
     reward_signals:
       extrinsic:
         gamma: 0.995
         strength: 1.0
-      # curiosity:
-      #   strength: 0.05
-      #   gamma: 0.95
+      curiosity:
+        strength: 0.15
+        gamma: 0.95
       gail:
-        strength: 0.075
-        gamma: 0.90
+        strength: 0.025
+        gamma: 0.9
         network_settings:
-          normalize: false
+          normalize: true
           hidden_units: 128
           num_layers: 2
-        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemos
+        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemosStacked
         use_vail: true
         use_actions: false
     behavioral_cloning:
-      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemos
-      strength: 0.4
-      steps: 10000
+      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemosStacked
+      strength: 0.5
+      steps: 50000
     keep_checkpoints: 5
-    max_steps: 250000
+    max_steps: 1000000
     time_horizon: 32
     summary_freq: 2000

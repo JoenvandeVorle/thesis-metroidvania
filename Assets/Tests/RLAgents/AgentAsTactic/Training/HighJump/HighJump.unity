@@ -20990,13 +20990,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4799761773657458632}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4802892421480802176}
-  m_Father: {fileID: 5191025300871464516}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3582552262268221643
 MonoBehaviour:
@@ -36982,13 +36982,12 @@ Transform:
   m_GameObject: {fileID: 4140901734514824190}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4018658374116149221}
   - {fileID: 8742178724677222880}
-  - {fileID: 3542721514638550253}
   - {fileID: 8553048177623487497}
   - {fileID: 880622728898531497}
   - {fileID: 5156281991840877911}
@@ -38878,7 +38877,7 @@ MonoBehaviour:
   Record: 0
   NumStepsToRecord: 2500
   DemonstrationName: HighJump
-  DemonstrationDirectory: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemos
+  DemonstrationDirectory: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemosStacked
 --- !u!114 &6780868421342671785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39419,7 +39418,7 @@ Transform:
   m_GameObject: {fileID: 4423433466273464879}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.94, y: 4.54, z: 0}
+  m_LocalPosition: {x: -1.06, y: 4.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49590,8 +49589,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
   m_BrainParameters:
-    VectorObservationSize: 53
-    NumStackedVectorObservations: 1
+    VectorObservationSize: 85
+    NumStackedVectorObservations: 3
     m_ActionSpec:
       m_NumContinuousActions: 0
       BranchSizes: 0300000002000000
@@ -49776,7 +49775,7 @@ Transform:
   m_GameObject: {fileID: 445999883347742521}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.94, y: 4.54, z: 0}
+  m_LocalPosition: {x: -1.06, y: 4.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55844,7 +55843,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   useGridObservations: 1
-  observationGridSize: 7
+  observationGridSize: 9
   observationGridCellRadius: 0.3
   drawObservationGrid: 0
   fallHeight: -5
@@ -56998,3 +56997,4 @@ SceneRoots:
   - {fileID: 1624451816}
   - {fileID: 6090313631051240928}
   - {fileID: 940097205}
+  - {fileID: 3542721514638550253}
