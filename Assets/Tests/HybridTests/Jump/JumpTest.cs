@@ -14,8 +14,10 @@ using Aplib.Core.Desire.GoalStructures;
 using Aplib.Core.Desire.DesireSets;
 using Aplib.Core.Agents;
 using Aplib.Integrations.Unity;
-using Unity.MLAgents.Policies;
 using Tests.AplibTests;
+using Metroidvania.Pathfinding;
+using Tuple = System.Tuple;
+using System.Runtime.CompilerServices;
 
 namespace Tests.HybridTests
 {
@@ -24,41 +26,11 @@ namespace Tests.HybridTests
         public readonly Belief<GameObject, GameObject> Player =
             new(reference: GameObject.Find("Player"), x => x);
 
-        /// <summary>
-        /// The list of targets
-        /// </summary>
-        public readonly Belief<Transform, List<Transform>> Targets =
-            new(GameObject.Find("Targets").transform, x => {
-                List<Transform> targets = new();
-                foreach (Transform child in x)
-                    targets.Add(child);
-                return targets;
-            });
+        public readonly Belief<GameObject, GameObject> Target = new(
+            GameObject.Find("Target_R_3"), x => x);
 
-        public readonly Belief<GameObject, GameObject> ClosestTarget = new(
-            GameObject.Find("Player"),
-            player => {
-                Transform targetsParent = GameObject.Find("Targets").transform;
-                GameObject closestTarget = null;
-                float closestDistance = float.MaxValue;
-                foreach (Transform target in targetsParent)
-                {
-                    if (!target.gameObject.activeSelf)
-                        continue;
-
-                    float distance = Vector2.Distance(player.transform.position, target.position);
-                    if (distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        closestTarget = target.gameObject;
-                    }
-                }
-                return closestTarget;
-            }
-        );
-
-        public readonly Belief<GameObject, JumpBehaviorLong> JumpBehavior =
-            new(GameObject.Find("Player"), x => x.GetComponent<JumpBehaviorLong>());
+        public readonly Belief<TargetPathFinder, List<Vector2>> currentPath = new(
+            GameObject.Find("Player").GetComponent<TargetPathFinder>(), x => x.GetCurrentPath());
     }
 
     public class HybridJumpTest
@@ -76,58 +48,120 @@ namespace Tests.HybridTests
             // Arrange
             InputGenerator inputGenerator = InputGenerator.instance;
             HybridJumpBeliefSet beliefSet = new();
-            JumpBehaviorLong jumpComponent = beliefSet.JumpBehavior;
-            jumpComponent.enabled = false;
+            GameObject player = beliefSet.Player;
+            JumpTacticForTest jumpTacticAgent = player.GetComponent<JumpTacticForTest>();
+            if (jumpTacticAgent == null)
+                Assert.Fail("JumpTacticForTest component not found on Player GameObject");
+            jumpTacticAgent.enabled = false;
+            TargetPathFinder pathfinder = player.GetComponent<TargetPathFinder>();
+            if (pathfinder == null)
+                Assert.Fail("TargetPathFinder component not found on Player GameObject");
 
-            // Action that turns on the jump component
-            Action<HybridJumpBeliefSet> jumpAction = new(
+            while (pathfinder.GetCurrentPath() == null)
+            {
+                Debug.Log("Waiting for path to be calculated...");
+                yield return TestWait.ForSeconds(1f);
+            }
+            System.Tuple<int, Vector2> nextPathNode = pathfinder.GetNextPathNode();
+
+            #region movement tactics
+
+            Action<HybridJumpBeliefSet> move = new(
                 beliefSet =>
                 {
-                    GameObject closestTarget = beliefSet.ClosestTarget;
-                    jumpComponent.goal = closestTarget;
-                    jumpComponent.enabled = true;
+                    nextPathNode = pathfinder.GetNextPathNode();
+                    // Debug.Log("Doing movement action to: " + nextPathInfo.Item2);
+                    Vector3 direction = ((Vector3)nextPathNode.Item2 - player.transform.position).normalized;
+                    inputGenerator.MoveTowards(direction);
                 }
             );
 
             Action<HybridJumpBeliefSet> stopMovement = new(
                 beliefSet =>
                 {
-                    jumpComponent.enabled = false;
-                    GameObject closestTarget = beliefSet.ClosestTarget;
-                    closestTarget.SetActive(false);
-                    Debug.Log("Disabled target: " + closestTarget.name);
+                    Debug.Log("Stopping movement");
+                    inputGenerator.ReleaseMovement();
                 }
             );
 
-            PrimitiveTactic<HybridJumpBeliefSet> startMovementTactic = new(jumpAction);
+            PrimitiveTactic<HybridJumpBeliefSet> startMovementTactic = new(move);
 
-            bool hasReachedTargetGuard(HybridJumpBeliefSet beliefSet)
+            bool hasReachedJumpPoint(HybridJumpBeliefSet beliefSet)
             {
+                if (jumpTacticAgent.enabled)
+                    return true;
+
                 GameObject player = beliefSet.Player;
-                Vector2 playerPosition = player.transform.position;
-                GameObject closestTarget = beliefSet.ClosestTarget;
-                Vector2 targetPosition = closestTarget.transform.position;
-                return Vector2.Distance(playerPosition, targetPosition) < 1f;
+                if (nextPathNode.Item1 == -1)
+                {
+                    Debug.LogWarning("No next path index available in hasReachedJumpPoint guard.");
+                    return false;
+                }
+                if (nextPathNode.Item2.y > player.transform.position.y)
+                {
+                    Debug.Log($"Reached jump point at i:{nextPathNode.Item1} - {nextPathNode.Item2}");
+                }
+                return nextPathNode.Item2.y > player.transform.position.y;
             }
 
-            PrimitiveTactic<HybridJumpBeliefSet> stopMovementTactic = new(stopMovement, hasReachedTargetGuard);
+            PrimitiveTactic<HybridJumpBeliefSet> stopMovementTactic = new(stopMovement, hasReachedJumpPoint);
             FirstOfTactic<HybridJumpBeliefSet> moveTactic = new(stopMovementTactic, startMovementTactic);
 
-            // Once all targets are disabled, the agent has succeeded.
-            Goal<HybridJumpBeliefSet> reachAllTargetsGoal = new(
-                moveTactic,
+            #endregion
+
+            #region jump tactic agent
+            Action<HybridJumpBeliefSet> jumpAction = new(
                 beliefSet =>
                 {
-                    List<Transform> targets = beliefSet.Targets;
-                    foreach (Transform target in targets)
-                    {
-                        if (target.gameObject.activeSelf)
-                            return false;
-                    }
-                    return true;
+                    if (jumpTacticAgent.enabled)
+                        return;
+                    Vector2 jumpEndPoint = pathfinder.FindEndOfJumpStartingAtIndex(nextPathNode.Item1 - 1);
+                    Debug.Log($"Starting jump to: " + jumpEndPoint + $" from index {nextPathNode.Item1 - 1}");
+                    jumpTacticAgent.StartAgent(jumpEndPoint);
                 }
             );
-            PrimitiveGoalStructure<HybridJumpBeliefSet> reachTargetGoalStructure = new(reachAllTargetsGoal);
+
+            Action<HybridJumpBeliefSet> stopJump = new(
+                beliefSet =>
+                {
+                    Debug.Log("Stopping jump");
+                    jumpTacticAgent.StopAgent();
+                    nextPathNode = pathfinder.GetNextPathNode();
+                }
+            );
+
+            PrimitiveTactic<HybridJumpBeliefSet> startJumpTactic = new(jumpAction, hasReachedJumpPoint);
+
+            bool hasReachedJumpTarget(HybridJumpBeliefSet beliefSet)
+            {
+                if (jumpTacticAgent.ReachedGoal)
+                    Debug.Log($"Reached jump target: {jumpTacticAgent.goalPosition}");
+                return jumpTacticAgent.ReachedGoal;
+            }
+
+            PrimitiveTactic<HybridJumpBeliefSet> stopJumpTactic = new(stopJump, hasReachedJumpTarget);
+            FirstOfTactic<HybridJumpBeliefSet> jumpTactic = new(stopJumpTactic, startJumpTactic);
+            #endregion
+
+            FirstOfTactic<HybridJumpBeliefSet> moveAndJumpTactic = new(jumpTactic, moveTactic);
+
+            Goal<HybridJumpBeliefSet> reachedTargetGoal = new(
+                moveAndJumpTactic,
+                beliefSet =>
+                {
+                    GameObject player = beliefSet.Player;
+                    GameObject target = beliefSet.Target;
+
+                    if (!didNotFall())
+                    {
+                        Assert.Fail("Player fell during the test");
+                        return false;
+                    }
+
+                    return Vector2.Distance(player.transform.position, target.transform.position) < 0.5f;
+                }
+            );
+            PrimitiveGoalStructure<HybridJumpBeliefSet> reachTargetGoalStructure = new(reachedTargetGoal);
             DesireSet<HybridJumpBeliefSet> desireSet = new(reachTargetGoalStructure);
 
             // Setup the agent with the belief set and desire set and initialize the test runner.
@@ -135,10 +169,17 @@ namespace Tests.HybridTests
             AplibRunner testRunner = new(agent);
 
             // Act
+            Assert.GreaterOrEqual(player.transform.position.y, -10);
             yield return testRunner.Test();
 
             // Assert
             Assert.AreEqual(CompletionStatus.Success, agent.Status);
+
+            bool didNotFall()
+            {
+                GameObject player = beliefSet.Player;
+                return player.transform.position.y > -10;
+            }
         }
 
     }

@@ -132,9 +132,9 @@ namespace Metroidvania.Characters.Knight
         private void Update()
         {
             stateMachine.Update();
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             InputReader.instance.Update();
-            #endif
+#endif
         }
 
         private void FixedUpdate()

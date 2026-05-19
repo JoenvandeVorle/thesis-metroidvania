@@ -1,0 +1,47 @@
+{
+    "HighJumpTactic": {
+        "checkpoints": [
+            {
+                "steps": 499993,
+                "file_path": "results-tactics-highjump\\stackedVectors7\\HighJumpTactic\\HighJumpTactic-499993.onnx",
+                "reward": -2.731515049934387,
+                "creation_time": 1778776398.9832017,
+                "auxillary_file_paths": [
+                    "results-tactics-highjump\\stackedVectors7\\HighJumpTactic\\HighJumpTactic-499993.pt"
+                ]
+            },
+            {
+                "steps": 999987,
+                "file_path": "results-tactics-highjump\\stackedVectors7\\HighJumpTactic\\HighJumpTactic-999987.onnx",
+                "reward": 9.763355016708374,
+                "creation_time": 1778779619.4119422,
+                "auxillary_file_paths": [
+                    "results-tactics-highjump\\stackedVectors7\\HighJumpTactic\\HighJumpTactic-999987.pt"
+                ]
+            },
+            {
+                "steps": 1000019,
+                "file_path": "results-tactics-highjump\\stackedVectors7\\HighJumpTactic\\HighJumpTactic-1000019.onnx",
+                "reward": 9.763355016708374,
+                "creation_time": 1778779619.48212,
+                "auxillary_file_paths": [
+                    "results-tactics-highjump\\stackedVectors7\\HighJumpTactic\\HighJumpTactic-1000019.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1000019,
+            "file_path": "results-tactics-highjump\\stackedVectors7\\HighJumpTactic.onnx",
+            "reward": 9.763355016708374,
+            "creation_time": 1778779619.48212,
+            "auxillary_file_paths": [
+                "results-tactics-highjump\\stackedVectors7\\HighJumpTactic\\HighJumpTactic-1000019.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

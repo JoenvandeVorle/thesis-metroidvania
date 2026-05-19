@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 using Unity.Collections;
 using UnityEngine;
 
@@ -30,6 +32,17 @@ namespace Metroidvania.Pathfinding
         {
             vectorPath.Clear();
             vectorPath.Add(position);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new();
+            sb.Append("Path: ");
+            foreach (Vector2 point in vectorPath)
+            {
+                sb.Append(point + " -> ");
+            }
+            return sb.ToString();
         }
     }
 }

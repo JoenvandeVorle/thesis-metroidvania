@@ -15,5 +15,12 @@ namespace Metroidvania.Pathfinding.Blocks
         public abstract bool IsBlocked(PathNode node);
 
         public abstract BoundsInt GetBounds();
+
+        public abstract Vector2 GetOffsetInWorldSpace();
+
+        public override string ToString()
+        {
+            return $"{name} (offset: {GetBounds().min}, size: {GetBounds().size})";
+        }
     }
 }

@@ -1,0 +1,29 @@
+{
+    "HighJumpTactic": {
+        "checkpoints": [
+            {
+                "steps": 250007,
+                "file_path": "results-tactics-highjump\\init5\\HighJumpTactic\\HighJumpTactic-250007.onnx",
+                "reward": -2.511260151863098,
+                "creation_time": 1778673335.9992216,
+                "auxillary_file_paths": [
+                    "results-tactics-highjump\\init5\\HighJumpTactic\\HighJumpTactic-250007.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 250007,
+            "file_path": "results-tactics-highjump\\init5\\HighJumpTactic.onnx",
+            "reward": -2.511260151863098,
+            "creation_time": 1778673335.9992216,
+            "auxillary_file_paths": [
+                "results-tactics-highjump\\init5\\HighJumpTactic\\HighJumpTactic-250007.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

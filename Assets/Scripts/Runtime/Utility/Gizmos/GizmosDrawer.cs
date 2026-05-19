@@ -103,6 +103,17 @@ namespace Metroidvania
                 DrawLine(path.vectorPath[i], path.vectorPath[i + 1]);
             return this;
         }
+
+        public GizmosDrawer DrawPathNodes(Pathfinding.Path path)
+        {
+            SetColor(GizmosColor.instance.pathfinding.pathColor);
+            for (int i = 0; i < path.vectorPath.Count - 1; i++)
+            {
+                DrawLine(path.vectorPath[i], path.vectorPath[i + 1]);
+                DrawWireDisc(path.vectorPath[i], 0.1f);
+            }
+            return this;
+        }
     }
 }
 #endif
