@@ -59,6 +59,9 @@ Assets/Tests/AplibTests/
 Assets/Tests/HybridTests/Jump/
  JumpTacticForTest.cs
  JumpTest.cs
+Assets/Tests/IanExperiment/Difficulty1/
+ BaseExperiment.cs
+ Trivial.cs
 Assets/Tests/
  InputGenerator.cs
  InputTests/
@@ -356,9 +359,7 @@ Library/ScriptAssemblies/
  UnityEditor.UI.dll
  UnityEngine.TestRunner.dll
  UnityEngine.UI.dll
-Temp/bin/Debug/
- DOTween.Modules.dll
- Metroidvania.dll
+Temp/bin/Debug/Metroidvania.dll
 
 [analyzerReferences]
 ../../../../Program Files/Unity/Hub/Editor/6000.3.10f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/
