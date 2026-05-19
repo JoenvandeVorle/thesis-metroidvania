@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aplib.Core;
 using Aplib.Core.Agents;
 using Aplib.Core.Belief.Beliefs;
 using Aplib.Core.Belief.BeliefSets;
@@ -11,6 +12,7 @@ using Aplib.Core.Intent.Tactics;
 using Aplib.Integrations.Unity;
 using NUnit.Framework;
 using Tests.AplibTests;
+using UnityEditor.TestTools.TestRunner.Api;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -149,6 +151,8 @@ namespace Tests.Experiments
         protected PrimitiveGoalStructure<ExperimentBeliefSet> experimentGoalStructure;
         protected DesireSet<ExperimentBeliefSet> desireSet;
         protected BdiAgent<ExperimentBeliefSet> agent;
+        protected AplibRunner runner;
+
         public void SetupExperiment()
         {
             Arrange();
@@ -182,6 +186,25 @@ namespace Tests.Experiments
             experimentGoalStructure = new PrimitiveGoalStructure<ExperimentBeliefSet>(reachedTargetGoal);
             desireSet = new DesireSet<ExperimentBeliefSet>(experimentGoalStructure);
             agent = new BdiAgent<ExperimentBeliefSet>(beliefSet, desireSet);
+            runner = new AplibRunner(agent);
+        }
+
+        public IEnumerator PerformExperiment()
+        {
+            SetupExperiment();
+            while (pathfinder.GetCurrentPath() == null)
+            {
+                Debug.Log("Waiting for path to be calculated...");
+                yield return TestWait.ForSeconds(1f);
+            }
+            nextPathNode = pathfinder.GetNextPathNode();
+
+            // Act
+            Assert.GreaterOrEqual(player.transform.position.y, -10, "Player should start above y = -10");
+            yield return runner.Test();
+
+            // Assert
+            Assert.AreEqual(CompletionStatus.Success, agent.Status);
         }
     }
 }

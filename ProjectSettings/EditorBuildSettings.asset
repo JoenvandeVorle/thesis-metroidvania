@@ -26,6 +26,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tests/IanExperiment/Difficulty1/trivial.unity
     guid: ae9f3c197bedf804bb04ac3b02bfa52f
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/trivialrv.unity
+    guid: b7282ff13c40a02458933159dcd1f4b0
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/u1.unity
+    guid: 71c644611ccb7714c920a62cafdd890c
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 189c569713a33b1489299ccee6e81330, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

@@ -62,6 +62,8 @@ Assets/Tests/HybridTests/Jump/
 Assets/Tests/IanExperiment/Difficulty1/
  BaseExperiment.cs
  Trivial.cs
+ Trivialrv.cs
+ U1.cs
 Assets/Tests/
  InputGenerator.cs
  InputTests/
