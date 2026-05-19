@@ -2,22 +2,22 @@
     "HighJumpTactic": {
         "checkpoints": [
             {
-                "steps": 0,
-                "file_path": "results-tactics-highjump\\extra_trainingdata\\HighJumpTactic\\HighJumpTactic-0.onnx",
-                "reward": null,
-                "creation_time": 1778852492.1836634,
+                "steps": 268707,
+                "file_path": "results-tactics-highjump\\extra_trainingdata\\HighJumpTactic\\HighJumpTactic-268707.onnx",
+                "reward": -1.2338268756866455,
+                "creation_time": 1778854282.5666718,
                 "auxillary_file_paths": [
-                    "results-tactics-highjump\\extra_trainingdata\\HighJumpTactic\\HighJumpTactic-0.pt"
+                    "results-tactics-highjump\\extra_trainingdata\\HighJumpTactic\\HighJumpTactic-268707.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 0,
+            "steps": 268707,
             "file_path": "results-tactics-highjump\\extra_trainingdata\\HighJumpTactic.onnx",
-            "reward": null,
-            "creation_time": 1778852492.1836634,
+            "reward": -1.2338268756866455,
+            "creation_time": 1778854282.5666718,
             "auxillary_file_paths": [
-                "results-tactics-highjump\\extra_trainingdata\\HighJumpTactic\\HighJumpTactic-0.pt"
+                "results-tactics-highjump\\extra_trainingdata\\HighJumpTactic\\HighJumpTactic-268707.pt"
             ]
         }
     },
