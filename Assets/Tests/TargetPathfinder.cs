@@ -103,7 +103,7 @@ public class TargetPathFinder : MonoBehaviour
                 return vectorPath[i];
         }
         Debug.LogWarning("No end of jump found in path after index " + startIndex);
-        return vectorPath[^1]; // last node
+        return vectorPath[^2]; // last node - 1
     }
 
     public void UpdatePath()

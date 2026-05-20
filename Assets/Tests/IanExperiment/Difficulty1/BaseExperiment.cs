@@ -12,13 +12,11 @@ using Aplib.Core.Intent.Tactics;
 using Aplib.Integrations.Unity;
 using NUnit.Framework;
 using Tests.AplibTests;
-using UnityEditor.TestTools.TestRunner.Api;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.TestTools;
 
 namespace Tests.Experiments
 {
+
     public class ExperimentBeliefSet : BeliefSet
     {
         public readonly Belief<GameObject, GameObject> Player =
@@ -33,6 +31,8 @@ namespace Tests.Experiments
 
     public class BaseExperiment
     {
+        public static int PATHFINDER_WAIT_TIMEOUT = 5;
+
         protected InputGenerator inputGenerator;
         protected ExperimentBeliefSet beliefSet;
         protected GameObject player;
@@ -78,11 +78,12 @@ namespace Tests.Experiments
                 Debug.LogWarning("No next path index available in hasReachedJumpPoint guard.");
                 return false;
             }
-            if (nextPathNode.Item2.y > player.transform.position.y)
+            if (nextPathNode.Item2.y > player.transform.position.y + 0.5f)
             {
                 Debug.Log($"Reached jump point at i:{nextPathNode.Item1} - {nextPathNode.Item2}");
+                return true;
             }
-            return nextPathNode.Item2.y > player.transform.position.y;
+            return false;
         }
 
         protected void InitializeMoveTactics()
@@ -192,10 +193,18 @@ namespace Tests.Experiments
         public IEnumerator PerformExperiment()
         {
             SetupExperiment();
-            while (pathfinder.GetCurrentPath() == null)
+            int pathfinderWaitTime = 0;
+            while (pathfinder.GetCurrentPath() == null && pathfinderWaitTime < PATHFINDER_WAIT_TIMEOUT)
             {
                 Debug.Log("Waiting for path to be calculated...");
+                pathfinderWaitTime++;
                 yield return TestWait.ForSeconds(1f);
+            }
+            if (pathfinder.GetCurrentPath() == null)
+            {
+                Debug.LogError("Pathfinder failed to calculate a path within the timeout period.");
+                Assert.Fail("Pathfinder failed to calculate a path within the timeout period.");
+                yield break;
             }
             nextPathNode = pathfinder.GetNextPathNode();
 

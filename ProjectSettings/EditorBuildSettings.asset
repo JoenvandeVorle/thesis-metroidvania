@@ -32,6 +32,42 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tests/IanExperiment/Difficulty1/u1.unity
     guid: 71c644611ccb7714c920a62cafdd890c
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/u2.unity
+    guid: a0a55620299a9564f8c660984c58c4db
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/u3.unity
+    guid: 966ce2bcb06b72c498dbf23d374c9231
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/diver.unity
+    guid: 7fa7757c9db1f1041a17117f9396b635
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/e1.unity
+    guid: abeac41490d22714f8a6fe69af169fc1
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/g1.unity
+    guid: f96955fc79ae27544909dd862561aafb
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/g1u1.unity
+    guid: 646e1a70c9b0a084881d06877086f2ed
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/g2u1.unity
+    guid: ae83edfb3b6f12e469a97c464c256bd5
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/g2u1ceil.unity
+    guid: 573929926895c0246b1abf30581cb502
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/g2u2.unity
+    guid: baf11896432a84f4694bb984f26cc752
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/offscreen-pitfall.unity
+    guid: 4537afb3a46503146ac84608ffb7410d
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/pitfall.unity
+    guid: f7b62aef5ad8a8540892fbe289a187e1
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty1/twogaps.unity
+    guid: 5214587153c9cba43a857b59ad2c5fbc
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 189c569713a33b1489299ccee6e81330, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
