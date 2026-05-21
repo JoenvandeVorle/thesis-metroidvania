@@ -13,8 +13,8 @@ public class TargetPathFinder : MonoBehaviour
     public GameObject target;
     private Pathfinder pathfinderInstance;
     private Path currentPath;
-    private float pathUpdateTimer;
     private KnightCharacterController character;
+    private float pathUpdateTimer;
 
     void Start()
     {
@@ -35,8 +35,8 @@ public class TargetPathFinder : MonoBehaviour
         pathUpdateTimer += Time.deltaTime;
         if (pathUpdateTimer >= pathUpdateRate)
         {
-            if (!character.collisionChecker.isGrounded)
-                return; // to prevent path updates mid-air
+            if (!(character.elapsedGroundTime >= 0.2f))
+                return; // Do not update in the air
 
             UpdatePath();
             pathUpdateTimer = 0f;
@@ -102,8 +102,9 @@ public class TargetPathFinder : MonoBehaviour
             if (yDiff <= 0) // end of jump when next node is at same or lower height
                 return vectorPath[i];
         }
-        Debug.LogWarning("No end of jump found in path after index " + startIndex);
-        return vectorPath[^2]; // last node - 1
+
+        int jumpEndIndex = Mathf.Min(startIndex + Vars.MAX_JUMP_HEIGHT, vectorPath.Count - 1);
+        return vectorPath[jumpEndIndex];
     }
 
     public void UpdatePath()

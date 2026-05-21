@@ -86,6 +86,12 @@ namespace Tests.Experiments
             return false;
         }
 
+        bool hasPath(ExperimentBeliefSet beliefSet)
+        {
+            List<Vector2> path = beliefSet.currentPath;
+            return path != null && path.Count > 0;
+        }
+
         protected void InitializeMoveTactics()
         {
             moveAction = new(
@@ -96,7 +102,7 @@ namespace Tests.Experiments
                     inputGenerator.MoveTowards(direction);
                 }
             );
-            startMovementTactic = new(moveAction);
+            startMovementTactic = new(moveAction, hasPath);
 
             stopMovementAction = new(beliefSet => inputGenerator.ReleaseMovement());
             stopMovementTactic = new(stopMovementAction, hasReachedJumpPoint);
@@ -120,6 +126,8 @@ namespace Tests.Experiments
             return jumpTacticAgent.ReachedGoal;
         }
 
+        bool mayJump(ExperimentBeliefSet beliefSet) => hasReachedJumpPoint(beliefSet) && hasPath(beliefSet);
+
         protected void InitializeJumpTactics()
         {
             jumpAction = new(
@@ -132,7 +140,7 @@ namespace Tests.Experiments
                     jumpTacticAgent.StartAgent(jumpEndPoint);
                 }
             );
-            startJumpTactic = new(jumpAction, hasReachedJumpPoint);
+            startJumpTactic = new(jumpAction, mayJump);
 
             stopJumpAction = new(
                 beliefSet =>
@@ -143,6 +151,36 @@ namespace Tests.Experiments
             );
             stopJumpTactic = new(stopJumpAction, hasReachedJumpTarget);
             jumpTactic = new FirstOfTactic<ExperimentBeliefSet>(stopJumpTactic, startJumpTactic);
+        }
+
+        #endregion
+
+        #region path correction
+
+        protected Action<ExperimentBeliefSet> updatePathAction;
+        protected PrimitiveTactic<ExperimentBeliefSet> updatePathTactic;
+        bool isOffPath(ExperimentBeliefSet beliefSet)
+        {
+            GameObject player = beliefSet.Player;
+            if (!hasPath(beliefSet))
+                return true;
+            System.Tuple<int, Vector2> closestNode = pathfinder.GetNextPathNode();
+            if (Vector2.Distance(player.transform.position, closestNode.Item2) > 5.0f)
+                return true;
+            return false;
+        }
+
+        protected void InitializePathCorrection()
+        {
+            updatePathAction = new(
+                beliefSet =>
+                {
+                    Debug.Log("Updating path due to deviation...");
+                    pathfinder.UpdatePath();
+                    nextPathNode = pathfinder.GetNextPathNode();
+                }
+            );
+            updatePathTactic = new(updatePathAction, isOffPath);
         }
 
         #endregion
@@ -159,8 +197,9 @@ namespace Tests.Experiments
             Arrange();
             InitializeMoveTactics();
             InitializeJumpTactics();
+            InitializePathCorrection();
 
-            moveAndJumpTactic = new FirstOfTactic<ExperimentBeliefSet>(jumpTactic, moveTactic);
+            moveAndJumpTactic = new FirstOfTactic<ExperimentBeliefSet>(updatePathTactic, jumpTactic, moveTactic);
 
             bool didNotFall()
             {

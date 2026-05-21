@@ -73,6 +73,7 @@ namespace Metroidvania.Characters.Knight
         public bool isInvincible => _invincibilityCount > 0 || stateMachine.currentState.isInvincible;
         public bool isDied => stateMachine.currentState is KnightDieState;
         public float elapsedAirtime { get; private set; }
+        public float elapsedGroundTime { get; private set; }
 
         public readonly CollisionChecker collisionChecker = new CollisionChecker();
 
@@ -145,9 +146,15 @@ namespace Metroidvania.Characters.Knight
             canStand = !Physics2D.OverlapBox(charPosition + boundsPosition, data.crouchHeadRect.size, 0, data.groundLayer);
             stateMachine.PhysicsUpdate();
             if (!collisionChecker.isGrounded)
+            {
                 elapsedAirtime += Time.fixedDeltaTime;
+                elapsedGroundTime = 0;
+            }
             else
+            {
                 elapsedAirtime = 0;
+                elapsedGroundTime += Time.fixedDeltaTime;
+            }
         }
 
         private void OnTriggerStay2D(Collider2D other)

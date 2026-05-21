@@ -59,9 +59,9 @@ namespace Metroidvania.Pathfinding
                     BoundsInt blockBounds = block.GetBounds();
                     Vector2 blockOffset = block.GetOffsetInWorldSpace();
                     Debug.Log($"Block {block.name} bounds: {block}");
-                    m_GraphWidth = Mathf.Max(m_GraphWidth, blockBounds.size.x);
-                    m_GraphHeight = Mathf.Max(m_GraphHeight, blockBounds.size.y);
-                    m_GraphOffset = new Vector2(Mathf.Min(m_GraphOffset.x, blockOffset.x), Mathf.Min(m_GraphOffset.y, blockOffset.y));
+                    m_GraphWidth = Mathf.Max(m_GraphWidth, blockBounds.size.x + 2);
+                    m_GraphHeight = Mathf.Max(m_GraphHeight, blockBounds.size.y + 1);
+                    m_GraphOffset = new Vector2(Mathf.Min(m_GraphOffset.x, blockOffset.x - 1), Mathf.Min(m_GraphOffset.y, blockOffset.y));
                     Debug.Log($"Updated graph size from block {block.name}: width={m_GraphWidth}, height={m_GraphHeight}");
                     Debug.Log($"Updated graph offset from block {block.name}): offset={m_GraphOffset}");
                 }

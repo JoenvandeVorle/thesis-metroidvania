@@ -10,7 +10,7 @@ namespace Metroidvania.Pathfinding
     public struct PathFindJobForPlayer : Unity.Jobs.IJob
     {
         private const int k_MoveStraightCost = 10;
-        private const int k_MoveDiagonalCost = 14;
+        private const int k_MoveDiagonalCost = 16;
         private const int k_MoveToFloorCost = 5;
 
         public CellPosition start;
@@ -88,13 +88,12 @@ namespace Metroidvania.Pathfinding
                         // Jump straight up.
                         ExploreAscend(cx, cy + 1, 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
                         // Jump diagonally (clears wall to the side first).
-                        if (IsWalkable(cx - 1, cy)) ExploreAscend(cx - 1, cy + 1, 2, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
-                        if (IsWalkable(cx + 1, cy)) ExploreAscend(cx + 1, cy + 1, 2, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                        if (IsWalkable(cx - 1, cy)) ExploreAscend(cx - 1, cy + 1, 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                        if (IsWalkable(cx + 1, cy)) ExploreAscend(cx + 1, cy + 1, 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                     }
                 }
-                else if (curPhase <= maxJumpHeight) // ascending
+                else if (curPhase < maxJumpHeight) // ascending
                 {
-                    // Continue rising.
                     if (curPhase < maxJumpHeight)
                     {
                         ExploreAscend(cx, cy + 1, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
@@ -107,15 +106,15 @@ namespace Metroidvania.Pathfinding
                     ExploreAir(cx + 1, cy, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
 
                     ExploreFall(cx, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
-                    ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
-                    ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                    if (IsWalkable(cx - 1, cy - 1)) ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                    if (IsWalkable(cx + 1, cy - 1)) ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                 }
                 else // falling
                 {
                     // Fall straight down or diagonally.
                     ExploreFall(cx, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
-                    ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
-                    ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                    if (IsWalkable(cx - 1, cy - 1)) ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                    if (IsWalkable(cx + 1, cy - 1)) ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                 }
             }
 

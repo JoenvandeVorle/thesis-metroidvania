@@ -6,21 +6,21 @@ using UnityEngine.TestTools;
 
 namespace Tests.Experiments
 {
-    public class Difficulty1 : BaseExperiment
+    public class Difficulty2 : BaseExperiment
     {
         private static readonly string[] _scenes =
         {
-            "trivial", "trivialrv", "diver", "e1", "g1", "g1u1", "g2u1", "g2u1ceil", "g2u2",
-            "offscreen-pitfall", "pitfall", "u1", "u2", "u3"
+            "backwards-progress", "cave", "caverv", "faith", "fork", "g1r1", "g1r1rv",
+            "g6u1", "infestation", "jump-limit", "jumparound", "softlockable", "staircase", "up"
         };
 
         [UnityTest]
         [Timeout(30000)]
-        public IEnumerator PerformDifficulty1([ValueSource(nameof(_scenes))] string scene)
+        public IEnumerator PerformDifficulty2([ValueSource(nameof(_scenes))] string scene)
         {
             Debug.Log($"Starting experiment {scene}");
             SceneManager.LoadScene(scene);
-            yield return null; // let the scene finish loading before SetupExperiment runs
+            yield return null;
             yield return PerformExperiment();
         }
     }

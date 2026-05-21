@@ -68,6 +68,75 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Tests/IanExperiment/Difficulty1/twogaps.unity
     guid: 5214587153c9cba43a857b59ad2c5fbc
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/jump-limit.unity
+    guid: a831c63629b92c3438a528c8abed0c7d
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/backwards-progress.unity
+    guid: 30831d3c130bb324f93ea9641894d077
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/cave.unity
+    guid: c560f11ec9df5c4448c33618b4b95e9a
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/caverv.unity
+    guid: dc73b0ee8366ed44d921de9fc91dd485
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/faith.unity
+    guid: e491f0c4759a19f4a8b0114c86a09f6e
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/fork.unity
+    guid: 6626c33147c38ad4d9fbd30895e06d09
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/g1r1.unity
+    guid: d3154b2d19b49a6429ea57666127d1b3
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/g1r1rv.unity
+    guid: 92278fe8069d52e42901c89259bd6fed
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/g6u1.unity
+    guid: a75212c42e01e8a4ca63cd1fe2f40abc
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/infestation.unity
+    guid: 071e51277554b7e4188071928ba10d09
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/jumparound.unity
+    guid: f93a5a0af081e43428344ba5c0239983
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/softlockable.unity
+    guid: ab6844872bb922542a4393fc9b421b77
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/staircase.unity
+    guid: 62809b7c8cb0db14e8e9edbbf4e0df51
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty2/up.unity
+    guid: 6e82d7eacd4d7be4ea21e93ba7caed23
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty4/jumpman.unity
+    guid: f42e5823fa410644c98c1e1426a04f60
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty3/clouds.unity
+    guid: c5f093f29caab06449065b2a48603231
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty3/dropper.unity
+    guid: 5150e6214dcebfb48bddf11dacd2b4d0
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty3/hostile-clouds.unity
+    guid: 79c5d5a978d7dd44182bd00369efa6e5
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty3/ladder.unity
+    guid: dc4d7176ee11431469b22cc42b958a37
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty3/target-spotted.unity
+    guid: 274b567f4f8aa08448ac8d8a55c49fcc
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty4/careful.unity
+    guid: 95b56c62df27878438d00151f67e328a
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty4/enemies.unity
+    guid: bd84ab7425da3e04e8b7b87f5d1821df
+  - enabled: 1
+    path: Assets/Tests/IanExperiment/Difficulty4/gauntlet.unity
+    guid: 7a471ce9cba1a7d47bc4305f5756f711
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 189c569713a33b1489299ccee6e81330, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
