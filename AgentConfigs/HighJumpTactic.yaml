@@ -14,7 +14,7 @@ behaviors:
       normalize: true
       hidden_units: 128
       num_layers: 2
-      goal_conditioning_type: hyper
+      # goal_conditioning_type: hyper
       # memory:
       #   memory_size: 128
       #   sequence_length: 32
@@ -31,14 +31,14 @@ behaviors:
         network_settings:
           normalize: true
           hidden_units: 128
-          num_layers: 2
-        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemosStacked
+          num_layers: 1
+        demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemosShort
         use_vail: true
         use_actions: false
     behavioral_cloning:
-      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemosStacked
+      demo_path: Assets/Tests/RLAgents/AgentAsTactic/Training/HighJump/HighJumpDemosShort
       strength: 0.5
-      steps: 50000
+      steps: 10000
     keep_checkpoints: 5
     max_steps: 1000000
     time_horizon: 32

@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1778782056",
+        "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Uni\\thesis-metroidvania\\venv\\Scripts\\mlagents-learn .\\AgentConfigs\\HighJumpTactic.yaml --results-dir .\\results-tactics-highjump\\ --run-id=memory",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.1+cpu",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1778782081"
+    },
+    "total": 24.992764099999988,
+    "count": 1,
+    "self": 0.0171004000000039,
+    "children": {
+        "run_training.setup": {
+            "total": 0.1603074999999876,
+            "count": 1,
+            "self": 0.1603074999999876
+        },
+        "TrainerController.start_learning": {
+            "total": 24.815356199999997,
+            "count": 1,
+            "self": 0.0004262999999582462,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 24.814918500000033,
+                    "count": 1,
+                    "self": 24.814918500000033
+                },
+                "trainer_threads": {
+                    "total": 1.499999996212864e-06,
+                    "count": 1,
+                    "self": 1.499999996212864e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 9.900000009110954e-06,
+                    "count": 1,
+                    "self": 9.900000009110954e-06
+                }
+            }
+        }
+    }
+}
