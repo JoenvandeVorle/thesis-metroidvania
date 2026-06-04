@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
@@ -16,13 +17,12 @@ namespace Tests.Experiments
 
         [UnityTest]
         [Timeout(30000)]
-        public IEnumerator PerformDifficulty1([ValueSource(nameof(_scenes))] string scene)
+        public IEnumerator PerformDifficulty1([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
         {
             Debug.Log($"Starting experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null; // let the scene finish loading before SetupExperiment runs
-            yield return PerformExperiment();
+            yield return PerformExperiment(run);
         }
     }
-
 }

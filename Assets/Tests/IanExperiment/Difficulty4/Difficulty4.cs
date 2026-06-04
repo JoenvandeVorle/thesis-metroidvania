@@ -15,12 +15,12 @@ namespace Tests.Experiments
 
         [UnityTest]
         [Timeout(90000)]
-        public IEnumerator PerformDifficulty4([ValueSource(nameof(_scenes))] string scene)
+        public IEnumerator PerformDifficulty4([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
         {
             Debug.Log($"Starting experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null;
-            yield return PerformExperiment();
+            yield return PerformExperiment(run);
         }
     }
 

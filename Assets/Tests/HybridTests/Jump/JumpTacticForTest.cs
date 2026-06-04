@@ -30,12 +30,12 @@ namespace Tests.AplibTests
         private bool isHoldingJump = false;
         private float startDistanceToGoal;
         private float[,] observationGrid;
-        private InputGenerator inputInstance = InputGenerator.instance;
+        private InputGenerator inputGenerator = InputGenerator.instance;
         private KnightCharacterController character;
 
         private void Start()
         {
-            inputInstance.SetKeyboardDisable(true);
+            inputGenerator.SetKeyboardDisable(true);
             observationGrid = new float[observationGridSize, observationGridSize];
             character = GetComponent<KnightCharacterController>();
         }
@@ -54,8 +54,8 @@ namespace Tests.AplibTests
 
         protected override void OnDisable()
         {
-            inputInstance.ReleaseMovement();
-            inputInstance.ReleaseJump();
+            inputGenerator.ReleaseMovement();
+            inputGenerator.ReleaseJump();
             ReachedGoal = false;
             Debug.Log("Disabling JumpTacticForTest, stopping all inputs");
             base.OnDisable();
@@ -105,15 +105,15 @@ namespace Tests.AplibTests
                 switch (movement)
                 {
                     case 1:
-                        inputInstance.HoldLeft();
+                        inputGenerator.HoldLeft();
                         currentMovement = 1;
                         break;
                     case 2:
-                        inputInstance.HoldRight();
+                        inputGenerator.HoldRight();
                         currentMovement = 2;
                         break;
                     default:
-                        inputInstance.ReleaseMovement();
+                        inputGenerator.ReleaseMovement();
                         currentMovement = 0;
                         break;
                 }
@@ -122,10 +122,10 @@ namespace Tests.AplibTests
             switch (jump)
             {
                 case 0 when !isHoldingJump:
-                    inputInstance.ReleaseJump();
+                    inputGenerator.ReleaseJump();
                     break;
                 case 1 when !isHoldingJump:
-                    inputInstance.HoldJump();
+                    inputGenerator.HoldJump();
                     break;
                 case 2 when !isHoldingJump: // Long Jump
                     StartCoroutine(ReleaseJumpAfterDelay(0.5f));
@@ -164,10 +164,10 @@ namespace Tests.AplibTests
 
         private IEnumerator ReleaseJumpAfterDelay(float delay)
         {
-            inputInstance.HoldJump();
+            inputGenerator.HoldJump();
             isHoldingJump = true;
             yield return new WaitForSeconds(delay);
-            inputInstance.ReleaseJump();
+            inputGenerator.ReleaseJump();
             isHoldingJump = false;
         }
     }

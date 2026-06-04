@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Aplib.Core;
 using Aplib.Core.Agents;
 using Aplib.Core.Belief.Beliefs;
@@ -13,10 +14,10 @@ using Aplib.Integrations.Unity;
 using NUnit.Framework;
 using Tests.AplibTests;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Tests.Experiments
 {
-
     public class ExperimentBeliefSet : BeliefSet
     {
         public readonly Belief<GameObject, GameObject> Player =
@@ -32,6 +33,10 @@ namespace Tests.Experiments
     public class BaseExperiment
     {
         public static int PATHFINDER_WAIT_TIMEOUT = 5;
+        protected static readonly int[] _runs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+        private static Dictionary<string, int> _writtenKeys;
+        private static string ResultKey(string scene, int run) => $"{scene}:{run}";
 
         protected InputGenerator inputGenerator;
         protected ExperimentBeliefSet beliefSet;
@@ -185,12 +190,14 @@ namespace Tests.Experiments
 
         #endregion
 
+        #region experiment goal and agent
+
         protected FirstOfTactic<ExperimentBeliefSet> moveAndJumpTactic;
         protected Goal<ExperimentBeliefSet> reachedTargetGoal;
         protected PrimitiveGoalStructure<ExperimentBeliefSet> experimentGoalStructure;
         protected DesireSet<ExperimentBeliefSet> desireSet;
         protected BdiAgent<ExperimentBeliefSet> agent;
-        protected AplibRunner runner;
+        protected AbortableAplibRunner runner;
 
         public void SetupExperiment()
         {
@@ -216,7 +223,7 @@ namespace Tests.Experiments
 
                     if (!didNotFall())
                     {
-                        Assert.Fail("Player fell during the test");
+                        runner.Abort();
                         return false;
                     }
 
@@ -226,10 +233,10 @@ namespace Tests.Experiments
             experimentGoalStructure = new PrimitiveGoalStructure<ExperimentBeliefSet>(reachedTargetGoal);
             desireSet = new DesireSet<ExperimentBeliefSet>(experimentGoalStructure);
             agent = new BdiAgent<ExperimentBeliefSet>(beliefSet, desireSet);
-            runner = new AplibRunner(agent);
+            runner = new AbortableAplibRunner(agent);
         }
 
-        public IEnumerator PerformExperiment()
+        public IEnumerator PerformExperiment(int run = 1)
         {
             SetupExperiment();
             int pathfinderWaitTime = 0;
@@ -242,6 +249,7 @@ namespace Tests.Experiments
             if (pathfinder.GetCurrentPath() == null)
             {
                 Debug.LogError("Pathfinder failed to calculate a path within the timeout period.");
+                WriteResult(SceneManager.GetActiveScene().name, run, "PathfinderTimeout", 0);
                 Assert.Fail("Pathfinder failed to calculate a path within the timeout period.");
                 yield break;
             }
@@ -249,10 +257,68 @@ namespace Tests.Experiments
 
             // Act
             Assert.GreaterOrEqual(player.transform.position.y, -10, "Player should start above y = -10");
-            yield return runner.Test();
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            try
+            {
+                yield return runner.Test();
+            }
+            finally
+            {
+                stopwatch.Stop();
+                WriteResult(SceneManager.GetActiveScene().name, run, runner.Status.ToString(), stopwatch.Elapsed.TotalSeconds);
+            }
 
             // Assert
-            Assert.AreEqual(CompletionStatus.Success, agent.Status);
+            Assert.AreEqual(CompletionStatus.Success, runner.Status);
+        }
+
+        #endregion
+
+        private static Dictionary<string, int> getWrittenKeys(string filePath)
+        {
+            if (_writtenKeys != null) return _writtenKeys;
+            _writtenKeys = new Dictionary<string, int>();
+            if (!File.Exists(filePath)) return _writtenKeys;
+
+            string[] lines = File.ReadAllLines(filePath);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                int sceneStart = line.IndexOf("\"scene\":\"") + 9;
+                int sceneEnd = line.IndexOf('"', sceneStart);
+                int runStart = line.IndexOf("\"run\":") + 6;
+                int runEnd = line.IndexOf(',', runStart);
+                if (sceneEnd < 0 || runEnd < 0) continue;
+                string s = line.Substring(sceneStart, sceneEnd - sceneStart);
+                if (int.TryParse(line.Substring(runStart, runEnd - runStart), out int r))
+                    _writtenKeys[ResultKey(s, r)] = i;
+            }
+            Debug.Log($"Written keys loaded: {string.Join(", ", _writtenKeys.Keys)}");
+            return _writtenKeys;
+        }
+
+        private static void WriteResult(string scene, int run, string status, double durationSeconds)
+        {
+            string dir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "ExperimentResults"));
+            Directory.CreateDirectory(dir);
+            string duration = durationSeconds.ToString("F3", System.Globalization.CultureInfo.InvariantCulture);
+            string newLine = $"{{\"scene\":\"{scene}\",\"run\":{run},\"status\":\"{status}\",\"duration\":{duration}}}";
+            string filePath = Path.Combine(dir, "results.jsonl");
+            string key = ResultKey(scene, run);
+            Dictionary<string, int> writtenKeys = getWrittenKeys(filePath);
+
+            // Replace line if it exists, otherwise append
+            if (writtenKeys.TryGetValue(key, out int lineIndex))
+            {
+                string[] lines = File.ReadAllLines(filePath);
+                lines[lineIndex] = newLine;
+                File.WriteAllLines(filePath, lines);
+                return;
+            }
+
+            File.AppendAllText(filePath, newLine + "\n");
+            _writtenKeys[key] = writtenKeys.Count;
         }
     }
 }
