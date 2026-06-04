@@ -25,7 +25,8 @@ namespace Tests.AplibTests
         [SerializeField] private float playerHeight = 0.25f;
 
         public bool ReachedGoal { get; private set; }
-        public Vector3 goalPosition;
+        public Vector3 goalPosition { get; private set; }
+        public int goalIndex { get; private set; }
         private int currentMovement = 0; // 0: no movement, 1: left, 2: right
         private bool isHoldingJump = false;
         private float startDistanceToGoal;
@@ -40,9 +41,10 @@ namespace Tests.AplibTests
             character = GetComponent<KnightCharacterController>();
         }
 
-        public void StartAgent(Vector3 goalPos)
+        public void StartAgent(System.Tuple<int, Vector2> jumpTarget)
         {
-            goalPosition = goalPos;
+            goalPosition = jumpTarget.Item2;
+            goalIndex = jumpTarget.Item1;
             ReachedGoal = false;
             this.enabled = true;
         }
@@ -133,7 +135,7 @@ namespace Tests.AplibTests
             }
 
             float distanceToGoal = Vector2.Distance(transform.position, goalPosition);
-            if (distanceToGoal <= 1) // reached goal
+            if (distanceToGoal <= 1 && character.elapsedGroundTime >= 0.01f) // reached goal
             {
                 ReachedGoal = true;
                 AddReward(8.0f);

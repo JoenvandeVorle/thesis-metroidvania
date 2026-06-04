@@ -7,5 +7,6 @@ namespace Metroidvania
         /// </summary>
         public const int MAX_JUMP_HEIGHT = 4;
         public const bool DO_SERIALIZE = false;
+        public const bool DOING_TESTS = true;
     }
 }

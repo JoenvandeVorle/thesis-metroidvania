@@ -7,6 +7,7 @@ using Aplib.Core.Desire.GoalStructures;
 using Aplib.Core.Intent.Actions;
 using Aplib.Core.Intent.Tactics;
 using Aplib.Integrations.Unity;
+using Metroidvania.Characters.Knight;
 using NUnit.Framework;
 using Tests.AplibTests;
 using UnityEngine;
@@ -19,8 +20,6 @@ namespace Tests.Experiments
         protected JumpTacticForTest jumpTacticAgent;
         protected TargetPathFinder pathfinder;
         protected System.Tuple<int, Vector2> nextPathNode;
-
-
 
         #region movement tactics
 
@@ -84,9 +83,24 @@ namespace Tests.Experiments
 
         bool hasReachedJumpTarget(ExperimentBeliefSet beliefSet)
         {
-            if (jumpTacticAgent.ReachedGoal)
-                Debug.Log($"Reached jump target: {jumpTacticAgent.goalPosition}");
-            return jumpTacticAgent.ReachedGoal;
+            return jumpTacticAgent.enabled && (jumpTacticAgent.ReachedGoal || checkNextFiveNodes(beliefSet));
+        }
+
+        private bool checkNextFiveNodes(ExperimentBeliefSet beliefSet)
+        {
+            GameObject player = beliefSet.Player;
+            List<Vector2> path = beliefSet.currentPath;
+            if (path == null) return false;
+
+            for (int i = jumpTacticAgent.goalIndex; i < Mathf.Min(jumpTacticAgent.goalIndex + 5, path.Count); i++)
+            {
+                if (Vector2.Distance(player.transform.position, path[i]) < 0.5f)
+                {
+                    Debug.Log($"Considered reached jump target by proximity to node at index {i}: {path[i]}");
+                    return true;
+                }
+            }
+            return false;
         }
 
         bool mayJump(ExperimentBeliefSet beliefSet) => hasReachedJumpPoint(beliefSet) && hasPath(beliefSet);
@@ -98,8 +112,8 @@ namespace Tests.Experiments
                 {
                     if (jumpTacticAgent.enabled)
                         return;
-                    Vector2 jumpEndPoint = pathfinder.FindEndOfJumpStartingAtIndex(nextPathNode.Item1 - 1);
-                    Debug.Log($"Starting jump to: " + jumpEndPoint + $" from index {nextPathNode.Item1 - 1}");
+                    System.Tuple<int, Vector2> jumpEndPoint = pathfinder.FindEndOfJumpStartingAtIndex(nextPathNode.Item1 - 1);
+                    Debug.Log($"Starting jump to: " + jumpEndPoint.Item2 + $" from index {nextPathNode.Item1 - 1}");
                     jumpTacticAgent.StartAgent(jumpEndPoint);
                 }
             );
@@ -128,7 +142,7 @@ namespace Tests.Experiments
             if (!hasPath(beliefSet))
                 return true;
             System.Tuple<int, Vector2> closestNode = pathfinder.GetNextPathNode();
-            if (Vector2.Distance(player.transform.position, closestNode.Item2) > 5.0f)
+            if (Vector2.Distance(player.transform.position, closestNode.Item2) > 4.0f)
                 return true;
             return false;
         }
@@ -141,6 +155,7 @@ namespace Tests.Experiments
                     Debug.Log("Updating path due to deviation...");
                     pathfinder.UpdatePath();
                     nextPathNode = pathfinder.GetNextPathNode();
+                    jumpTacticAgent.StopAgent();
                 }
             );
             updatePathTactic = new(updatePathAction, isOffPath);
@@ -170,6 +185,12 @@ namespace Tests.Experiments
                 return player.transform.position.y > -10;
             }
 
+            bool isAlive()
+            {
+                KnightCharacterController controller = beliefSet.PlayerController;
+                return controller != null && controller.lifeAttribute.currentValue > 0;
+            }
+
             reachedTargetGoal = new Goal<ExperimentBeliefSet>(
                 moveAndJumpTactic,
                 beliefSet =>
@@ -177,9 +198,9 @@ namespace Tests.Experiments
                     GameObject player = beliefSet.Player;
                     GameObject target = beliefSet.Target;
 
-                    if (!didNotFall())
+                    if (!didNotFall() || !isAlive())
                     {
-                        runner.Abort();
+                        runner.Abort("Fell or died");
                         return false;
                     }
 
@@ -227,7 +248,7 @@ namespace Tests.Experiments
             if (pathfinder.GetCurrentPath() == null)
             {
                 Debug.LogError("Pathfinder failed to calculate a path within the timeout period.");
-                runner.Abort();
+                runner.Abort("Pathfinder timeout");
                 yield break;
             }
             nextPathNode = pathfinder.GetNextPathNode();

@@ -13,6 +13,8 @@ namespace Tests.Experiments
             "clouds", "dropper", "hostile-clouds", "ladder", "target-spotted"
         };
 
+        private static string _resultsFile = "difficulty3.jsonl";
+
         [UnityTest]
         [Timeout(30000)]
         public IEnumerator PerformDifficulty3([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
@@ -20,7 +22,7 @@ namespace Tests.Experiments
             Debug.Log($"Starting experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null;
-            yield return RunExperiment(run);
+            yield return RunExperiment(_resultsFile, run);
         }
     }
 

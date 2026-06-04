@@ -14,6 +14,8 @@ namespace Tests.Experiments
             "g6u1", "infestation", "jump-limit", "jumparound", "softlockable", "staircase", "up"
         };
 
+        private static string _resultsFile = "difficulty2.jsonl";
+
         [UnityTest]
         [Timeout(30000)]
         public IEnumerator PerformDifficulty2([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
@@ -21,7 +23,7 @@ namespace Tests.Experiments
             Debug.Log($"Starting experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null;
-            yield return RunExperiment(run);
+            yield return RunExperiment(_resultsFile, run);
         }
     }
 

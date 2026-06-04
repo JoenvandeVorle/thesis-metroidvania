@@ -24,7 +24,7 @@ namespace Metroidvania.UI
 
         public void Animate(float value)
         {
-            slider.DOValue(value, m_duration).SetEase(m_ease).SetTarget(slider);
+            slider.DOValue(value, m_duration).SetEase(m_ease).SetTarget(slider).SetLink(gameObject);
         }
     }
 }

@@ -52,13 +52,22 @@ namespace Metroidvania.GameOver
         private IEnumerator DOGameOver()
         {
             InputReader.instance.DisableAllInputActions();
-            _gameOverScreen.SetActive(true);
-            yield return FadeScreen.instance.DOFadeIn(m_fadeTime).WaitForCompletion();
-            yield return Helpers.GetYieldSeconds(m_gameOverScreenTime);
-            m_onGameOverChannel?.Raise();
-            GameData gameData = DataManager.instance.gameData;
-            yield return SceneLoader.instance.LoadSceneWithoutTransition(m_gameOverScene, SceneLoader.SceneTransitionData.GameOver);
-            yield return FadeScreen.instance.DOFadeOut(m_fadeTime).WaitForCompletion();
+            if (!Vars.DOING_TESTS)
+            {
+                _gameOverScreen.SetActive(true);
+                yield return FadeScreen.instance.DOFadeIn(m_fadeTime).WaitForCompletion();
+                yield return Helpers.GetYieldSeconds(m_gameOverScreenTime);
+                m_onGameOverChannel?.Raise();
+                GameData gameData = DataManager.instance.gameData;
+                yield return SceneLoader.instance.LoadSceneWithoutTransition(m_gameOverScene, SceneLoader.SceneTransitionData.GameOver);
+                yield return FadeScreen.instance.DOFadeOut(m_fadeTime).WaitForCompletion();
+                _gameOverScreen.SetActive(false);
+            }
+        }
+
+        public void Reset()
+        {
+            InputReader.instance.EnableGameplayInputActions();
             _gameOverScreen.SetActive(false);
         }
     }

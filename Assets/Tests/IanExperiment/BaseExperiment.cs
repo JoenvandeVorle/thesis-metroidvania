@@ -5,6 +5,7 @@ using Aplib.Core;
 using Aplib.Core.Belief.Beliefs;
 using Aplib.Core.Belief.BeliefSets;
 using Aplib.Integrations.Unity;
+using Metroidvania.Characters.Knight;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -21,6 +22,9 @@ namespace Tests.Experiments
     {
         public readonly Belief<GameObject, GameObject> Player =
             new(reference: GameObject.Find("Player"), x => x);
+
+        public readonly Belief<GameObject, KnightCharacterController> PlayerController =
+            new(reference: GameObject.Find("Player"), x => x.GetComponent<KnightCharacterController>());
 
         public readonly Belief<GameObject, GameObject> Target = new(
             GameObject.Find("Target"), x => x);
@@ -50,7 +54,7 @@ namespace Tests.Experiments
 
         public abstract IEnumerator Act(int run);
 
-        public IEnumerator RunExperiment(int run = 1)
+        public IEnumerator RunExperiment(string resultsFileName, int run = 1)
         {
             Arrange();
 
@@ -65,6 +69,7 @@ namespace Tests.Experiments
             finally
             {
                 WriteResult(
+                    fileName: resultsFileName,
                     agentType: agentType,
                     scene: UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
                     run: run,
@@ -72,7 +77,7 @@ namespace Tests.Experiments
                     durationSeconds: stopWatch.Elapsed.TotalSeconds);
             }
 
-            Assert.AreEqual(CompletionStatus.Success, runner.Status);
+            Assert.AreEqual(CompletionStatus.Success, runner.Status, $"Experiment failed. Abort reason: {runner.AbortReason}");
         }
 
         protected static Dictionary<string, int> getWrittenKeys(string filePath, AgentType agentType)
@@ -99,13 +104,13 @@ namespace Tests.Experiments
             return _writtenKeys;
         }
 
-        protected static void WriteResult(AgentType agentType, string scene, int run, string status, double durationSeconds)
+        protected static void WriteResult(string fileName, AgentType agentType, string scene, int run, string status, double durationSeconds)
         {
             string dir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "ExperimentResults"));
             Directory.CreateDirectory(dir);
             string duration = durationSeconds.ToString("F3", System.Globalization.CultureInfo.InvariantCulture);
             string newLine = $"{{ \"agent\":\"{agentType}\", \"scene\":\"{scene}\",\"run\":{run},\"status\":\"{status}\",\"duration\":{duration}}}";
-            string filePath = Path.Combine(dir, "results.jsonl");
+            string filePath = Path.Combine(dir, fileName);
             string key = ResultKey(agentType, scene, run);
             Dictionary<string, int> writtenKeys = getWrittenKeys(filePath, agentType);
 

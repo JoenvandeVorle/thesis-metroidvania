@@ -7,6 +7,7 @@ namespace Aplib.Integrations.Unity
     public class AbortableAplibRunner
     {
         public CompletionStatus Status => _isAborted ? CompletionStatus.Failure : _agent.Status;
+        public string AbortReason { get; private set; }
 
         /// <summary>
         /// The agent that the test runner is testing.
@@ -36,9 +37,10 @@ namespace Aplib.Integrations.Unity
             }
         }
 
-        public void Abort()
+        public void Abort(string reason)
         {
             _isAborted = true;
+            AbortReason = reason;
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Tests.Experiments
             "offscreen-pitfall", "pitfall", "u1", "u2", "u3"
         };
 
+        private static string _resultsFile = "difficulty1.jsonl";
+
         [UnityTest]
         [Timeout(30000)]
         public IEnumerator PerformDifficulty1([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
@@ -22,7 +24,7 @@ namespace Tests.Experiments
             Debug.Log($"Starting experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null; // let the scene finish loading before SetupExperiment runs
-            yield return RunExperiment(run);
+            yield return RunExperiment(_resultsFile, run);
         }
     }
 }

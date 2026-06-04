@@ -78,33 +78,33 @@ public class TargetPathFinder : MonoBehaviour
         return Tuple.Create(closestNodeIdx + 1, path[closestNodeIdx + 1]);
     }
 
-    public Vector2 FindEndOfJumpStartingAtIndex(int index)
+    public Tuple<int, Vector2> FindEndOfJumpStartingAtIndex(int index)
     {
         if (currentPath == null)
         {
             Debug.LogWarning("No current path available in FindEndOfJumpAtIndex.");
-            return Vector2.zero;
+            return Tuple.Create(-1, Vector2.zero);
         }
         return FindEndOfJumpStartingAtIndex(currentPath.vectorPath, index);
     }
 
-    public static Vector2 FindEndOfJumpStartingAtIndex(List<Vector2> vectorPath, int startIndex)
+    public static Tuple<int, Vector2> FindEndOfJumpStartingAtIndex(List<Vector2> vectorPath, int startIndex)
     {
         if (startIndex < 0 || startIndex >= vectorPath.Count)
         {
             Debug.LogWarning("Invalid path or index for FindEndOfJumpAtIndex.");
-            return Vector2.zero;
+            return Tuple.Create(-1, Vector2.zero);
         }
 
         for (int i = startIndex + 1; i < vectorPath.Count - 1; i++)
         {
             float yDiff = vectorPath[i].y - vectorPath[startIndex].y;
             if (yDiff <= 0) // end of jump when next node is at same or lower height
-                return vectorPath[i];
+                return Tuple.Create(i, vectorPath[i]);
         }
 
-        int jumpEndIndex = Mathf.Min(startIndex + Vars.MAX_JUMP_HEIGHT, vectorPath.Count - 1);
-        return vectorPath[jumpEndIndex];
+        int jumpEndIndex = Mathf.Min(startIndex + Vars.MAX_JUMP_HEIGHT + 1, vectorPath.Count - 1);
+        return Tuple.Create(jumpEndIndex, vectorPath[jumpEndIndex]);
     }
 
     public void UpdatePath()
