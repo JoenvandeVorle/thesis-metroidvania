@@ -6,7 +6,7 @@ using UnityEngine.TestTools;
 
 namespace Tests.Experiments
 {
-    public class Difficulty2 : BaseExperiment
+    public class Difficulty2 : HybridExperiment
     {
         private static readonly string[] _scenes =
         {
@@ -21,7 +21,7 @@ namespace Tests.Experiments
             Debug.Log($"Starting experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null;
-            yield return PerformExperiment(run);
+            yield return RunExperiment(run);
         }
     }
 
