@@ -36,7 +36,7 @@ namespace Tests.Experiments
     public abstract class BaseExperiment
     {
         protected static readonly int[] _runs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        protected AgentType agentType;
+        protected abstract AgentType AgentType { get; }
         protected InputGenerator inputGenerator;
         protected ExperimentBeliefSet beliefSet;
         protected GameObject player;
@@ -70,7 +70,7 @@ namespace Tests.Experiments
             {
                 WriteResult(
                     fileName: resultsFileName,
-                    agentType: agentType,
+                    agentType: AgentType,
                     scene: UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
                     run: run,
                     status: runner.Status.ToString(),
@@ -95,8 +95,12 @@ namespace Tests.Experiments
                 int sceneEnd = line.IndexOf('"', sceneStart);
                 int runStart = line.IndexOf("\"run\":") + 6;
                 int runEnd = line.IndexOf(',', runStart);
-                if (sceneEnd < 0 || runEnd < 0) continue;
+                int agentStart = line.IndexOf("\"agent\":\"") + 9;
+                int agentEnd = line.IndexOf('"', agentStart);
+                if (sceneEnd < 0 || runEnd < 0 || agentEnd < 0) continue;
                 string s = line.Substring(sceneStart, sceneEnd - sceneStart);
+                string a = line.Substring(agentStart, agentEnd - agentStart);
+                if (!System.Enum.TryParse(a, out AgentType aType) || aType != agentType) continue;
                 if (int.TryParse(line.Substring(runStart, runEnd - runStart), out int r))
                     _writtenKeys[ResultKey(agentType, s, r)] = i;
             }
@@ -125,6 +129,14 @@ namespace Tests.Experiments
 
             File.AppendAllText(filePath, newLine + "\n");
             _writtenKeys[key] = writtenKeys.Count;
+        }
+
+        [TearDown]
+        public virtual void TearDown()
+        {
+            Debug.Log("Tearing down experiment, releasing inputs");
+            inputGenerator.ReleaseMovement();
+            inputGenerator.ReleaseJump();
         }
     }
 }

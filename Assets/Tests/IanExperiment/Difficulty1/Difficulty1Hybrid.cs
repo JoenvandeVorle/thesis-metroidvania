@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 
 namespace Tests.Experiments
 {
-    public class Difficulty1 : HybridExperiment
+    public class Difficulty1Hybrid : HybridExperiment
     {
         private static readonly string[] _scenes =
         {
@@ -21,7 +21,7 @@ namespace Tests.Experiments
         [Timeout(30000)]
         public IEnumerator PerformDifficulty1([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
         {
-            Debug.Log($"Starting experiment {scene}");
+            Debug.Log($"Starting Hybrid experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null; // let the scene finish loading before SetupExperiment runs
             yield return RunExperiment(_resultsFile, run);

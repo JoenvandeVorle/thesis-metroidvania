@@ -6,7 +6,7 @@ using UnityEngine.TestTools;
 
 namespace Tests.Experiments
 {
-    public class Difficulty2 : HybridExperiment
+    public class Difficulty2Hybrid : HybridExperiment
     {
         private static readonly string[] _scenes =
         {
@@ -17,10 +17,10 @@ namespace Tests.Experiments
         private static string _resultsFile = "difficulty2.jsonl";
 
         [UnityTest]
-        [Timeout(30000)]
+        [Timeout(15000)]
         public IEnumerator PerformDifficulty2([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
         {
-            Debug.Log($"Starting experiment {scene}");
+            Debug.Log($"Starting Hybrid experiment {scene}");
             SceneManager.LoadScene(scene);
             yield return null;
             yield return RunExperiment(_resultsFile, run);
