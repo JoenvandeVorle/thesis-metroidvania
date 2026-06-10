@@ -35,10 +35,9 @@ public class TargetPathFinder : MonoBehaviour
         pathUpdateTimer += Time.deltaTime;
         if (pathUpdateTimer >= pathUpdateRate)
         {
-            if (!(character.elapsedGroundTime >= 0.2f))
-                return; // Do not update in the air
+            if (!UpdatePath())
+                return;
 
-            UpdatePath();
             pathUpdateTimer = 0f;
         }
     }
@@ -98,8 +97,12 @@ public class TargetPathFinder : MonoBehaviour
 
         for (int i = startIndex + 1; i < vectorPath.Count - 1; i++)
         {
-            float yDiff = vectorPath[i].y - vectorPath[startIndex].y;
-            if (yDiff <= 0) // end of jump when next node is at same or lower height
+            float yDiffStart = vectorPath[i].y - vectorPath[startIndex].y;
+            if (yDiffStart <= 0) // end of jump when next node is at same or lower height
+                return Tuple.Create(i, vectorPath[i]);
+            // OR: select next section of straight path as end of jump
+            float yDiffNext = vectorPath[i].y - vectorPath[i + 1].y;
+            if (i >= startIndex + Vars.MAX_JUMP_HEIGHT && yDiffNext <= 0)
                 return Tuple.Create(i, vectorPath[i]);
         }
 
@@ -107,8 +110,11 @@ public class TargetPathFinder : MonoBehaviour
         return Tuple.Create(jumpEndIndex, vectorPath[jumpEndIndex]);
     }
 
-    public void UpdatePath()
+    public bool UpdatePath()
     {
+        if (!(character.elapsedGroundTime >= 0.2f))
+            return false; // Do not update in the air
+
         Vector2 playerPos = player.transform.position;
         Vector2 targetPos = target.transform.position;
 
@@ -116,6 +122,7 @@ public class TargetPathFinder : MonoBehaviour
             pathfinderInstance.ReleasePath(ref currentPath);
 
         currentPath = pathfinderInstance.FindPathForPlayer(playerPos, targetPos);
+        return true;
     }
 
 #if UNITY_EDITOR

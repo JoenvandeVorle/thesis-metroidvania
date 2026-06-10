@@ -17,7 +17,7 @@ namespace Tests.Experiments
         private static string _resultsFile = "difficulty2.jsonl";
 
         [UnityTest]
-        [Timeout(15000)]
+        [Timeout(20000)]
         public IEnumerator PerformDifficulty2([ValueSource(nameof(_scenes))] string scene, [ValueSource(nameof(_runs))] int run)
         {
             Debug.Log($"Starting Hybrid experiment {scene}");

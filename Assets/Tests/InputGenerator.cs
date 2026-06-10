@@ -48,8 +48,6 @@ public class InputGenerator : Singleton<InputGenerator>
     public void MoveTowards(Vector2 direction)
     {
         bool toLeft = direction.x < 0;
-        if (doPrintDebug)
-            Debug.Log($"Moving in direction {direction}");
         if (toLeft)
             InputReader.instance.SimulateLeftHolding();
         else

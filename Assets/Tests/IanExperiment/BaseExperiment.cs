@@ -134,7 +134,6 @@ namespace Tests.Experiments
         [TearDown]
         public virtual void TearDown()
         {
-            Debug.Log("Tearing down experiment, releasing inputs");
             inputGenerator.ReleaseMovement();
             inputGenerator.ReleaseJump();
         }

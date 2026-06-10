@@ -35,16 +35,8 @@ namespace Tests.Experiments
                 return true;
 
             GameObject player = beliefSet.Player;
-            if (nextPathNode.Item1 == -1)
-            {
-                Debug.LogWarning("No next path index available in hasReachedJumpPoint guard.");
-                return false;
-            }
             if (nextPathNode.Item2.y > player.transform.position.y + 0.5f)
-            {
-                Debug.Log($"Reached jump point at i:{nextPathNode.Item1} - {nextPathNode.Item2}");
                 return true;
-            }
             return false;
         }
 
@@ -112,7 +104,7 @@ namespace Tests.Experiments
                     if (IsJumping)
                         return;
                     System.Tuple<int, Vector2> jumpEndPoint = pathfinder.FindEndOfJumpStartingAtIndex(nextPathNode.Item1 - 1);
-                    Debug.Log($"Starting jump to: " + jumpEndPoint.Item2 + $" from index {nextPathNode.Item1 - 1}");
+                    Debug.Log($"Starting jump to: " + jumpEndPoint.Item2 + $" from index {nextPathNode.Item1 - 1}: ${nextPathNode.Item2}");
                     StartJump(jumpEndPoint);
                     jumpGoalIndex = jumpEndPoint.Item1;
                 }
@@ -148,6 +140,8 @@ namespace Tests.Experiments
             System.Tuple<int, Vector2> closestNode = pathfinder.GetNextPathNode();
             if (Vector2.Distance(player.transform.position, closestNode.Item2) > 4.0f)
                 return true;
+            if (IsJumping && Mathf.Abs(jumpGoalIndex - closestNode.Item1) > 5)
+                return true;
             return false;
         }
 
@@ -156,7 +150,6 @@ namespace Tests.Experiments
             updatePathAction = new(
                 beliefSet =>
                 {
-                    Debug.Log("Updating path due to deviation...");
                     pathfinder.UpdatePath();
                     nextPathNode = pathfinder.GetNextPathNode();
                     StopJump();
