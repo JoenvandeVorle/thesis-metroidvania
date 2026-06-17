@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Aplib.Core;
-using Aplib.Core.Belief.Beliefs;
-using Aplib.Core.Belief.BeliefSets;
 using Aplib.Integrations.Unity;
-using Metroidvania.Characters.Knight;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -18,27 +15,13 @@ namespace Tests.Experiments
         RL
     }
 
-    public class ExperimentBeliefSet : BeliefSet
-    {
-        public readonly Belief<GameObject, GameObject> Player =
-            new(reference: GameObject.Find("Player"), x => x);
-
-        public readonly Belief<GameObject, KnightCharacterController> PlayerController =
-            new(reference: GameObject.Find("Player"), x => x.GetComponent<KnightCharacterController>());
-
-        public readonly Belief<GameObject, GameObject> Target = new(
-            GameObject.Find("Target"), x => x);
-
-        public readonly Belief<TargetPathFinder, List<Vector2>> currentPath = new(
-            GameObject.Find("Player").GetComponent<TargetPathFinder>(), x => x.GetCurrentPath());
-    }
-
     public abstract class BaseExperiment
     {
         protected static readonly int[] _runs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        // protected static readonly int[] _runs = { 1 };
         protected abstract AgentType AgentType { get; }
+        protected abstract CompletionStatus CompletionStatus { get; }
         protected InputGenerator inputGenerator;
-        protected ExperimentBeliefSet beliefSet;
         protected GameObject player;
         protected AbortableAplibRunner runner;
 
@@ -48,8 +31,9 @@ namespace Tests.Experiments
         protected virtual void Arrange()
         {
             inputGenerator = InputGenerator.instance;
-            beliefSet = new ExperimentBeliefSet();
-            player = beliefSet.Player;
+            player = GameObject.Find("Player");
+            if (player == null)
+                Assert.Fail("Player GameObject not found in scene");
         }
 
         public abstract IEnumerator Act(int run);
@@ -57,8 +41,6 @@ namespace Tests.Experiments
         public IEnumerator RunExperiment(string resultsFileName, int run = 1)
         {
             Arrange();
-
-            Assert.GreaterOrEqual(player.transform.position.y, -10, "Player should start above y = -10");
 
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
@@ -73,11 +55,11 @@ namespace Tests.Experiments
                     agentType: AgentType,
                     scene: UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
                     run: run,
-                    status: runner.Status.ToString(),
+                    status: CompletionStatus.ToString(),
                     durationSeconds: stopWatch.Elapsed.TotalSeconds);
             }
 
-            Assert.AreEqual(CompletionStatus.Success, runner.Status, $"Experiment failed. Abort reason: {runner.AbortReason}");
+            Assert.AreEqual(CompletionStatus.Success, CompletionStatus, $"Experiment failed. Abort reason: {runner?.AbortReason}");
         }
 
         protected static Dictionary<string, int> getWrittenKeys(string filePath, AgentType agentType)

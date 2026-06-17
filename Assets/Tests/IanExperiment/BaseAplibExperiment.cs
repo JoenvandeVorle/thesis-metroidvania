@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aplib.Core;
 using Aplib.Core.Agents;
+using Aplib.Core.Belief.Beliefs;
+using Aplib.Core.Belief.BeliefSets;
 using Aplib.Core.Desire.DesireSets;
 using Aplib.Core.Desire.Goals;
 using Aplib.Core.Desire.GoalStructures;
@@ -14,12 +17,29 @@ using UnityEngine;
 
 namespace Tests.Experiments
 {
+    public class ExperimentBeliefSet : BeliefSet
+    {
+        public readonly Belief<GameObject, GameObject> Player =
+            new(reference: GameObject.Find("Player"), x => x);
+
+        public readonly Belief<GameObject, KnightCharacterController> PlayerController =
+            new(reference: GameObject.Find("Player"), x => x.GetComponent<KnightCharacterController>());
+
+        public readonly Belief<GameObject, GameObject> Target = new(
+            GameObject.Find("Target"), x => x);
+
+        public readonly Belief<TargetPathFinder, List<Vector2>> currentPath = new(
+            GameObject.Find("Player").GetComponent<TargetPathFinder>(), x => x.GetCurrentPath());
+    }
+
     public abstract class BaseAplibExperiment : BaseExperiment
     {
         public static int PATHFINDER_WAIT_TIMEOUT = 5;
         protected JumpTacticForTest jumpTacticAgent;
         protected TargetPathFinder pathfinder;
         protected System.Tuple<int, Vector2> nextPathNode;
+        protected ExperimentBeliefSet beliefSet;
+        protected override CompletionStatus CompletionStatus => runner.Status;
 
         #region movement tactics
 
@@ -215,6 +235,9 @@ namespace Tests.Experiments
         protected override void Arrange()
         {
             base.Arrange();
+
+            beliefSet = new ExperimentBeliefSet();
+            player = beliefSet.Player;
 
             jumpTacticAgent = player.GetComponent<JumpTacticForTest>();
             if (jumpTacticAgent == null)
