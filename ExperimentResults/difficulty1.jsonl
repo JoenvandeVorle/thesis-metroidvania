@@ -378,13 +378,13 @@
 { "agent":"RL", "scene":"offscreen-pitfall","run":8,"status":"Success","duration":4.411}
 { "agent":"RL", "scene":"offscreen-pitfall","run":9,"status":"Success","duration":4.557}
 { "agent":"RL", "scene":"offscreen-pitfall","run":10,"status":"Success","duration":6.623}
-{ "agent":"RL", "scene":"pitfall","run":1,"status":"Unfinished","duration":29.710}
-{ "agent":"RL", "scene":"pitfall","run":3,"status":"Success","duration":3.323}
-{ "agent":"RL", "scene":"pitfall","run":4,"status":"Success","duration":7.681}
-{ "agent":"RL", "scene":"pitfall","run":5,"status":"Unfinished","duration":29.714}
-{ "agent":"RL", "scene":"pitfall","run":7,"status":"Success","duration":16.908}
-{ "agent":"RL", "scene":"pitfall","run":8,"status":"Unfinished","duration":29.723}
-{ "agent":"RL", "scene":"pitfall","run":10,"status":"Unfinished","duration":29.681}
+{ "agent":"RL", "scene":"pitfall","run":1,"status":"Unfinished","duration":25.213}
+{ "agent":"RL", "scene":"pitfall","run":3,"status":"Unfinished","duration":29.717}
+{ "agent":"RL", "scene":"pitfall","run":4,"status":"Success","duration":12.944}
+{ "agent":"RL", "scene":"pitfall","run":5,"status":"Success","duration":9.368}
+{ "agent":"RL", "scene":"pitfall","run":7,"status":"Unfinished","duration":29.693}
+{ "agent":"RL", "scene":"pitfall","run":8,"status":"Success","duration":24.425}
+{ "agent":"RL", "scene":"pitfall","run":10,"status":"Unfinished","duration":29.716}
 { "agent":"RL", "scene":"u1","run":1,"status":"Success","duration":1.996}
 { "agent":"RL", "scene":"u1","run":2,"status":"Success","duration":2.287}
 { "agent":"RL", "scene":"u1","run":3,"status":"Success","duration":2.983}
@@ -415,3 +415,6 @@
 { "agent":"RL", "scene":"u3","run":8,"status":"Success","duration":2.665}
 { "agent":"RL", "scene":"u3","run":9,"status":"Success","duration":5.692}
 { "agent":"RL", "scene":"u3","run":10,"status":"Success","duration":5.032}
+{ "agent":"RL", "scene":"pitfall","run":2,"status":"Success","duration":26.606}
+{ "agent":"RL", "scene":"pitfall","run":6,"status":"Success","duration":12.590}
+{ "agent":"RL", "scene":"pitfall","run":9,"status":"Success","duration":2.060}

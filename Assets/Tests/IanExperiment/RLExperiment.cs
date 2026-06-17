@@ -4,6 +4,7 @@ using Tests.AplibTests;
 using System.Collections;
 using Aplib.Core;
 using System.Linq;
+using Metroidvania.Characters.Knight;
 
 namespace Tests.Experiments
 {
@@ -15,13 +16,13 @@ namespace Tests.Experiments
         private GameObject target;
         private GameObject RLPlayer;
         private IanAgentRaysForTest agent;
+        private KnightCharacterController character;
 
         protected override void Arrange()
         {
             base.Arrange();
             player.SetActive(false); // disable default player gameobject
 
-            // RLPlayer = GameObject.Find("Player_RL");
             RLPlayer = GameObject.FindObjectsByType<GameObject>(
                 FindObjectsInactive.Include,
                 FindObjectsSortMode.None
@@ -35,6 +36,9 @@ namespace Tests.Experiments
             agent = RLPlayer.GetComponent<IanAgentRaysForTest>();
             if (agent == null)
                 Assert.Fail("IanAgentRaysForTest component not found on Player_RL GameObject");
+            character = RLPlayer.GetComponent<KnightCharacterController>();
+            if (character == null)
+                Assert.Fail("KnightCharacterController component not found on Player_RL GameObject");
 
             status = CompletionStatus.Unfinished;
             agent.SetGoal(target);
@@ -46,14 +50,19 @@ namespace Tests.Experiments
             return Vector3.Distance(RLPlayer.transform.position, target.transform.position) < 1f;
         }
 
+        bool isAlive()
+        {
+            return character.lifeAttribute.currentValue > 0;
+        }
+
         public override IEnumerator Act(int run)
         {
             while (!hasReachedTarget())
             {
-                if (RLPlayer.transform.position.y < -10)
+                if (RLPlayer.transform.position.y < -10 || !isAlive())
                 {
                     agent.enabled = false;
-                    Debug.Log("Agent has fallen below y = -10. Ending experiment.");
+                    Debug.Log("Agent has died. Ending experiment.");
                     status = CompletionStatus.Failure;
                     yield break;
                 }
@@ -66,9 +75,12 @@ namespace Tests.Experiments
             status = CompletionStatus.Success;
             yield break;
         }
-    }
 
-    internal class ComplectionStatus
-    {
+        [TearDown]
+        public override void TearDown()
+        {
+            base.TearDown();
+            agent.enabled = false;
+        }
     }
 }
