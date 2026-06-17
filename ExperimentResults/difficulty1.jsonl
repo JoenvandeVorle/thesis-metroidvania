@@ -278,7 +278,7 @@
 { "agent":"Aplib", "scene":"u3","run":8,"status":"Unfinished","duration":29.741}
 { "agent":"Aplib", "scene":"u3","run":9,"status":"Unfinished","duration":29.737}
 { "agent":"Aplib", "scene":"u3","run":10,"status":"Unfinished","duration":29.710}
-{ "agent":"RL", "scene":"trivial","run":1,"status":"Success","duration":2.320}
+{ "agent":"RL", "scene":"trivial","run":1,"status":"Success","duration":2.301}
 { "agent":"RL", "scene":"trivial","run":2,"status":"Success","duration":1.468}
 { "agent":"RL", "scene":"trivial","run":3,"status":"Success","duration":3.119}
 { "agent":"RL", "scene":"trivial","run":4,"status":"Success","duration":1.916}
@@ -288,7 +288,7 @@
 { "agent":"RL", "scene":"trivial","run":8,"status":"Success","duration":1.764}
 { "agent":"RL", "scene":"trivial","run":9,"status":"Success","duration":2.057}
 { "agent":"RL", "scene":"trivial","run":10,"status":"Success","duration":2.142}
-{ "agent":"RL", "scene":"trivialrv","run":1,"status":"Success","duration":1.946}
+{ "agent":"RL", "scene":"trivialrv","run":1,"status":"Success","duration":1.683}
 { "agent":"RL", "scene":"trivialrv","run":2,"status":"Success","duration":2.518}
 { "agent":"RL", "scene":"trivialrv","run":3,"status":"Success","duration":1.583}
 { "agent":"RL", "scene":"trivialrv","run":4,"status":"Success","duration":2.851}
@@ -298,7 +298,7 @@
 { "agent":"RL", "scene":"trivialrv","run":8,"status":"Success","duration":1.888}
 { "agent":"RL", "scene":"trivialrv","run":9,"status":"Success","duration":1.797}
 { "agent":"RL", "scene":"trivialrv","run":10,"status":"Success","duration":2.364}
-{ "agent":"RL", "scene":"diver","run":1,"status":"Success","duration":1.311}
+{ "agent":"RL", "scene":"diver","run":1,"status":"Success","duration":2.821}
 { "agent":"RL", "scene":"diver","run":2,"status":"Success","duration":2.118}
 { "agent":"RL", "scene":"diver","run":3,"status":"Success","duration":2.024}
 { "agent":"RL", "scene":"diver","run":4,"status":"Success","duration":3.270}
@@ -308,7 +308,7 @@
 { "agent":"RL", "scene":"diver","run":8,"status":"Success","duration":2.199}
 { "agent":"RL", "scene":"diver","run":9,"status":"Success","duration":2.456}
 { "agent":"RL", "scene":"diver","run":10,"status":"Success","duration":2.481}
-{ "agent":"RL", "scene":"e1","run":1,"status":"Success","duration":2.746}
+{ "agent":"RL", "scene":"e1","run":1,"status":"Success","duration":3.170}
 { "agent":"RL", "scene":"e1","run":2,"status":"Success","duration":2.031}
 { "agent":"RL", "scene":"e1","run":3,"status":"Success","duration":3.125}
 { "agent":"RL", "scene":"e1","run":4,"status":"Success","duration":3.144}
@@ -318,7 +318,7 @@
 { "agent":"RL", "scene":"e1","run":8,"status":"Success","duration":2.865}
 { "agent":"RL", "scene":"e1","run":9,"status":"Success","duration":3.484}
 { "agent":"RL", "scene":"e1","run":10,"status":"Success","duration":2.934}
-{ "agent":"RL", "scene":"g1","run":1,"status":"Failure","duration":3.837}
+{ "agent":"RL", "scene":"g1","run":1,"status":"Success","duration":3.319}
 { "agent":"RL", "scene":"g1","run":2,"status":"Success","duration":1.862}
 { "agent":"RL", "scene":"g1","run":3,"status":"Success","duration":2.550}
 { "agent":"RL", "scene":"g1","run":4,"status":"Success","duration":2.559}
@@ -328,7 +328,7 @@
 { "agent":"RL", "scene":"g1","run":8,"status":"Success","duration":2.109}
 { "agent":"RL", "scene":"g1","run":9,"status":"Success","duration":1.753}
 { "agent":"RL", "scene":"g1","run":10,"status":"Failure","duration":4.607}
-{ "agent":"RL", "scene":"g1u1","run":1,"status":"Success","duration":2.595}
+{ "agent":"RL", "scene":"g1u1","run":1,"status":"Failure","duration":3.576}
 { "agent":"RL", "scene":"g1u1","run":2,"status":"Success","duration":3.251}
 { "agent":"RL", "scene":"g1u1","run":3,"status":"Success","duration":2.033}
 { "agent":"RL", "scene":"g1u1","run":4,"status":"Failure","duration":3.359}
@@ -338,7 +338,7 @@
 { "agent":"RL", "scene":"g1u1","run":8,"status":"Failure","duration":2.675}
 { "agent":"RL", "scene":"g1u1","run":9,"status":"Success","duration":1.986}
 { "agent":"RL", "scene":"g1u1","run":10,"status":"Success","duration":2.755}
-{ "agent":"RL", "scene":"g2u1","run":1,"status":"Failure","duration":2.986}
+{ "agent":"RL", "scene":"g2u1","run":1,"status":"Failure","duration":2.822}
 { "agent":"RL", "scene":"g2u1","run":2,"status":"Failure","duration":4.429}
 { "agent":"RL", "scene":"g2u1","run":3,"status":"Success","duration":2.023}
 { "agent":"RL", "scene":"g2u1","run":4,"status":"Failure","duration":3.553}
@@ -348,7 +348,7 @@
 { "agent":"RL", "scene":"g2u1","run":8,"status":"Failure","duration":2.155}
 { "agent":"RL", "scene":"g2u1","run":9,"status":"Failure","duration":3.051}
 { "agent":"RL", "scene":"g2u1","run":10,"status":"Failure","duration":2.914}
-{ "agent":"RL", "scene":"g2u1ceil","run":1,"status":"Failure","duration":4.218}
+{ "agent":"RL", "scene":"g2u1ceil","run":1,"status":"Failure","duration":4.272}
 { "agent":"RL", "scene":"g2u1ceil","run":2,"status":"Failure","duration":3.274}
 { "agent":"RL", "scene":"g2u1ceil","run":3,"status":"Success","duration":3.342}
 { "agent":"RL", "scene":"g2u1ceil","run":4,"status":"Failure","duration":3.109}
@@ -358,7 +358,7 @@
 { "agent":"RL", "scene":"g2u1ceil","run":8,"status":"Failure","duration":3.643}
 { "agent":"RL", "scene":"g2u1ceil","run":9,"status":"Success","duration":7.236}
 { "agent":"RL", "scene":"g2u1ceil","run":10,"status":"Success","duration":3.592}
-{ "agent":"RL", "scene":"g2u2","run":1,"status":"Failure","duration":5.834}
+{ "agent":"RL", "scene":"g2u2","run":1,"status":"Failure","duration":2.073}
 { "agent":"RL", "scene":"g2u2","run":2,"status":"Failure","duration":4.771}
 { "agent":"RL", "scene":"g2u2","run":3,"status":"Failure","duration":2.304}
 { "agent":"RL", "scene":"g2u2","run":4,"status":"Failure","duration":5.280}
@@ -368,7 +368,7 @@
 { "agent":"RL", "scene":"g2u2","run":8,"status":"Failure","duration":3.004}
 { "agent":"RL", "scene":"g2u2","run":9,"status":"Failure","duration":2.962}
 { "agent":"RL", "scene":"g2u2","run":10,"status":"Failure","duration":3.039}
-{ "agent":"RL", "scene":"offscreen-pitfall","run":1,"status":"Success","duration":11.009}
+{ "agent":"RL", "scene":"offscreen-pitfall","run":1,"status":"Success","duration":15.173}
 { "agent":"RL", "scene":"offscreen-pitfall","run":2,"status":"Success","duration":8.960}
 { "agent":"RL", "scene":"offscreen-pitfall","run":3,"status":"Success","duration":7.181}
 { "agent":"RL", "scene":"offscreen-pitfall","run":4,"status":"Success","duration":15.441}
@@ -378,14 +378,14 @@
 { "agent":"RL", "scene":"offscreen-pitfall","run":8,"status":"Success","duration":4.411}
 { "agent":"RL", "scene":"offscreen-pitfall","run":9,"status":"Success","duration":4.557}
 { "agent":"RL", "scene":"offscreen-pitfall","run":10,"status":"Success","duration":6.623}
-{ "agent":"RL", "scene":"pitfall","run":1,"status":"Unfinished","duration":25.213}
+{ "agent":"RL", "scene":"pitfall","run":1,"status":"Unfinished","duration":29.705}
 { "agent":"RL", "scene":"pitfall","run":3,"status":"Unfinished","duration":29.717}
 { "agent":"RL", "scene":"pitfall","run":4,"status":"Success","duration":12.944}
 { "agent":"RL", "scene":"pitfall","run":5,"status":"Success","duration":9.368}
 { "agent":"RL", "scene":"pitfall","run":7,"status":"Unfinished","duration":29.693}
 { "agent":"RL", "scene":"pitfall","run":8,"status":"Success","duration":24.425}
 { "agent":"RL", "scene":"pitfall","run":10,"status":"Unfinished","duration":29.716}
-{ "agent":"RL", "scene":"u1","run":1,"status":"Success","duration":1.996}
+{ "agent":"RL", "scene":"u1","run":1,"status":"Success","duration":2.154}
 { "agent":"RL", "scene":"u1","run":2,"status":"Success","duration":2.287}
 { "agent":"RL", "scene":"u1","run":3,"status":"Success","duration":2.983}
 { "agent":"RL", "scene":"u1","run":4,"status":"Success","duration":2.606}
@@ -395,7 +395,7 @@
 { "agent":"RL", "scene":"u1","run":8,"status":"Success","duration":2.769}
 { "agent":"RL", "scene":"u1","run":9,"status":"Success","duration":1.868}
 { "agent":"RL", "scene":"u1","run":10,"status":"Success","duration":2.329}
-{ "agent":"RL", "scene":"u2","run":1,"status":"Success","duration":2.949}
+{ "agent":"RL", "scene":"u2","run":1,"status":"Success","duration":4.946}
 { "agent":"RL", "scene":"u2","run":2,"status":"Success","duration":4.458}
 { "agent":"RL", "scene":"u2","run":3,"status":"Success","duration":6.150}
 { "agent":"RL", "scene":"u2","run":4,"status":"Success","duration":1.986}
@@ -405,7 +405,7 @@
 { "agent":"RL", "scene":"u2","run":8,"status":"Success","duration":2.468}
 { "agent":"RL", "scene":"u2","run":9,"status":"Success","duration":3.151}
 { "agent":"RL", "scene":"u2","run":10,"status":"Success","duration":2.740}
-{ "agent":"RL", "scene":"u3","run":1,"status":"Success","duration":21.145}
+{ "agent":"RL", "scene":"u3","run":1,"status":"Success","duration":2.941}
 { "agent":"RL", "scene":"u3","run":2,"status":"Success","duration":15.805}
 { "agent":"RL", "scene":"u3","run":3,"status":"Success","duration":3.823}
 { "agent":"RL", "scene":"u3","run":4,"status":"Success","duration":10.122}

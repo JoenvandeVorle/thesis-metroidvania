@@ -17,8 +17,8 @@ namespace Tests.Experiments
 
     public abstract class BaseExperiment
     {
-        protected static readonly int[] _runs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        // protected static readonly int[] _runs = { 1 };
+        // protected static readonly int[] _runs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        protected static readonly int[] _runs = { 1 };
         protected abstract AgentType AgentType { get; }
         protected abstract CompletionStatus CompletionStatus { get; }
         protected InputGenerator inputGenerator;
