@@ -1,4 +1,4 @@
-{ "agent":"Hybrid", "scene":"backwards-progress","run":1,"status":"Unfinished","duration":10.317}
+{ "agent":"Hybrid", "scene":"backwards-progress","run":1,"status":"Unfinished","duration":15.393}
 { "agent":"Hybrid", "scene":"backwards-progress","run":2,"status":"Unfinished","duration":14.708}
 { "agent":"Hybrid", "scene":"backwards-progress","run":3,"status":"Unfinished","duration":14.719}
 { "agent":"Hybrid", "scene":"backwards-progress","run":4,"status":"Unfinished","duration":14.734}
@@ -8,7 +8,7 @@
 { "agent":"Hybrid", "scene":"backwards-progress","run":8,"status":"Unfinished","duration":14.723}
 { "agent":"Hybrid", "scene":"backwards-progress","run":9,"status":"Unfinished","duration":14.737}
 { "agent":"Hybrid", "scene":"backwards-progress","run":10,"status":"Unfinished","duration":14.738}
-{ "agent":"Hybrid", "scene":"cave","run":1,"status":"Success","duration":5.277}
+{ "agent":"Hybrid", "scene":"cave","run":1,"status":"Success","duration":8.418}
 { "agent":"Hybrid", "scene":"cave","run":2,"status":"Success","duration":5.344}
 { "agent":"Hybrid", "scene":"cave","run":3,"status":"Success","duration":5.789}
 { "agent":"Hybrid", "scene":"cave","run":4,"status":"Success","duration":5.115}
@@ -18,7 +18,7 @@
 { "agent":"Hybrid", "scene":"cave","run":8,"status":"Success","duration":6.064}
 { "agent":"Hybrid", "scene":"cave","run":9,"status":"Success","duration":10.853}
 { "agent":"Hybrid", "scene":"cave","run":10,"status":"Success","duration":9.485}
-{ "agent":"Hybrid", "scene":"caverv","run":1,"status":"Unfinished","duration":14.726}
+{ "agent":"Hybrid", "scene":"caverv","run":1,"status":"Success","duration":10.270}
 { "agent":"Hybrid", "scene":"caverv","run":2,"status":"Unfinished","duration":14.732}
 { "agent":"Hybrid", "scene":"caverv","run":3,"status":"Success","duration":5.231}
 { "agent":"Hybrid", "scene":"caverv","run":4,"status":"Success","duration":8.738}
@@ -28,7 +28,7 @@
 { "agent":"Hybrid", "scene":"caverv","run":8,"status":"Success","duration":3.966}
 { "agent":"Hybrid", "scene":"caverv","run":9,"status":"Success","duration":9.120}
 { "agent":"Hybrid", "scene":"caverv","run":10,"status":"Unfinished","duration":14.725}
-{ "agent":"Hybrid", "scene":"faith","run":1,"status":"Success","duration":2.538}
+{ "agent":"Hybrid", "scene":"faith","run":1,"status":"Success","duration":1.845}
 { "agent":"Hybrid", "scene":"faith","run":2,"status":"Success","duration":2.924}
 { "agent":"Hybrid", "scene":"faith","run":3,"status":"Success","duration":1.967}
 { "agent":"Hybrid", "scene":"faith","run":4,"status":"Success","duration":2.089}
@@ -38,7 +38,7 @@
 { "agent":"Hybrid", "scene":"faith","run":8,"status":"Success","duration":2.630}
 { "agent":"Hybrid", "scene":"faith","run":9,"status":"Success","duration":3.924}
 { "agent":"Hybrid", "scene":"faith","run":10,"status":"Success","duration":2.742}
-{ "agent":"Hybrid", "scene":"fork","run":1,"status":"Failure","duration":8.891}
+{ "agent":"Hybrid", "scene":"fork","run":1,"status":"Failure","duration":5.822}
 { "agent":"Hybrid", "scene":"fork","run":2,"status":"Failure","duration":5.005}
 { "agent":"Hybrid", "scene":"fork","run":3,"status":"Success","duration":4.387}
 { "agent":"Hybrid", "scene":"fork","run":4,"status":"Failure","duration":5.533}
