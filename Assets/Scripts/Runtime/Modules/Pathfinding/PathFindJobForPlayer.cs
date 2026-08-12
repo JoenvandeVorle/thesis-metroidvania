@@ -10,7 +10,8 @@ namespace Metroidvania.Pathfinding
     public struct PathFindJobForPlayer : Unity.Jobs.IJob
     {
         private const int k_MoveStraightCost = 10;
-        private const int k_MoveDiagonalCost = 14;
+        private const int k_MoveDiagonalCost = 16;
+        private const int k_MoveToFloorCost = 5;
 
         public CellPosition start;
         public CellPosition end;
@@ -79,8 +80,8 @@ namespace Metroidvania.Pathfinding
                 if (curPhase == 0) // grounded
                 {
                     // Walk left/right; fall off edges automatically.
-                    ExploreGround(cx - 1, cy, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
-                    ExploreGround(cx + 1, cy, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
+                    ExploreGround(cx - 1, cy, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveToFloorCost);
+                    ExploreGround(cx + 1, cy, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveToFloorCost);
 
                     if (maxJumpHeight >= 1)
                     {
@@ -91,9 +92,8 @@ namespace Metroidvania.Pathfinding
                         if (IsWalkable(cx + 1, cy)) ExploreAscend(cx + 1, cy + 1, 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                     }
                 }
-                else if (curPhase <= maxJumpHeight) // ascending
+                else if (curPhase < maxJumpHeight) // ascending
                 {
-                    // Continue rising.
                     if (curPhase < maxJumpHeight)
                     {
                         ExploreAscend(cx, cy + 1, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
@@ -105,15 +105,16 @@ namespace Metroidvania.Pathfinding
                     ExploreAir(cx - 1, cy, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
                     ExploreAir(cx + 1, cy, curPhase + 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
 
-                    // Gravity takes over — start falling.
                     ExploreFall(cx, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
+                    if (IsWalkable(cx - 1, cy - 1)) ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                    if (IsWalkable(cx + 1, cy - 1)) ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                 }
                 else // falling
                 {
                     // Fall straight down or diagonally.
                     ExploreFall(cx, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveStraightCost);
-                    if (IsWalkable(cx - 1, cy)) ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
-                    if (IsWalkable(cx + 1, cy)) ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                    if (IsWalkable(cx - 1, cy - 1)) ExploreFall(cx - 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
+                    if (IsWalkable(cx + 1, cy - 1)) ExploreFall(cx + 1, cy - 1, curIdx, cells, fallingPhase, states, openList, closedList, k_MoveDiagonalCost);
                 }
             }
 
@@ -180,7 +181,12 @@ namespace Metroidvania.Pathfinding
             NativeArray<StateNode> states, NativeList<int> openList, NativeList<int> closedList, int cost)
         {
             if (!IsWalkable(nx, ny)) return;
-            int destPhase = HasFloor(nx, ny) ? 0 : fallingPhase;
+            int destPhase = fallingPhase;
+            if (HasFloor(nx, ny))
+            {
+                destPhase = 0;
+                cost = k_MoveToFloorCost;
+            }
             AddNeighbor(nx + ny * gridSize.x + destPhase * cells, fromIdx, new CellPosition(nx, ny), cost, states, openList, closedList);
         }
 

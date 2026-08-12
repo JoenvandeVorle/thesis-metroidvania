@@ -55,7 +55,7 @@ namespace Metroidvania.Pathfinding
                 }
                 sb.AppendLine();
             }
-            Debug.Log("Generated grid graph:\n" + sb.ToString());
+            // Debug.Log("Generated grid graph:\n" + sb.ToString());
         }
 
         public void InvokeNodeChanged(PathNode node) => NodeChanged?.Invoke(node);

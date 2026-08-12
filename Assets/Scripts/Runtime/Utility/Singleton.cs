@@ -6,7 +6,7 @@ namespace Metroidvania
     // This some real gourmet shit
     public abstract class Singleton<T> where T : Singleton<T>
     {
-        private static readonly Lazy<T> lazyInstance = 
+        private static readonly Lazy<T> lazyInstance =
             new Lazy<T>(() => Activator.CreateInstance(typeof(T), true) as T);
         public static T instance => lazyInstance.Value;
         protected Singleton() { }
@@ -40,6 +40,7 @@ namespace Metroidvania
         protected override void Awake()
         {
             base.Awake();
+            // if (!Vars.DOING_TESTS) // Persistent singletons tend to cause issues in tests
             DontDestroyOnLoad(gameObject);
             name = $"[{typeof(T).Name}]";
         }

@@ -52,18 +52,18 @@ namespace Metroidvania.Pathfinding
             _blocks = GetComponentsInChildren<Blocks.GraphBlockBase>();
             if (m_GetSizesFromTilemap)
             {
-                Debug.Log("Getting graph size and offset from tilemap blocks...");
+                // Debug.Log("Getting graph size and offset from tilemap blocks...");
                 m_GraphWidth = 0; m_GraphHeight = 0; m_GraphOffset = Vector2.zero;
                 foreach (var block in _blocks)
                 {
                     BoundsInt blockBounds = block.GetBounds();
                     Vector2 blockOffset = block.GetOffsetInWorldSpace();
-                    Debug.Log($"Block {block.name} bounds: {block}");
-                    m_GraphWidth = Mathf.Max(m_GraphWidth, blockBounds.size.x);
-                    m_GraphHeight = Mathf.Max(m_GraphHeight, blockBounds.size.y);
-                    m_GraphOffset = new Vector2(Mathf.Min(m_GraphOffset.x, blockOffset.x), Mathf.Min(m_GraphOffset.y, blockOffset.y));
-                    Debug.Log($"Updated graph size from block {block.name}: width={m_GraphWidth}, height={m_GraphHeight}");
-                    Debug.Log($"Updated graph offset from block {block.name}): offset={m_GraphOffset}");
+                    // Debug.Log($"Block {block.name} bounds: {block}");
+                    m_GraphWidth = Mathf.Max(m_GraphWidth, blockBounds.size.x + 2);
+                    m_GraphHeight = Mathf.Max(m_GraphHeight, blockBounds.size.y + 1);
+                    m_GraphOffset = new Vector2(Mathf.Min(m_GraphOffset.x, blockOffset.x - 1), Mathf.Min(m_GraphOffset.y, blockOffset.y));
+                    // Debug.Log($"Updated graph size from block {block.name}: width={m_GraphWidth}, height={m_GraphHeight}");
+                    // Debug.Log($"Updated graph offset from block {block.name}): offset={m_GraphOffset}");
                 }
             }
             graph = new GridGraph(m_GraphWidth, m_GraphHeight, m_GraphCellSize, m_GraphOffset, _blocks);

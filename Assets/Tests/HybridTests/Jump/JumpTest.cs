@@ -115,8 +115,8 @@ namespace Tests.HybridTests
                 {
                     if (jumpTacticAgent.enabled)
                         return;
-                    Vector2 jumpEndPoint = pathfinder.FindEndOfJumpStartingAtIndex(nextPathNode.Item1 - 1);
-                    Debug.Log($"Starting jump to: " + jumpEndPoint + $" from index {nextPathNode.Item1 - 1}");
+                    System.Tuple<int, Vector2> jumpEndPoint = pathfinder.FindEndOfJumpStartingAtIndex(nextPathNode.Item1 - 1);
+                    Debug.Log($"Starting jump to: " + jumpEndPoint.Item2 + $" from index {nextPathNode.Item1 - 1}");
                     jumpTacticAgent.StartAgent(jumpEndPoint);
                 }
             );

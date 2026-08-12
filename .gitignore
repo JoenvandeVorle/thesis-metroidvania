@@ -1,8 +1,11 @@
-﻿# python venv
+﻿Assets/_Recovery
+
+# python venv
 venv/
 
 # ML-agents timers folder
 Assets/ML-Agents/Timers/
+ProfilerCaptures/
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #

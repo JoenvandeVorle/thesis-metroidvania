@@ -13,8 +13,8 @@ public class TargetPathFinder : MonoBehaviour
     public GameObject target;
     private Pathfinder pathfinderInstance;
     private Path currentPath;
-    private float pathUpdateTimer;
     private KnightCharacterController character;
+    private float pathUpdateTimer;
 
     void Start()
     {
@@ -35,10 +35,9 @@ public class TargetPathFinder : MonoBehaviour
         pathUpdateTimer += Time.deltaTime;
         if (pathUpdateTimer >= pathUpdateRate)
         {
-            if (!character.collisionChecker.isGrounded)
-                return; // to prevent path updates mid-air
+            if (!UpdatePath())
+                return;
 
-            UpdatePath();
             pathUpdateTimer = 0f;
         }
     }
@@ -78,36 +77,44 @@ public class TargetPathFinder : MonoBehaviour
         return Tuple.Create(closestNodeIdx + 1, path[closestNodeIdx + 1]);
     }
 
-    public Vector2 FindEndOfJumpStartingAtIndex(int index)
+    public Tuple<int, Vector2> FindEndOfJumpStartingAtIndex(int index)
     {
         if (currentPath == null)
         {
             Debug.LogWarning("No current path available in FindEndOfJumpAtIndex.");
-            return Vector2.zero;
+            return Tuple.Create(-1, Vector2.zero);
         }
         return FindEndOfJumpStartingAtIndex(currentPath.vectorPath, index);
     }
 
-    public static Vector2 FindEndOfJumpStartingAtIndex(List<Vector2> vectorPath, int startIndex)
+    public static Tuple<int, Vector2> FindEndOfJumpStartingAtIndex(List<Vector2> vectorPath, int startIndex)
     {
         if (startIndex < 0 || startIndex >= vectorPath.Count)
         {
             Debug.LogWarning("Invalid path or index for FindEndOfJumpAtIndex.");
-            return Vector2.zero;
+            return Tuple.Create(-1, Vector2.zero);
         }
 
         for (int i = startIndex + 1; i < vectorPath.Count - 1; i++)
         {
-            float yDiff = vectorPath[i].y - vectorPath[startIndex].y;
-            if (yDiff <= 0) // end of jump when next node is at same or lower height
-                return vectorPath[i];
+            float yDiffStart = vectorPath[i].y - vectorPath[startIndex].y;
+            if (yDiffStart <= 0) // end of jump when next node is at same or lower height
+                return Tuple.Create(i, vectorPath[i]);
+            // OR: select next section of straight path as end of jump
+            float yDiffNext = vectorPath[i].y - vectorPath[i + 1].y;
+            if (i >= startIndex + Vars.MAX_JUMP_HEIGHT && yDiffNext <= 0)
+                return Tuple.Create(i, vectorPath[i]);
         }
-        Debug.LogWarning("No end of jump found in path after index " + startIndex);
-        return vectorPath[^1]; // last node
+
+        int jumpEndIndex = Mathf.Min(startIndex + Vars.MAX_JUMP_HEIGHT + 1, vectorPath.Count - 1);
+        return Tuple.Create(jumpEndIndex, vectorPath[jumpEndIndex]);
     }
 
-    public void UpdatePath()
+    public bool UpdatePath()
     {
+        if (!(character.elapsedGroundTime >= 0.2f))
+            return false; // Do not update in the air
+
         Vector2 playerPos = player.transform.position;
         Vector2 targetPos = target.transform.position;
 
@@ -115,6 +122,7 @@ public class TargetPathFinder : MonoBehaviour
             pathfinderInstance.ReleasePath(ref currentPath);
 
         currentPath = pathfinderInstance.FindPathForPlayer(playerPos, targetPos);
+        return true;
     }
 
 #if UNITY_EDITOR

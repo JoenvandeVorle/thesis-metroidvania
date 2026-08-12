@@ -33,5 +33,15 @@ namespace Metroidvania
         {
             m_lifeSlider.slider.maxValue = _life.maxValue;
         }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (_life != null)
+            {
+                _life.OnValueChanged -= LifeChanged;
+                _life.OnLevelChanged -= LifeLevelChanged;
+            }
+        }
     }
 }
